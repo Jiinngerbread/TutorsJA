@@ -1,0 +1,274 @@
+/* Grooup: TripleJ */
+
+model TutorsJA
+
+-- DATATYPE CLASSES --
+class Date 
+attributes 
+    day: Integer
+    month: Integer
+    year: Integer
+operations
+    DateInit(d: Integer, m: Integer, y: Integer)
+    begin
+        self.day := d;
+        self.month := m;
+        self.year:= y;
+    end
+end
+
+class Period end --to be used to show a range of days on a calender or period within which a service is offered
+
+
+
+-- CONCRETE CLASSES --
+class Child
+attributes
+    fname: String
+    lname: String
+    dob: Date
+    sex: Sex
+    grade: Grade
+    subject: String --possible collection of subjects of interest -- 
+    modeOfDelivery: ModeOfDelivery 
+    serviceType: ServiceType
+    specialNeeds: String --review this
+    location: String --may not need this
+end
+
+class Rating 
+attributes 
+    levelOfRating: Ratings
+end 
+
+class Review --POSSIBILITY OF ASSOCIATION CLASS?
+attributes 
+    reviewTxt: String
+end 
+
+class Dialogue  -- POSSIBILITY OF ASSOCIATION CLASS?
+attributes 
+    parent: Parent
+    tutor: Tutor
+    pMsg: String 
+    tMsg: String 
+end 
+
+class SpecialRequest 
+attributes
+    msgBody: String 
+    tags: String
+    status: SRStatus
+end 
+
+class Payment
+attributes
+    amount: Real
+    datePayed: Date
+end
+
+class EnrollmentRequest
+attributes
+    status: EnrollmentStatus
+end
+
+
+
+-- ENUMS -- 
+enum GeneralStatus{Not_Approved, Approved, Verified}
+enum Grade{K1, K2, K3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
+enum AvailabilityStatus{Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
+enum ModeOfDelivery{Online, FaceToFace, Blended}
+enum ServiceType{OneOnOne, Group}
+enum Days{Mon, Tue, Wed, Thru, Fri, Sat, Sun}
+enum Ratings{1, 2, 3, 4, 5}
+enum SRStatus{Unanswered, Answered, Resolved, Outdated}
+enum Sex{male, female}
+enum EnrollmentStatus{accepted, denied, pending}
+
+
+
+-- ABSTRACT CLASSES --
+
+abstract class User -- the D2 said its abstract --
+attributes 
+    fname: String
+    lname: String
+    sex: Sex
+    location: String
+end 
+
+
+abstract class Calendar end --Thought needs to be given to this representation
+
+
+abstract class Service
+attributes
+    grade: Grade
+    subject: String
+    location: String
+    modeofdelivery: ModeOfDelivery
+    serviceType: ServiceType
+    Duration: Period --period class/date class needed -- 
+    meetingdays: Days
+    numslots: Integer
+    rate: Ratings
+    availStatus: AvailabilityStatus
+end
+
+abstract class Policy end 
+
+abstract class Rule end
+
+
+
+-- EXTENDED CONCRETE CLASSES --
+
+class Parent < User
+attributes
+    children: Child --collection of children??-- 
+end
+
+class Tutor < User
+attributes 
+    grade: Grade --possible collection -- 
+    subject: String --possible collection --
+    generalStatus: GeneralStatus
+    availStatus: AvailabilityStatus --not sure if this is how it is to be done--
+    certifications: String  --collection
+    special_needs: String --collection--
+end 
+
+class PrivateService < Service 
+attributes 
+    description: String
+    serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point
+operations
+    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st := #OneOnOne, dur: Period, meet: Days, nslots := 1, rate := #Three, stat := #Free, descr: String, cap: Integer ) --can i initialize values like this ?-- 
+    begin
+        self.Service(g, s, loc, mod, st, dur, meet, nslots, rate, stat) ;
+        self.description := descr;
+        self.serviceCap := cap;
+    end
+
+
+end 
+
+class GroupService < Service 
+attributes 
+    description: String 
+operations
+    GroupServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st := #Group, dur: Period, meet: Days, nslots, rate := #Three, stat := #Free, descr: String)
+    self.description := descr;
+    -- insert rest---
+    
+end 
+
+
+-- ASSOCIATION CLASS -- 
+associationclass Proposal between
+    SpecialRequest[1] role request
+    Tutor[1] role tutor
+attributes
+    proposal: String
+end
+
+
+-- ASSOCIATIONS IN MODEL -- 
+-- according to latest D2 oct 20th -- 
+
+--names of association need work --
+
+association ServiceOffering between
+    Tutor[1] role tutor
+    Service[*] role service
+end
+
+association TutorRating between 
+    Rating[1] role rating
+    Tutor[1] role Tutor 
+    Child[1] role student
+end 
+
+association TutorReview between 
+    Rating[1] role rating
+    Tutor[1] role Tutor 
+    Child[1] role student
+end
+
+association TutorCalender between 
+    Calendar[1] role schedule
+    Tutor[1] role tutor
+end
+
+association ChildCalendar between 
+    Calendar[1] role schedule 
+    Child[1] role student
+
+association ChildOf between 
+    Parent[1] role parent
+    Child[1..*] role child
+end
+
+association OneOnOneService between 
+    Child[1] role student 
+    Tutor[1] role instructor 
+end 
+
+association GroupService between 
+    Child[*] role students 
+    Tutor[1] role instructor 
+end 
+
+association relatedReview between 
+    Rating[1] role ratings 
+    Review[0..1] role review
+end 
+
+association Conversation between
+    Dialogue[*] role messages 
+    Tutor[1] role reciever 
+    Parent[1] role reciever
+end 
+
+association SpecialRequestInteraction between 
+    Parent[1] role requestor 
+    SpecialRequest[1] role messages
+    Proposal[*] role responses
+end 
+
+association ServicePayment between 
+    Payment[1..*] role payments 
+    Parent[1] role payer
+    Tutor[1] role payee
+    ServiceOffering[1..*] role service -- better placed on enrollment Enrollment[1] role establishedStudent
+    Child[1] role forChild
+end
+
+association Enrollment between 
+    Parent[1] role liaison 
+    Child[1] role potentialStudent
+    Service[1] role interestedServive
+    Tutor[1] role potentialInstructor 
+end 
+
+
+
+-- constraints must be expressed in theire relevant classes-- 
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
