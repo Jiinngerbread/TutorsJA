@@ -9,7 +9,7 @@ enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Wit
 enum ModeOfDelivery {Online, Face_To_Face, Blended}
 enum ServiceType {One_On_One, Group}
 enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
-enum Ratings {1, 2, 3, 4, 5}
+enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
 enum SRStatus {Unanswered, Answered, Resolved, Outdated}
 enum Sex {Male, Female}
 enum EnrollmentStatus {Accepted, Denied, Pending}
@@ -44,6 +44,69 @@ operations
 end
 
 
+-- ABSTRACT CLASSES --
+
+abstract class User -- the D2 said its abstract --
+attributes 
+    fname: String
+    lname: String
+    sex: Sex
+    location: String
+operations
+    UserInit(f:String, l:String, s:Sex, loc:String)
+    begin   
+        self.fname := f;
+        self.lname := l;
+        self.sex := s;
+        self.location := loc;
+    end 
+end 
+
+
+abstract class Calendar --Thought needs to be given to this representation
+attributes
+    dayNotes: Set(Tuple(date:Date, note:String));
+operations
+    CalendarInit(dns:Set(Tuple(date:Date, note:String)))
+    begin   
+        self.dayNotes := dns;
+    end 
+end
+
+
+abstract class Service
+attributes
+    grade: Grade
+    subject: String --so they can only do one subject even in group classes; that's what we want to say, right?
+    location: String
+    modeOfDelivery: ModeOfDelivery
+    serviceType: ServiceType
+    duration: Period 
+    meetingDays: Set (Days)
+    numOfSlots: Integer
+    rate: Ratings
+    --rate: Real
+    availStatus: AvailabilityStatus
+operations  
+    ServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate: Ratings)
+    begin   
+        self.grade := g;
+        self.subject := s;
+        self.location := loc;
+        self.modeOfDelivery := mod;
+        self.serviceType := st;
+        self.duration :=  d;
+        self.meetingDays := mds;
+        self.numOfSlots := nos;
+        self.rate := Ratings::STAR3;
+        self.availStatus := AvailabilityStatus::Free;
+    end 
+end
+
+
+-- ? abstract class Policy end  --?
+
+-- ? abstract class Rule end --?
 
 -- CONCRETE CLASSES --
 class Child
@@ -59,7 +122,7 @@ attributes
     specialNeeds: Set (String) --review this; good with me - suggesting a Set though
     location: String --may not need this; I think we should keep it
 operations
-    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns:Set (String), loc:String)
+    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String)
     begin   
         self.fname := f;
         self.lname := l;
@@ -67,9 +130,9 @@ operations
         self.sex := s; 
         self.grade := g;
         self.subjects := sub;
-        self.modeOfDelivery := mod;
+        self.modesOfDelivery := mod;
         self.serviceTypes := sts;
-        self.specialNeeds := sn;
+        self.specialNeeds := sns;
         self.location := loc;
     end
 end
@@ -88,8 +151,8 @@ operations
     SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String)
     begin   
         self.msgBody := msg;
-        self.grade :=  t;
-        self.subjects := g;
+        self.grade :=  Grade::Kg3;
+        self.subjects := s;
         self.modesOfDelivery := mod;
         self.specialNeeds := sns;
         self.location := loc;
@@ -123,71 +186,6 @@ end
 
 
 
--- ABSTRACT CLASSES --
-
-abstract class User -- the D2 said its abstract --
-attributes 
-    fname: String
-    lname: String
-    sex: Sex
-    location: String
-operations
-    UserInit(f:String, l:String, s:Sex; loc:String)
-    begin   
-        self.fname := f;
-        self.lname := l;
-        self.s := s;
-        self.location := loc;
-    end 
-end 
-
-
-abstract class Calendar --Thought needs to be given to this representation
-attributes
-    dayNotes: Set(Tuple(date:Date, note:String));
-operations
-    CalendarInit(dns:Set(Tuple(date:Date, note:String)))
-    begin   
-        self.dayNotes := dns;
-    end 
-end
-
-
-abstract class Service
-attributes
-    grade: Grade
-    subject: String --so they can only do one subject even in group classes; that's what we want to say, right?
-    location: String
-    modeOfDelivery: ModeOfDelivery
-    serviceType: ServiceType
-    duration: Period 
-    meetingDays: Set (Days)
-    numOfSlots: Integer
-    --rate: Ratings
-    rate: Real
-    availStatus: AvailabilityStatus
-operations  
-    ServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Real)
-    begin   
-        self.grade := g;
-        self.subject := s;
-        self.location := loc;
-        self.modeOfDelivery := mod;
-        self.serviceType := st;
-        self.duration :=  d;
-        self.meetingDays := mds;
-        self.numOfSlots := nos;
-        self.rate := Real;
-        self.availStatus := AvailabilityStatus::Free;
-    end 
-end
-
-
--- ? abstract class Policy end  --?
-
--- ? abstract class Rule end --?
-
-
 
 -- EXTENDED CONCRETE CLASSES --
 
@@ -195,9 +193,9 @@ class Parent < User
 attributes
     children: Set (Child) 
 operations
-    ParentInit(f:String, l:String, s:Sex; loc:String, c:Set (Child))
+    ParentInit(f:String, l:String, s:Sex, loc:String, c:Set (Child))
     begin   
-        self.UserInit(f:String, l:String, s:Sex; loc:String);
+        self.UserInit(f, l, s, loc);
         self.children := c;
     end
 end
@@ -211,13 +209,13 @@ attributes
     certifications: Set (String)
     special_needs: Set (String)
 operations
-    TutorInit(f:String, l:String, s:Sex; loc:String, gs:Set (Grade), subs:Set(String), sns:Set(String))
+    TutorInit(f:String, l:String, s:Sex, loc:String, gs:Set (Grade), subs:Set(String), sns:Set(String))
     begin   
-        self.UserInit(f:String, l:String, s:Sex; loc:String);
+        self.UserInit(f, l, s, loc);
         self.grades := gs;
         self.subjects := subs;
         self.generalStatus := GeneralStatus::Not_Approved;
-        self.certifications := NULL;
+        --self.certifications := NULL;
         self.special_needs := sns;
     end
     
@@ -238,9 +236,11 @@ attributes
     description: String
     --! serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point -- thinking this should be in the Service class; removed it from Init for now
 operations
-    PrivateServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType::One_On_One, d:Period, mds:Set (Days), nos:Integer, rate:Real, descr: String) --can I initialize ..like this-- not sure, but probably; in adjusting the line, wrote the initialization like this just in case for now
+    PrivateServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st: ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String) --can I initialize ..like this-- not sure, but probably; in adjusting the line, wrote the initialization like this just in case for now
     begin
-        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate)
+        st:= ServiceType::One_On_One;
+        rate:= Ratings::STAR3;
+        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
         self.description := descr;
         --self.serviceCap := cap;
     end
@@ -252,9 +252,11 @@ class GroupService < Service
 attributes 
     description: String 
 operations
-    GroupServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType::Group, d:Period, mds:Set (Days), nos:Integer, rate:Real, descr: String)
+    GroupServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String)
     begin   
-        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate)
+        st := ServiceType::Group;
+        rate:= Ratings::STAR3;
+        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
         self.description := descr; 
     end    
 end 
@@ -290,6 +292,7 @@ end
 association ChildCalendar between 
     Calendar[1] role schedule 
     Child[1] role student
+end
 
 association ChildOf between 
     Parent[1] role parent
@@ -301,9 +304,9 @@ association OneOnOneService between
     Tutor[1] role instructor 
 end 
 
-association GroupService between 
+association GroupServices between 
     Child[*] role students 
-    Tutor[1] role instructor 
+    Tutor[1] role groupInstructor 
 end 
 
 -- association relatedReview between 
@@ -327,7 +330,8 @@ association ServicePayment between
     Payment[1..*] role payments 
     Parent[1] role payer
     Tutor[1] role payee
-    ServiceOffering[1..*] role service -- better placed on enrollment Enrollment[1] role establishedStudent
+    --ServiceOffering[1..*] role service -- better placed on enrollment Enrollment[1] role establishedStudent
+    --Enrollment[1] role establishedStudent
     Child[1] role forChild
 end
 
@@ -356,8 +360,8 @@ attributes
 end 
 
 associationclass Dialogue between
-    Parent[1]
-    Tutor[1]
+    Parent[1] role chatInitiator
+    Tutor[1] role charRcvr
 attributes 
     parent: Parent
     tutor: Tutor
