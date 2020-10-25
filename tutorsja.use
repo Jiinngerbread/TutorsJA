@@ -144,9 +144,9 @@ attributes
     description: String
     serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point
 operations
-    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st: #OneOnOne, dur: Period, meet: Days, nslots := 1, rate := #Three, stat := #Free, descr: String, cap: Integer ) --can i initialize values like this ?-- 
+    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery,  dur: Period, meet: Days, descr: String, cap: Integer ) --can i initialize values like this ?-- 
     begin
-        self.Service(g, s, loc, mod, st, dur, meet, nslots, rate, stat) ;
+        self.Service(g, s, loc, mod, #OneOnOne, dur, meet, 1, #Three, #Free) ;
         self.description := descr;
         self.serviceCap := cap;
     end
