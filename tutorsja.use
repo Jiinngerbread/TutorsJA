@@ -81,7 +81,7 @@ enum AvailabilityStatus{Free, Fully_Booked, Not_Accepting_Requests, Service_With
 enum ModeOfDelivery{Online, FaceToFace, Blended}
 enum ServiceType{OneOnOne, Group}
 enum Days{Mon, Tue, Wed, Thru, Fri, Sat, Sun}
-enum Ratings{1, 2, 3, 4, 5}
+enum Ratings{star1, star2, star3, star4, star5}
 enum SRStatus{Unanswered, Answered, Resolved, Outdated}
 enum Sex{male, female}
 enum EnrollmentStatus{accepted, denied, pending}
@@ -144,7 +144,7 @@ attributes
     description: String
     serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point
 operations
-    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st := #OneOnOne, dur: Period, meet: Days, nslots := 1, rate := #Three, stat := #Free, descr: String, cap: Integer ) --can i initialize values like this ?-- 
+    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st: #OneOnOne, dur: Period, meet: Days, nslots := 1, rate := #Three, stat := #Free, descr: String, cap: Integer ) --can i initialize values like this ?-- 
     begin
         self.Service(g, s, loc, mod, st, dur, meet, nslots, rate, stat) ;
         self.description := descr;
