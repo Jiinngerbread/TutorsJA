@@ -172,20 +172,6 @@ operations
     end 
 end
 
-class EnrollmentRequest
-attributes
-    status: EnrollmentStatus
-operations
-    EnrollmentRequestInit()
-    begin
-        self.status := EnrollmentStatus:: Pending;
-    end
-end
-
-
-
-
-
 
 -- EXTENDED CONCRETE CLASSES --
 
@@ -263,9 +249,6 @@ end
 
 
 -- ASSOCIATIONS IN MODEL -- 
--- according to latest D2 oct 24th -- 
-
---names of association need work --
 
 association ServiceOffering between
     Tutor[1] role tutor
@@ -299,12 +282,12 @@ association ChildOf between
     Child[1..*] role child
 end
 
-association OneOnOneService between 
+association OneOnOneEnrollment between 
     Child[1] role student 
     Tutor[1] role instructor 
 end 
 
-association GroupServices between 
+association GroupEnrollment between 
     Child[*] role students 
     Tutor[1] role groupInstructor 
 end 
@@ -330,17 +313,22 @@ association ServicePayment between
     Payment[1..*] role payments 
     Parent[1] role payer
     Tutor[1] role payee
-    --ServiceOffering[1..*] role service -- better placed on enrollment Enrollment[1] role establishedStudent
+    --ServiceOffering[1..*] role service 
     --Enrollment[1] role establishedStudent
     Child[1] role forChild
 end
 
-association Enrollment between 
-    Parent[1] role liaison 
-    Child[1] role potentialStudent
-    Service[1] role interestedServive
-    Tutor[1] role potentialInstructor 
-end 
+--association Enrollment between 
+--    Parent[1] role liaison 
+--    Child[1] role potentialStudent
+--    Service[1] role interestedServive
+--    Tutor[1] role potentialInstructor 
+--end 
+
+association CreateSpecialMsg between 
+    Parent[1] role spCreator 
+    SpecialRequest[1..*] role request
+end
 
 
 -- ASSOCIATION CLASS -- 
@@ -368,6 +356,44 @@ attributes
     pMsg: String 
     tMsg: String 
 end 
+
+
+associationclass EnrollmentRequest between 
+    Parent[1] role liaison 
+    Child[1] role potentialStudent
+    Service[1] role interestedServive
+    Tutor[1] role potentialInstructor 
+attributes
+    status: EnrollmentStatus
+    TutorAgreement: Boolean init: false
+    ParentAgreement: Boolean init: true
+operations
+    EnrollmentRequestInit()
+    begin
+        self.status := EnrollmentStatus:: Pending;
+    end
+
+   /* updateAgreement(reponse: Boolean, rolename: String)
+    begin
+        if rolename := PARENT then 
+            self.ParentAgreement := response;
+        else
+            rolename := TUTOR then 
+            self.TutorAgreement := response;
+        endif
+    end */
+
+/* constraints
+    inv AcceptedEnrollment: 
+        if self.TutorAgreement = true or self.ParentAgreement = true then
+            self.status = EnrollmentStatus::Accepted
+        else
+            if self.TutorAgreement = false or self.ParentAgreement = false then
+                self.status = EnrollmentStatus::Denied 
+        endif
+    end */
+
+end
 
 
 -- constraints must be expressed in theire relevant classes-- 
