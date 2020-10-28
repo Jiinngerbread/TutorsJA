@@ -213,9 +213,6 @@ constraints
 
     --A Parent may review a tutor only after rating a Tutor. 
 
-
-    
-
 end
 
 class Tutor < User
@@ -226,6 +223,7 @@ attributes
     --availStatus: AvailabilityStatus --not sure if this is how it is to be done-- I think we'd keep this for each service
     certifications: Set (String)
     special_needs: Set (String)
+    --services: Set(Service)
 operations
     TutorInit(f:String, l:String, s:Sex, loc:String, gs:Set (Grade), subs:Set(String), sns:Set(String))
     begin   
@@ -246,8 +244,13 @@ operations
     begin
         --add cert to certifications Set
     end
-
-
+constraints
+    inv:
+        self->collect(ServiceOffering)->size() > 0 implies self.generalStatus = GeneralStatus::Approved
+/*
+    inv approvedForService:
+        self.ServiceOffering->size() > 0 implies self.generalStatus = GeneralStatus::Approved
+*/
 end 
 
 class PrivateService < Service 
@@ -429,7 +432,10 @@ operations
 end
 
 
--- constraints must be expressed in theire relevant classes-- 
+--context Tutor
+--inv: self.Tutor->collect(ServiceOffering)->size() > 0 implies self.generalStatus = GeneralStatus::Approved
+
+-- constraints must be expressed in theire relevant classes--
 
 --Parents may have only one pending enrollment request at a time for a particular Tutor’s service for their child
 /*
@@ -446,7 +452,7 @@ context Calendar::RateTutor():
 pre: rating <> NULL implies duration > initialDur
 
 --Only tutors who are approved may offer services 
-context Tutor:
+context self.Tutor:
 pre: (self->collect(services)-size() > 0) implies self.generalStatus = GeneralStatus::Approved
 */
 
