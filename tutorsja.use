@@ -2,6 +2,20 @@
 
 model TutorsJA
 
+-- ENUMS -- 
+enum GeneralStatus {Not_Approved, Approved, Verified}
+enum Grade {Kg3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
+enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
+enum ModeOfDelivery {Online, Face_To_Face, Blended}
+enum ServiceType {One_On_One, Group}
+enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
+enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
+enum SRStatus {Unanswered, Answered, Resolved, Outdated}
+enum Sex {Male, Female}
+enum EnrollmentStatus {Accepted, Denied, Pending}
+
+
+
 -- DATATYPE CLASSES --
 class Date 
 attributes 
@@ -17,75 +31,17 @@ operations
     end
 end
 
-class Period end --to be used to show a range of days on a calender or period within which a service is offered
-
-
-
--- CONCRETE CLASSES --
-class Child
+class Period  --to be used to show a range of days on a calendar or period within which a service is offered
 attributes
-    fname: String
-    lname: String
-    dob: Date
-    sex: Sex
-    grade: Grade
-    subject: String --possible collection of subjects of interest -- 
-    modeOfDelivery: ModeOfDelivery 
-    serviceType: ServiceType
-    specialNeeds: String --review this
-    location: String --may not need this
+    startDate: Date
+    endDate: Date
+operations
+    PeriodInit(sDate: Date, eDate: Date)
+    begin
+        self.startDate := sDate;
+        self.endDate := eDate;
+    end
 end
-
-class Rating 
-attributes 
-    levelOfRating: Ratings
-end 
-
-class Review --POSSIBILITY OF ASSOCIATION CLASS?
-attributes 
-    reviewTxt: String
-end 
-
-class Dialogue  -- POSSIBILITY OF ASSOCIATION CLASS?
-attributes 
-    parent: Parent
-    tutor: Tutor
-    pMsg: String 
-    tMsg: String 
-end 
-
-class SpecialRequest 
-attributes
-    msgBody: String 
-    tags: String
-    status: SRStatus
-end 
-
-class Payment
-attributes
-    amount: Real
-    datePayed: Date
-end
-
-class EnrollmentRequest
-attributes
-    status: EnrollmentStatus
-end
-
-
-
--- ENUMS -- 
-enum GeneralStatus{Not_Approved, Approved, Verified}
-enum Grade{K1, K2, K3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
-enum AvailabilityStatus{Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
-enum ModeOfDelivery{Online, FaceToFace, Blended}
-enum ServiceType{OneOnOne, Group}
-enum Days{Mon, Tue, Wed, Thru, Fri, Sat, Sun}
-enum Ratings{star1, star2, star3, star4, star5}
-enum SRStatus{Unanswered, Answered, Resolved, Outdated}
-enum Sex{male, female}
-enum EnrollmentStatus{accepted, denied, pending}
-
 
 
 -- ABSTRACT CLASSES --
@@ -96,59 +52,225 @@ attributes
     lname: String
     sex: Sex
     location: String
+operations
+    UserInit(f:String, l:String, s:Sex, loc:String)
+    begin   
+        self.fname := f;
+        self.lname := l;
+        self.sex := s;
+        self.location := loc;
+    end 
 end 
 
 
-abstract class Calendar end --Thought needs to be given to this representation
+abstract class Calendar --Thought needs to be given to this representation 
+attributes
+    dayNotes: Set(Tuple(date:Date, note:String));
+operations
+    CalendarInit(dns:Set(Tuple(date:Date, note:String)))
+    begin   
+        self.dayNotes := dns;
+    end 
+end
 
 
 abstract class Service
 attributes
     grade: Grade
-    subject: String
+    subject: String --so they can only do one subject even in group classes; that's what we want to say, right?
     location: String
-    modeofdelivery: ModeOfDelivery
+    modeOfDelivery: ModeOfDelivery
     serviceType: ServiceType
-    Duration: Period --period class/date class needed -- 
-    meetingdays: Days
-    numslots: Integer
+    duration: Period
+    initialDur: Period 
+    meetingDays: Set (Days)
+    numOfSlots: Integer
+    currentRun: Period
     rate: Ratings
+    --rate: Real
     availStatus: AvailabilityStatus
+operations  
+    ServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate: Ratings)
+    begin   
+        self.grade := g;
+        self.subject := s;
+        self.location := loc;
+        self.modeOfDelivery := mod;
+        self.serviceType := st;
+        self.initialDur :=  d;
+        self.meetingDays := mds;
+        self.numOfSlots := nos;
+        self.rate := Ratings::STAR3;
+        self.availStatus := AvailabilityStatus::Free;
+    end
+
 end
 
-abstract class Policy end 
 
-abstract class Rule end
+-- ? abstract class Policy end  --?
 
+-- ? abstract class Rule end --?
+
+-- CONCRETE CLASSES --
+class Child
+attributes
+    fname: String
+    lname: String
+    dob: Date
+    sex: Sex
+    grade: Grade
+    subjects: Set (String) --possible collection of subjects of interest --still need to check if set works like this but should since Miss used it as operation return types 
+    modesOfDelivery: Set (ModeOfDelivery) --maybe a Set for this as well in case they want a different mode for each type of service for eg
+    serviceTypes: Set (ServiceType) --set since they may enroll in many services; may want both private and group
+    specialNeeds: Set (String) --review this; good with me - suggesting a Set though
+    location: String --may not need this; I think we should keep it
+operations
+    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String)
+    begin   
+        self.fname := f;
+        self.lname := l;
+        self.dob := d;
+        self.sex := s; 
+        self.grade := g;
+        self.subjects := sub;
+        self.modesOfDelivery := mod;
+        self.serviceTypes := sts;
+        self.specialNeeds := sns;
+        self.location := loc;
+    end
+constraints
+    --A child must have a minimum age of 5 and a child must be below the age of 19. 
+    inv ageFiveToNineteen:
+        self.age >= 5 and < 19
+
+end
+
+class SpecialRequest 
+attributes
+    msgBody: String 
+    --tags: String
+    grade: Grade
+    subjects: Set (String)
+    modesOfDelivery: Set (ModeOfDelivery)
+    specialNeeds: Set (String)
+    location: String 
+    status: SRStatus
+    neededBy: Period
+    daysPast: Date
+operations  
+    SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String, needBy:Period, currentDate: Date)
+    begin   
+        self.msgBody := msg;
+        self.grade :=  Grade::Kg3;
+        self.subjects := s;
+        self.modesOfDelivery := mod;
+        self.specialNeeds := sns;
+        self.location := loc;
+        self.status := SRStatus::Unanswered;
+        self.neededBy := needBy
+        self.daysPast := currentDate
+    end
+
+    SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String, currentDate: Date) --overloaded constructor 
+    begin   
+        self.msgBody := msg;
+        self.grade :=  Grade::Kg3;
+        self.subjects := s;
+        self.modesOfDelivery := mod;
+        self.specialNeeds := sns;
+        self.location := loc;
+        self.status := SRStatus::Unanswered;
+        self.neededBy := NULL
+        self.daysPast := currentDate
+    end
+
+constraints
+    --A Special Request existing without a date-needed-by date will become outdated after 31 days
+    inv autoOutdate:
+        (self.neededBy = NULL and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::"Outdated"
+end 
+
+class Payment
+attributes
+    amount: Real
+    datePayed: Date
+operations
+    PaymentInit(a: Real, dp: Date)
+    begin   
+        self.amount := a;
+        self.datePayed := dp;
+    end 
+end
 
 
 -- EXTENDED CONCRETE CLASSES --
 
 class Parent < User
 attributes
-    children: Child --collection of children??-- 
+    children: Set (Child) 
+    hasPending: Boolean
+operations
+    ParentInit(f:String, l:String, s:Sex, loc:String, c:Set (Child))
+    begin   
+        self.UserInit(f, l, s, loc);
+        self.children := c;
+    end
+constraints
+    --Parents may only send enrollment requests to Tutors for a service whose availability is “free”. 
+
+    --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
+
+    --A Parent may review a tutor only after rating a Tutor. 
+
+
+    
+
 end
 
 class Tutor < User
 attributes 
-    grade: Grade --possible collection -- 
-    subject: String --possible collection --
+    grades: Set (Grade)
+    subjects: Set (String)
     generalStatus: GeneralStatus
-    availStatus: AvailabilityStatus --not sure if this is how it is to be done--
-    certifications: String  --collection
-    special_needs: String --collection--
+    --availStatus: AvailabilityStatus --not sure if this is how it is to be done-- I think we'd keep this for each service
+    certifications: Set (String)
+    special_needs: Set (String)
+operations
+    TutorInit(f:String, l:String, s:Sex, loc:String, gs:Set (Grade), subs:Set(String), sns:Set(String))
+    begin   
+        self.UserInit(f, l, s, loc);
+        self.grades := gs;
+        self.subjects := subs;
+        self.generalStatus := GeneralStatus::Not_Approved;
+        --self.certifications := NULL;
+        self.special_needs := sns;
+    end
+    
+    UpdateGeneralStatus(newGStatus: GeneralStatus)
+    begin   
+        self.generalStatus := newGStatus;
+    end
+
+    AddCertification(cert:String)
+    begin
+        --add cert to certifications Set
+    end
+
+
 end 
 
 class PrivateService < Service 
 attributes 
     description: String
-    serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point
+    --! serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point -- thinking this should be in the Service class; removed it from Init for now
 operations
-    PrivateServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery,  dur: Period, meet: Days, descr: String, cap: Integer ) --can i initialize values like this ?-- 
+    PrivateServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st: ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String) --can I initialize ..like this-- not sure, but probably; in adjusting the line, wrote the initialization like this just in case for now
     begin
-        self.Service(g, s, loc, mod, #OneOnOne, dur, meet, 1, #Three, #Free) ;
+        st:= ServiceType::One_On_One;
+        rate:= Ratings::STAR3;
+        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
         self.description := descr;
-        self.serviceCap := cap;
+        --self.serviceCap := cap;
     end
 
 
@@ -158,11 +280,97 @@ class GroupService < Service
 attributes 
     description: String 
 operations
-    GroupServiceInit(g: Grade, s: String, loc: String, mod: ModeOfDelivery, st := #Group, dur: Period, meet: Days, nslots, rate := #Three, stat := #Free, descr: String)
-    self.description := descr;
-    -- insert rest---
-    
+    GroupServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String)
+    begin   
+        st := ServiceType::Group;
+        rate:= Ratings::STAR3;
+        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
+        self.description := descr; 
+    end    
 end 
+
+
+-- ASSOCIATIONS IN MODEL -- 
+
+association ServiceOffering between
+    Tutor[1] role tutor
+    Service[*] role service
+end
+
+-- association TutorRating between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end 
+
+-- association TutorReview between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end
+
+association TutorCalendar between 
+    Calendar[1] role schedule
+    Tutor[1] role tutor
+end
+
+association ChildCalendar between 
+    Calendar[1] role schedule 
+    Child[1] role student
+end
+
+association ChildOf between 
+    Parent[1] role parent
+    Child[1..*] role child
+end
+
+association OneOnOneEnrollment between 
+    Child[1] role student 
+    Tutor[1] role instructor 
+end 
+
+association GroupEnrollment between 
+    Child[*] role students 
+    Tutor[1] role groupInstructor 
+end 
+
+-- association relatedReview between 
+--     Rating[1] role ratings 
+--     Review[0..1] role review
+-- end 
+
+-- association Conversation between
+--     Dialogue[*] role messages 
+--     Tutor[1] role reciever 
+--     Parent[1] role reciever
+-- end 
+
+-- association SpecialRequestInteraction between 
+--     Parent[1] role requestor 
+--     SpecialRequest[1] role messages
+--     Proposal[*] role responses
+-- end 
+
+association ServicePayment between 
+    Payment[1..*] role payments 
+    Parent[1] role payer
+    Tutor[1] role payee
+    --ServiceOffering[1..*] role service 
+    --Enrollment[1] role establishedStudent
+    Child[1] role forChild
+end
+
+--association Enrollment between 
+--    Parent[1] role liaison 
+--    Child[1] role potentialStudent
+--    Service[1] role interestedService
+--    Tutor[1] role potentialInstructor 
+--end 
+
+association CreateSpecialMsg between 
+    Parent[1] role spCreator 
+    SpecialRequest[1..*] role request
+end
 
 
 -- ASSOCIATION CLASS -- 
@@ -173,92 +381,86 @@ attributes
     proposal: String
 end
 
-
--- ASSOCIATIONS IN MODEL -- 
--- according to latest D2 oct 20th -- 
-
---names of association need work --
-
-association ServiceOffering between
-    Tutor[1] role tutor
-    Service[*] role service
-end
-
-association TutorRating between 
-    Rating[1] role rating
-    Tutor[1] role Tutor 
-    Child[1] role student
+associationclass Review between
+    Parent[1]  
+    Service[1]  
+attributes 
+    rating: Ratings
+    reviewTxt: String
 end 
 
-association TutorReview between 
-    Rating[1] role rating
-    Tutor[1] role Tutor 
-    Child[1] role student
-end
-
-association TutorCalender between 
-    Calendar[1] role schedule
-    Tutor[1] role tutor
-end
-
-association ChildCalendar between 
-    Calendar[1] role schedule 
-    Child[1] role student
-
-association ChildOf between 
-    Parent[1] role parent
-    Child[1..*] role child
-end
-
-association OneOnOneService between 
-    Child[1] role student 
-    Tutor[1] role instructor 
+associationclass Dialogue between
+    Parent[1] role chatInitiator
+    Tutor[1] role charRcvr
+attributes 
+    parent: Parent
+    tutor: Tutor
+    pMsg: String 
+    tMsg: String 
 end 
 
-association GroupService between 
-    Child[*] role students 
-    Tutor[1] role instructor 
-end 
 
-association relatedReview between 
-    Rating[1] role ratings 
-    Review[0..1] role review
-end 
-
-association Conversation between
-    Dialogue[*] role messages 
-    Tutor[1] role reciever 
-    Parent[1] role reciever
-end 
-
-association SpecialRequestInteraction between 
-    Parent[1] role requestor 
-    SpecialRequest[1] role messages
-    Proposal[*] role responses
-end 
-
-association ServicePayment between 
-    Payment[1..*] role payments 
-    Parent[1] role payer
-    Tutor[1] role payee
-    ServiceOffering[1..*] role service -- better placed on enrollment Enrollment[1] role establishedStudent
-    Child[1] role forChild
-end
-
-association Enrollment between 
+associationclass EnrollmentRequest between 
     Parent[1] role liaison 
     Child[1] role potentialStudent
     Service[1] role interestedServive
     Tutor[1] role potentialInstructor 
-end 
+attributes
+    status: EnrollmentStatus
+    TutorAgreement: Boolean init: false
+    ParentAgreement: Boolean init: true
+operations
+    EnrollmentRequestInit()
+    begin
+        self.status := EnrollmentStatus:: Pending;
+    end
 
+   /* updateAgreement(reponse: Boolean, rolename: String)
+    begin
+        if rolename := PARENT then 
+            self.ParentAgreement := response;
+        else
+            rolename := TUTOR then 
+            self.TutorAgreement := response;
+        endif
+    end */
+
+/* constraints
+    inv AcceptedEnrollment: 
+        if self.TutorAgreement = true or self.ParentAgreement = true then
+            self.status = EnrollmentStatus::Accepted
+        else
+            if self.TutorAgreement = false or self.ParentAgreement = false then
+                self.status = EnrollmentStatus::Denied 
+        endif
+    end */
+
+end
 
 
 -- constraints must be expressed in theire relevant classes-- 
 
+--Parents may have only one pending enrollment request at a time for a particular Tutor’s service for their child
+
+context Parent::SendEnrollmentReq():
+pre: self.hasPending = false
 
 
-    
+--parents may only send enrollment requests to Tutors  for a service whose availability is “free” 
+
+context Parent::SendEnrollmentReq():
+
+--A parent may rate a tutor after ½ of the service their child is enrolled in is completed.  
+context Calendar::RateTutor():
+pre: rating <> NULL implies duration > initialDur
+
+--Only tutors who are approved may offer services 
+context Tutor:
+pre: (self->collect(services)-size() > 0) implies self.generalStatus = GeneralStatus::Approved
+
+
+
+
 
 
 
