@@ -31,7 +31,7 @@ operations
     end
 end
 
-class Period  --to be used to show a range of days on a calendar or period within which a service is offered
+class Period  --to be used to show a range of days on a calender or period within which a service is offered
 attributes
     startDate: Date
     endDate: Date
@@ -63,7 +63,7 @@ operations
 end 
 
 
-abstract class Calendar --Thought needs to be given to this representation 
+abstract class Calendar --Thought needs to be given to this representation
 attributes
     dayNotes: Set(Tuple(date:Date, note:String));
 operations
@@ -81,11 +81,9 @@ attributes
     location: String
     modeOfDelivery: ModeOfDelivery
     serviceType: ServiceType
-    duration: Period
-    initialDur: Period 
+    duration: Period 
     meetingDays: Set (Days)
     numOfSlots: Integer
-    currentRun: Period
     rate: Ratings
     --rate: Real
     availStatus: AvailabilityStatus
@@ -97,19 +95,14 @@ operations
         self.location := loc;
         self.modeOfDelivery := mod;
         self.serviceType := st;
-        self.initialDur :=  d;
+        self.duration :=  d;
         self.meetingDays := mds;
         self.numOfSlots := nos;
         self.rate := Ratings::STAR3;
         self.availStatus := AvailabilityStatus::Free;
-    end
-
+    end 
 end
 
-
--- ? abstract class Policy end  --?
-
--- ? abstract class Rule end --?
 
 -- CONCRETE CLASSES --
 class Child
@@ -124,9 +117,8 @@ attributes
     serviceTypes: Set (ServiceType) --set since they may enroll in many services; may want both private and group
     specialNeeds: Set (String) --review this; good with me - suggesting a Set though
     location: String --may not need this; I think we should keep it
-    age: Integer
 operations
-    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String, age:Integer)
+    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String)
     begin   
         self.fname := f;
         self.lname := l;
@@ -138,13 +130,7 @@ operations
         self.serviceTypes := sts;
         self.specialNeeds := sns;
         self.location := loc;
-        self.age:= age;
     end
-constraints
-    --A child must have a minimum age of 5 and a child must be below the age of 19. 
-    inv ageFiveToNineteen:
-        self.age >= 5 and self.age < 19
-
 end
 
 class SpecialRequest 
@@ -157,10 +143,8 @@ attributes
     specialNeeds: Set (String)
     location: String 
     status: SRStatus
-    neededBy: Period
-    daysPast: Date
 operations  
-    SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String, needBy:Period, currentDate: Date)
+    SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String)
     begin   
         self.msgBody := msg;
         self.grade :=  Grade::Kg3;
@@ -169,16 +153,7 @@ operations
         self.specialNeeds := sns;
         self.location := loc;
         self.status := SRStatus::Unanswered;
-        self.neededBy := needBy;
-        self.daysPast := currentDate;
     end
-
-constraints
-    --A Special Request existing without a date-needed-by date will become outdated after 31 days
-    /*
-    inv autoOutdate:
-        (self.neededBy == NULL and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::Outdated
-        */
 end 
 
 class Payment
@@ -199,20 +174,12 @@ end
 class Parent < User
 attributes
     children: Set (Child) 
-    hasPending: Boolean
 operations
     ParentInit(f:String, l:String, s:Sex, loc:String, c:Set (Child))
     begin   
         self.UserInit(f, l, s, loc);
         self.children := c;
     end
-constraints
-    --Parents may only send enrollment requests to Tutors for a service whose availability is “free”. 
-
-    --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
-
-    --A Parent may review a tutor only after rating a Tutor. 
-
 end
 
 class Tutor < User
@@ -223,7 +190,6 @@ attributes
     --availStatus: AvailabilityStatus --not sure if this is how it is to be done-- I think we'd keep this for each service
     certifications: Set (String)
     special_needs: Set (String)
-    --services: Set(Service)
 operations
     TutorInit(f:String, l:String, s:Sex, loc:String, gs:Set (Grade), subs:Set(String), sns:Set(String))
     begin   
@@ -244,13 +210,7 @@ operations
     begin
         --add cert to certifications Set
     end
-constraints
-    inv:
-        self->collect(ServiceOffering)->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-/*
-    inv approvedForService:
-        self.ServiceOffering->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-*/
+
 end 
 
 class PrivateService < Service 
@@ -303,7 +263,7 @@ end
 --     Child[1] role student
 -- end
 
-association TutorCalendar between 
+association TutorCalender between 
     Calendar[1] role schedule
     Tutor[1] role tutor
 end
@@ -357,7 +317,7 @@ end
 --association Enrollment between 
 --    Parent[1] role liaison 
 --    Child[1] role potentialStudent
---    Service[1] role interestedService
+--    Service[1] role interestedServive
 --    Tutor[1] role potentialInstructor 
 --end 
 
@@ -432,43 +392,11 @@ operations
 end
 
 
---context Tutor
---inv: self.Tutor->collect(ServiceOffering)->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-
--- constraints must be expressed in theire relevant classes--
-
---Parents may have only one pending enrollment request at a time for a particular Tutor’s service for their child
-/*
-context Parent::SendEnrollmentReq():
-pre: self.hasPending = false
-
-
---parents may only send enrollment requests to Tutors  for a service whose availability is “free” 
-
-context Parent::SendEnrollmentReq():
-
---A parent may rate a tutor after ½ of the service their child is enrolled in is completed.  
-context Calendar::RateTutor():
-pre: rating <> NULL implies duration > initialDur
-
---Only tutors who are approved may offer services 
-context self.Tutor:
-pre: (self->collect(services)-size() > 0) implies self.generalStatus = GeneralStatus::Approved
-*/
+-- constraints must be expressed in theire relevant classes-- 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
