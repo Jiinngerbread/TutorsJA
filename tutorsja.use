@@ -104,10 +104,6 @@ operations
 end
 
 
--- ? abstract class Policy end  --?
-
--- ? abstract class Rule end --?
-
 -- CONCRETE CLASSES --
 class Child
 attributes
