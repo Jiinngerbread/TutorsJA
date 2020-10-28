@@ -124,8 +124,9 @@ attributes
     serviceTypes: Set (ServiceType) --set since they may enroll in many services; may want both private and group
     specialNeeds: Set (String) --review this; good with me - suggesting a Set though
     location: String --may not need this; I think we should keep it
+    age: Integer
 operations
-    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String)
+    ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String, age:Integer)
     begin   
         self.fname := f;
         self.lname := l;
@@ -137,11 +138,12 @@ operations
         self.serviceTypes := sts;
         self.specialNeeds := sns;
         self.location := loc;
+        self.age:= age;
     end
 constraints
     --A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
-        self.age >= 5 and < 19
+        self.age >= 5 and self.age < 19
 
 end
 
@@ -167,27 +169,16 @@ operations
         self.specialNeeds := sns;
         self.location := loc;
         self.status := SRStatus::Unanswered;
-        self.neededBy := needBy
-        self.daysPast := currentDate
-    end
-
-    SpecialRequestInit(msg:String, t:String, g:Grade, s:Set (String), mod:Set (ModeOfDelivery), sns:Set (String), loc: String, currentDate: Date) --overloaded constructor 
-    begin   
-        self.msgBody := msg;
-        self.grade :=  Grade::Kg3;
-        self.subjects := s;
-        self.modesOfDelivery := mod;
-        self.specialNeeds := sns;
-        self.location := loc;
-        self.status := SRStatus::Unanswered;
-        self.neededBy := NULL
-        self.daysPast := currentDate
+        self.neededBy := needBy;
+        self.daysPast := currentDate;
     end
 
 constraints
     --A Special Request existing without a date-needed-by date will become outdated after 31 days
+    /*
     inv autoOutdate:
-        (self.neededBy = NULL and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::"Outdated"
+        (self.neededBy == NULL and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::Outdated
+        */
 end 
 
 class Payment
@@ -441,7 +432,7 @@ end
 -- constraints must be expressed in theire relevant classes-- 
 
 --Parents may have only one pending enrollment request at a time for a particular Tutor’s service for their child
-
+/*
 context Parent::SendEnrollmentReq():
 pre: self.hasPending = false
 
@@ -457,6 +448,7 @@ pre: rating <> NULL implies duration > initialDur
 --Only tutors who are approved may offer services 
 context Tutor:
 pre: (self->collect(services)-size() > 0) implies self.generalStatus = GeneralStatus::Approved
+*/
 
 
 
