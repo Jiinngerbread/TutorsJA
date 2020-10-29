@@ -62,47 +62,10 @@ operations
     end 
 end 
 
-abstract class Service
-attributes
-    grade: Grade
-    subject: String --so they can only do one subject even in group classes; that's what we want to say, right?
-    location: String
-    modeOfDelivery: ModeOfDelivery
-    serviceType: ServiceType
-    duration: Period
-    initialDur: Period 
-    meetingDays: Set (Days)
-    numOfSlots: Integer
-    currentRun: Period
-    rate: Ratings
-    --rate: Real
-    availStatus: AvailabilityStatus
-operations  
-    ServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate: Ratings)
-    begin   
-        self.grade := g;
-        self.subject := s;
-        self.location := loc;
-        self.modeOfDelivery := mod;
-        self.serviceType := st;
-        self.initialDur :=  d;
-        self.meetingDays := mds;
-        self.numOfSlots := nos;
-        self.rate := Ratings::STAR3;
-        self.availStatus := AvailabilityStatus::Free;
-    end
-constraints
-    inv:
-        self.modeOfDelivery = ModeOfDelivery::Online implies self.location = null
 
-end
-
-
--- ? abstract class Policy end  --?
-
--- ? abstract class Rule end --?
 
 -- CONCRETE CLASSES --
+
 class Child
 attributes
     fname: String
@@ -173,6 +136,51 @@ constraints
     */
 end 
 
+class Service
+attributes
+    grade: Grade
+    subject: String 
+    location: String
+    modeOfDelivery: ModeOfDelivery
+    serviceType: ServiceType
+    duration: Period
+    initialDur: Period 
+    meetingDays: Set (Days)
+    numOfSlots: Integer
+    currentRun: Period
+    rate: Real
+    availStatus: AvailabilityStatus
+operations  
+    ServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, r: Real)
+    begin   
+        self.grade := g;
+        self.subject := s;
+        self.location := loc;
+        self.modeOfDelivery := mod;
+        self.serviceType := st;
+        self.initialDur :=  d;
+        self.meetingDays := mds;
+        self.numOfSlots := nos;
+        self.rate := r;
+        self.availStatus := AvailabilityStatus::Free;
+    end
+constraints
+    inv:
+        self.modeOfDelivery = ModeOfDelivery::Online implies self.location = null
+end
+
+class Review
+attributes 
+    rating: Ratings
+    reviewTxt: String
+operations
+    ReviewInit(r: Ratings, rt: String)
+    begin
+        self.rating := r;
+      self.reviewTxt := rt;
+    end
+end 
+
 class Payment
 attributes
     amount: Real
@@ -212,11 +220,11 @@ constraints
     inv:
         self.oneOnOneEnrollRequest->size() + self.groupEnrollRequest->size() <= 1 
     --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
-
+        
     --A Parent may review a tutor only after rating a Tutor. 
     /*inv:
         self.rate = null implies self.review = null
-    */
+      */
 end
 
 class Tutor < User
@@ -314,15 +322,10 @@ end
 -- end 
 
 
-association ServicePayment between 
+association GroupServicePayment between 
     Payment[1..*] role payments 
-    Parent[1] role payer
-    Tutor[1] role payee
-    --ServiceOffering[1..*] role service 
-    --Enrollment[1] role establishedStudent
-    Child[1] role forChild
+    GroupEnrollRequest[1] role groupService
 end
-
 
 association CreateSpecialMsg between 
     Parent[1] role spCreator 
@@ -338,13 +341,6 @@ attributes
     proposal: String
 end
 
-associationclass Review between
-    Parent[1]  
-    Service[1]  
-attributes 
-    rating: Ratings
-    reviewTxt: String
-end 
 
 associationclass Dialogue between
     Parent[1] role chatInitiator
@@ -361,6 +357,15 @@ associationclass GroupEnrollRequest between
     Child[1] role gparticipant
     Service[1] role gService
     Tutor[1] role potentialgInstructor 
+attributes
+        acceptanceStatus: EnrollmentStatus
+operations
+    GroupEnrollRequestInit()
+    begin
+        self.acceptanceStatus := EnrollmentStatus:: Pending;
+    end
+constraints
+--service type must be 'group'
 end
 
 associationclass OneOnOneEnrollRequest between 
@@ -368,6 +373,19 @@ associationclass OneOnOneEnrollRequest between
     Child[1] role oooparticipant
     Service[1] role oooServive
     Tutor[1] role potentialoooInstructor 
+attributes
+    acceptanceStatus: EnrollmentStatus
+    tutorAgreement: AgrStatus
+    parentAgreement: AgrStatus
+operations
+    OneOnOneEnrollRequestInit()
+    begin
+        self.acceptanceStatus := EnrollmentStatus:: Pending;
+        self.tutorAgreement := AgrStatus:: Disagree;
+        self.parentAgreement := AgrStatus:: Disagree;
+    end
+constraints
+--service type must be 'one-on-one'
 end
 
 
