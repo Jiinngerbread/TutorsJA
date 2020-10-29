@@ -245,12 +245,9 @@ operations
         --add cert to certifications Set
     end
 constraints
+    --Only tutors who are approved may offer services 
     inv:
-        self->collect(ServiceOffering)->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-/*
-    inv approvedForService:
-        self.ServiceOffering->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-*/
+        self.service->size() > 0 implies self.generalStatus = GeneralStatus::Approved
 end 
 
 class PrivateService < Service 
@@ -451,9 +448,6 @@ context Parent::SendEnrollmentReq():
 context Calendar::RateTutor():
 pre: rating <> NULL implies duration > initialDur
 
---Only tutors who are approved may offer services 
-context self.Tutor:
-pre: (self->collect(services)-size() > 0) implies self.generalStatus = GeneralStatus::Approved
 */
 
 
