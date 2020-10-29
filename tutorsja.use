@@ -62,18 +62,6 @@ operations
     end 
 end 
 
-
-abstract class Calendar --Thought needs to be given to this representation 
-attributes
-    dayNotes: Set(Tuple(date:Date, note:String));
-operations
-    CalendarInit(dns:Set(Tuple(date:Date, note:String)))
-    begin   
-        self.dayNotes := dns;
-    end 
-end
-
-
 abstract class Service
 attributes
     grade: Grade
@@ -103,6 +91,9 @@ operations
         self.rate := Ratings::STAR3;
         self.availStatus := AvailabilityStatus::Free;
     end
+constraints
+    inv:
+        self.modeOfDelivery = ModeOfDelivery::Online implies self.location = null
 
 end
 
@@ -177,8 +168,8 @@ constraints
     --A Special Request existing without a date-needed-by date will become outdated after 31 days
     /*
     inv autoOutdate:
-        (self.neededBy == NULL and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::Outdated
-        */
+        (self.neededBy = null and self.daysPast < self.period.lengthofPeriod()) implies self.status = SRStatus::Outdated
+    */
 end 
 
 class Payment
@@ -193,6 +184,15 @@ operations
     end 
 end
 
+class Calendar 
+attributes
+    dayNotes: Set(Tuple(date:Date, note:String));
+operations
+    CalendarInit(dns:Set(Tuple(date:Date, note:String)))
+    begin   
+        self.dayNotes := dns;
+    end 
+end
 
 -- EXTENDED CONCRETE CLASSES --
 
@@ -249,7 +249,14 @@ constraints
     --Only tutors who are approved may offer services 
     inv:
         self.service->size() > 0 implies self.generalStatus = GeneralStatus::Approved
-end 
+    --A tutor has at most 1 calendar
+    inv:
+        self.tutorCalendar->size() <= 1 
+    --A Tutor may enroll many children into a service provided that the maximum enrollment capacity is not exceeded.
+    --inv:
+        --self.service.numOfSlots 
+    --The current enrollment value must not exceed the enrollment capacity
+end     
 
 class PrivateService < Service 
 attributes 
@@ -326,7 +333,7 @@ association GroupEnrollment between
     Tutor[1] role groupInstructor 
 end 
 
--- association relatedReview between 
+-- association RelatedReview between 
 --     Rating[1] role ratings 
 --     Review[0..1] role review
 -- end 
