@@ -13,7 +13,7 @@ enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
 enum SRStatus {Unanswered, Answered, Resolved, Outdated}
 enum Sex {Male, Female}
 enum EnrollmentStatus {Accepted, Denied, Pending}
-
+enum AgrStatus{Agree, Disagree}
 
 
 -- DATATYPE CLASSES --
@@ -259,35 +259,6 @@ constraints
     --The current enrollment value must not exceed the enrollment capacity
 end     
 
-class PrivateService < Service 
-attributes 
-    description: String
-    --! serviceCap: Integer --represents the max number of one-on-one a tutor may have at any given point -- thinking this should be in the Service class; removed it from Init for now
-operations
-    PrivateServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st: ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String) --can I initialize ..like this-- not sure, but probably; in adjusting the line, wrote the initialization like this just in case for now
-    begin
-        st:= ServiceType::One_On_One;
-        rate:= Ratings::STAR3;
-        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
-        self.description := descr;
-        --self.serviceCap := cap;
-    end
-
-
-end 
-
-class GroupService < Service 
-attributes 
-    description: String 
-operations
-    GroupServiceInit(g:Grade, s:String, loc:String, mod:ModeOfDelivery, st:ServiceType, d:Period, mds:Set (Days), nos:Integer, rate:Ratings, descr: String)
-    begin   
-        st := ServiceType::Group;
-        rate:= Ratings::STAR3;
-        self.ServiceInit(g, s, loc, mod, st, d, mds, nos, rate);
-        self.description := descr; 
-    end    
-end 
 
 
 -- ASSOCIATIONS IN MODEL -- 
@@ -334,22 +305,14 @@ association GroupEnrollment between
     Tutor[1] role groupInstructor 
 end 
 
+<<<<<<< Updated upstream
 -- association RelatedReview between 
 --     Rating[1] role ratings 
 --     Review[0..1] role review
 -- end 
+=======
+>>>>>>> Stashed changes
 
--- association Conversation between
---     Dialogue[*] role messages 
---     Tutor[1] role reciever 
---     Parent[1] role reciever
--- end 
-
--- association SpecialRequestInteraction between 
---     Parent[1] role requestor 
---     SpecialRequest[1] role messages
---     Proposal[*] role responses
--- end 
 
 association ServicePayment between 
     Payment[1..*] role payments 
@@ -360,12 +323,6 @@ association ServicePayment between
     Child[1] role forChild
 end
 
---association Enrollment between 
---    Parent[1] role liaison 
---    Child[1] role potentialStudent
---    Service[1] role interestedService
---    Tutor[1] role potentialInstructor 
---end 
 
 association CreateSpecialMsg between 
     Parent[1] role spCreator 
@@ -399,43 +356,57 @@ attributes
     tMsg: String 
 end 
 
-
-associationclass EnrollmentRequest between 
-    Parent[1] role liaison 
-    Child[1] role potentialStudent
-    Service[1] role interestedServive
-    Tutor[1] role potentialInstructor 
-attributes
-    status: EnrollmentStatus
-    TutorAgreement: Boolean init: false
-    ParentAgreement: Boolean init: true
-operations
-    EnrollmentRequestInit()
-    begin
-        self.status := EnrollmentStatus:: Pending;
-    end
-
-   /* updateAgreement(reponse: Boolean, rolename: String)
-    begin
-        if rolename := PARENT then 
-            self.ParentAgreement := response;
-        else
-            rolename := TUTOR then 
-            self.TutorAgreement := response;
-        endif
-    end */
-
-/* constraints
-    inv AcceptedEnrollment: 
-        if self.TutorAgreement = true or self.ParentAgreement = true then
-            self.status = EnrollmentStatus::Accepted
-        else
-            if self.TutorAgreement = false or self.ParentAgreement = false then
-                self.status = EnrollmentStatus::Denied 
-        endif
-    end */
-
+associationclass GroupEnrollRequest between 
+    Parent[1] role gliaison 
+    Child[1] role gparticipant
+    Service[1] role gService
+    Tutor[1] role potentialgInstructor 
 end
+
+associationclass OneOnOneEnrollRequest between 
+    Parent[1] role oooLiason 
+    Child[1] role oooparticipant
+    Service[1] role oooServive
+    Tutor[1] role potentialoooInstructor 
+end
+
+
+--associationclass EnrollmentRequest between 
+--    Parent[1] role liaison 
+--    Child[1] role potentialStudent
+--    Service[1] role interestedServive
+--    Tutor[1] role potentialInstructor 
+--attributes
+--    status: EnrollmentStatus
+--    TutorAgreement: Boolean init: false
+--    ParentAgreement: Boolean init: true
+--operations
+--    EnrollmentRequestInit()
+--    begin
+--        self.status := EnrollmentStatus:: Pending;
+--    end
+--
+--   /* updateAgreement(reponse: Boolean, rolename: String)
+--    begin
+--        if rolename := PARENT then 
+--            self.ParentAgreement := response;
+--        else
+--            rolename := TUTOR then 
+--            self.TutorAgreement := response;
+--        endif
+--    end */
+
+--/* constraints
+--    inv AcceptedEnrollment: 
+--        if self.TutorAgreement = true or self.ParentAgreement = true then
+--            self.status = EnrollmentStatus::Accepted
+--        else
+--            if self.TutorAgreement = false or self.ParentAgreement = false then
+--                self.status = EnrollmentStatus::Denied 
+--        endif
+--    end */
+
+--end
 
 
 --context Tutor
