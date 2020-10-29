@@ -161,14 +161,6 @@
         </strategy>
         <hidden>false</hidden>
     </node>
-    <node id="sType" sizeCalculated="true" type="Enumeration">
-        <name>sType</name>
-        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>1167.0</x>
-            <y>309.0</y>
-        </strategy>
-        <hidden>false</hidden>
-    </node>
     <node id="SRStatus" sizeCalculated="true" type="Enumeration">
         <name>SRStatus</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
@@ -342,18 +334,6 @@
             <target>Parent</target>
             <name>payer</name>
             <properties>
-                <edgeproperty id="ServicePayment::payer::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
-                    <name>1</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>-3.0</userOffsetX>
-                        <userOffsetY>16.0</userOffsetY>
-                        <attached>ServicePayment::payer::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>BOTTOM</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="ServicePayment::payer::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                     <name>payer</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -363,6 +343,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>TOP</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="ServicePayment::payer::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+                    <name>1</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>-3.0</userOffsetX>
+                        <userOffsetY>16.0</userOffsetY>
+                        <attached>ServicePayment::payer::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>BOTTOM</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -404,18 +396,6 @@
             <target>Tutor</target>
             <name>payee</name>
             <properties>
-                <edgeproperty id="ServicePayment::payee::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                    <name>payee</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>16.0</userOffsetX>
-                        <userOffsetY>-5.0</userOffsetY>
-                        <attached>ServicePayment::payee::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>TOP</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="ServicePayment::payee::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                     <name>1</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -425,6 +405,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>BOTTOM</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="ServicePayment::payee::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                    <name>payee</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>16.0</userOffsetX>
+                        <userOffsetY>-5.0</userOffsetY>
+                        <attached>ServicePayment::payee::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>TOP</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -474,18 +466,6 @@
             <target>Child</target>
             <name>forChild</name>
             <properties>
-                <edgeproperty id="ServicePayment::forChild::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                    <name>forChild</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>-18.0</userOffsetX>
-                        <userOffsetY>-17.0</userOffsetY>
-                        <attached>ServicePayment::forChild::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>TOP</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="ServicePayment::forChild::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                     <name>1</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -495,6 +475,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>BOTTOM</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="ServicePayment::forChild::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                    <name>forChild</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>-18.0</userOffsetX>
+                        <userOffsetY>-17.0</userOffsetY>
+                        <attached>ServicePayment::forChild::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>TOP</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -610,18 +602,6 @@
             <target>Child</target>
             <name>oooparticipant</name>
             <properties>
-                <edgeproperty id="OneOnOneEnrollRequest::oooparticipant::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                    <name>oooparticipant</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>69.0</userOffsetX>
-                        <userOffsetY>-14.0</userOffsetY>
-                        <attached>OneOnOneEnrollRequest::oooparticipant::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>TOP</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="OneOnOneEnrollRequest::oooparticipant::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                     <name>1</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -631,6 +611,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>BOTTOM</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="OneOnOneEnrollRequest::oooparticipant::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                    <name>oooparticipant</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>69.0</userOffsetX>
+                        <userOffsetY>-14.0</userOffsetY>
+                        <attached>OneOnOneEnrollRequest::oooparticipant::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>TOP</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -672,18 +664,6 @@
             <target>Service</target>
             <name>oooServive</name>
             <properties>
-                <edgeproperty id="OneOnOneEnrollRequest::oooServive::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
-                    <name>1</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>-3.0</userOffsetX>
-                        <userOffsetY>11.0</userOffsetY>
-                        <attached>OneOnOneEnrollRequest::oooServive::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>BOTTOM</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="OneOnOneEnrollRequest::oooServive::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                     <name>oooServive</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -693,6 +673,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>TOP</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="OneOnOneEnrollRequest::oooServive::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+                    <name>1</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>-3.0</userOffsetX>
+                        <userOffsetY>11.0</userOffsetY>
+                        <attached>OneOnOneEnrollRequest::oooServive::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>BOTTOM</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -726,18 +718,6 @@
             <target>Tutor</target>
             <name>potentialoooInstructor</name>
             <properties>
-                <edgeproperty id="OneOnOneEnrollRequest::potentialoooInstructor::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                    <name>potentialoooInstructor</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>53.0</userOffsetX>
-                        <userOffsetY>10.0</userOffsetY>
-                        <attached>OneOnOneEnrollRequest::potentialoooInstructor::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>TOP</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="OneOnOneEnrollRequest::potentialoooInstructor::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="false" visible="true">
                     <name>1</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -747,6 +727,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>BOTTOM</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="OneOnOneEnrollRequest::potentialoooInstructor::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                    <name>potentialoooInstructor</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>53.0</userOffsetX>
+                        <userOffsetY>10.0</userOffsetY>
+                        <attached>OneOnOneEnrollRequest::potentialoooInstructor::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>TOP</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -854,18 +846,6 @@
             <target>Child</target>
             <name>gparticipant</name>
             <properties>
-                <edgeproperty id="GroupEnrollRequest::gparticipant::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                    <name>gparticipant</name>
-                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                        <userOffsetX>85.0</userOffsetX>
-                        <userOffsetY>-12.0</userOffsetY>
-                        <attached>GroupEnrollRequest::gparticipant::WayPoint::1</attached>
-                        <offset_x>8</offset_x>
-                        <offset_y>8</offset_y>
-                        <placement>TOP</placement>
-                    </strategy>
-                    <hidden>false</hidden>
-                </edgeproperty>
                 <edgeproperty id="GroupEnrollRequest::gparticipant::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                     <name>1</name>
                     <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -875,6 +855,18 @@
                         <offset_x>8</offset_x>
                         <offset_y>8</offset_y>
                         <placement>BOTTOM</placement>
+                    </strategy>
+                    <hidden>false</hidden>
+                </edgeproperty>
+                <edgeproperty id="GroupEnrollRequest::gparticipant::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                    <name>gparticipant</name>
+                    <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                        <userOffsetX>85.0</userOffsetX>
+                        <userOffsetY>-12.0</userOffsetY>
+                        <attached>GroupEnrollRequest::gparticipant::WayPoint::1</attached>
+                        <offset_x>8</offset_x>
+                        <offset_y>8</offset_y>
+                        <placement>TOP</placement>
                     </strategy>
                     <hidden>false</hidden>
                 </edgeproperty>
@@ -1034,20 +1026,6 @@
         <target>Child</target>
         <name>ChildOf</name>
         <properties>
-            <edgeproperty id="ChildOf::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>ChildOf</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>360.0</userOffsetX>
-                    <userOffsetY>-247.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>ChildOf::WayPoint::0</related0>
-                        <related1>ChildOf::WayPoint::4</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="ChildOf::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>child</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -1075,8 +1053,8 @@
             <edgeproperty id="ChildOf::source::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>parent</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>39.0</userOffsetX>
-                    <userOffsetY>12.0</userOffsetY>
+                    <userOffsetX>35.0</userOffsetX>
+                    <userOffsetY>-13.0</userOffsetY>
                     <attached>ChildOf::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -1093,6 +1071,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="ChildOf::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>ChildOf</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>360.0</userOffsetX>
+                    <userOffsetY>-247.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>ChildOf::WayPoint::0</related0>
+                        <related1>ChildOf::WayPoint::4</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1172,17 +1164,15 @@
         <target>SpecialRequest</target>
         <name>CreateSpecialMsg</name>
         <properties>
-            <edgeproperty id="CreateSpecialMsg::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>CreateSpecialMsg</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>-182.0</userOffsetX>
-                    <userOffsetY>-327.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>CreateSpecialMsg::WayPoint::0</related0>
-                        <related1>CreateSpecialMsg::WayPoint::4</related1>
-                    </related>
+            <edgeproperty id="CreateSpecialMsg::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>2.0</userOffsetX>
+                    <userOffsetY>-12.0</userOffsetY>
+                    <attached>CreateSpecialMsg::WayPoint::4</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1195,18 +1185,6 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="CreateSpecialMsg::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
-                <name>1..*</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>2.0</userOffsetX>
-                    <userOffsetY>-12.0</userOffsetY>
-                    <attached>CreateSpecialMsg::WayPoint::4</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>BOTTOM</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1231,6 +1209,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="CreateSpecialMsg::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>CreateSpecialMsg</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>-182.0</userOffsetX>
+                    <userOffsetY>-327.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>CreateSpecialMsg::WayPoint::0</related0>
+                        <related1>CreateSpecialMsg::WayPoint::4</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1310,17 +1302,15 @@
         <target>Service</target>
         <name>ServiceOffering</name>
         <properties>
-            <edgeproperty id="ServiceOffering::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>ServiceOffering</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>365.0</userOffsetX>
-                    <userOffsetY>357.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>ServiceOffering::WayPoint::0</related0>
-                        <related1>ServiceOffering::WayPoint::4</related1>
-                    </related>
+            <edgeproperty id="ServiceOffering::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>service</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>-4.0</userOffsetX>
+                    <userOffsetY>-22.0</userOffsetY>
+                    <attached>ServiceOffering::WayPoint::4</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1333,18 +1323,6 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="ServiceOffering::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>service</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>-4.0</userOffsetX>
-                    <userOffsetY>-22.0</userOffsetY>
-                    <attached>ServiceOffering::WayPoint::4</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1369,6 +1347,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="ServiceOffering::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>ServiceOffering</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>365.0</userOffsetX>
+                    <userOffsetY>357.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>ServiceOffering::WayPoint::0</related0>
+                        <related1>ServiceOffering::WayPoint::4</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1448,20 +1440,6 @@
         <target>Child</target>
         <name>ChildCalendar</name>
         <properties>
-            <edgeproperty id="ChildCalendar::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>ChildCalendar</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>13.0</userOffsetX>
-                    <userOffsetY>16.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>ChildCalendar::WayPoint::0</related0>
-                        <related1>ChildCalendar::WayPoint::2</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="ChildCalendar::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -1489,8 +1467,8 @@
             <edgeproperty id="ChildCalendar::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>8.0</userOffsetY>
+                    <userOffsetX>8.0</userOffsetX>
+                    <userOffsetY>15.0</userOffsetY>
                     <attached>ChildCalendar::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -1507,6 +1485,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="ChildCalendar::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>ChildCalendar</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>13.0</userOffsetX>
+                    <userOffsetY>16.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>ChildCalendar::WayPoint::0</related0>
+                        <related1>ChildCalendar::WayPoint::2</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1566,17 +1558,15 @@
         <target>Tutor</target>
         <name>GroupEnrollment</name>
         <properties>
-            <edgeproperty id="GroupEnrollment::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>GroupEnrollment</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>337.0</userOffsetX>
-                    <userOffsetY>164.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>GroupEnrollment::WayPoint::0</related0>
-                        <related1>GroupEnrollment::WayPoint::4</related1>
-                    </related>
+            <edgeproperty id="GroupEnrollment::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>groupInstructor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>49.0</userOffsetX>
+                    <userOffsetY>22.0</userOffsetY>
+                    <attached>GroupEnrollment::WayPoint::4</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1592,15 +1582,15 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="GroupEnrollment::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>groupInstructor</name>
+            <edgeproperty id="GroupEnrollment::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+                <name>*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>49.0</userOffsetX>
-                    <userOffsetY>22.0</userOffsetY>
-                    <attached>GroupEnrollment::WayPoint::4</attached>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>11.0</userOffsetY>
+                    <attached>GroupEnrollment::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
-                    <placement>TOP</placement>
+                    <placement>BOTTOM</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1616,15 +1606,17 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="GroupEnrollment::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
-                <name>*</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>11.0</userOffsetY>
-                    <attached>GroupEnrollment::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>BOTTOM</placement>
+            <edgeproperty id="GroupEnrollment::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>GroupEnrollment</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>337.0</userOffsetX>
+                    <userOffsetY>164.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>GroupEnrollment::WayPoint::0</related0>
+                        <related1>GroupEnrollment::WayPoint::4</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1704,20 +1696,6 @@
         <target>Tutor</target>
         <name>OneOnOneEnrollment</name>
         <properties>
-            <edgeproperty id="OneOnOneEnrollment::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>OneOnOneEnrollment</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>-35.0</userOffsetX>
-                    <userOffsetY>122.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>OneOnOneEnrollment::WayPoint::0</related0>
-                        <related1>OneOnOneEnrollment::WayPoint::4</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="OneOnOneEnrollment::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -1742,6 +1720,18 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
+            <edgeproperty id="OneOnOneEnrollment::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>OneOnOneEnrollment::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
             <edgeproperty id="OneOnOneEnrollment::source::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>student</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -1754,15 +1744,17 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="OneOnOneEnrollment::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="false" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <attached>OneOnOneEnrollment::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>BOTTOM</placement>
+            <edgeproperty id="OneOnOneEnrollment::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>OneOnOneEnrollment</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>-35.0</userOffsetX>
+                    <userOffsetY>122.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>OneOnOneEnrollment::WayPoint::0</related0>
+                        <related1>OneOnOneEnrollment::WayPoint::4</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1781,7 +1773,7 @@
             <edgeproperty id="OneOnOneEnrollment::WayPoint::1" sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>975.0</x>
+                    <x>977.0</x>
                     <y>630.0</y>
                 </strategy>
                 <id>1</id>
@@ -1834,17 +1826,15 @@
         <target>Tutor</target>
         <name>TutorCalendar</name>
         <properties>
-            <edgeproperty id="TutorCalendar::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>TutorCalendar</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>35.0</userOffsetX>
-                    <userOffsetY>-46.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>TutorCalendar::WayPoint::0</related0>
-                        <related1>TutorCalendar::WayPoint::2</related1>
-                    </related>
+            <edgeproperty id="TutorCalendar::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>1.0</userOffsetX>
+                    <userOffsetY>-6.0</userOffsetY>
+                    <attached>TutorCalendar::WayPoint::2</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1860,12 +1850,12 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="TutorCalendar::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
+            <edgeproperty id="TutorCalendar::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="false" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>1.0</userOffsetX>
-                    <userOffsetY>-6.0</userOffsetY>
-                    <attached>TutorCalendar::WayPoint::2</attached>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>TutorCalendar::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
@@ -1884,15 +1874,17 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="TutorCalendar::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="false" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <attached>TutorCalendar::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>BOTTOM</placement>
+            <edgeproperty id="TutorCalendar::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>TutorCalendar</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>35.0</userOffsetX>
+                    <userOffsetY>-46.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>TutorCalendar::WayPoint::0</related0>
+                        <related1>TutorCalendar::WayPoint::2</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1952,20 +1944,6 @@
         <target>Tutor</target>
         <name>Dialogue</name>
         <properties>
-            <edgeproperty id="Dialogue::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>Dialogue</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>26.0</userOffsetX>
-                    <userOffsetY>10.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>Dialogue::WayPoint::0</related0>
-                        <related1>Dialogue::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="Dialogue::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -2011,6 +1989,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="Dialogue::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>Dialogue</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>26.0</userOffsetX>
+                    <userOffsetY>10.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>Dialogue::WayPoint::0</related0>
+                        <related1>Dialogue::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -2100,8 +2092,8 @@
             <edgeproperty id="naryedge::OneOnOneEnrollRequest::DiamondNode::OneOnOneEnrollRequest::WayPoint::0" sizeCalculated="true" type="WayPoint" userDefined="false" visible="true">
                 <name>0</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>656.5476321883963</x>
-                    <y>266.1084470893956</y>
+                    <x>636.1598641497752</x>
+                    <y>256.30233110870614</y>
                 </strategy>
                 <id>0</id>
                 <specialid>1</specialid>
@@ -2110,7 +2102,7 @@
             <edgeproperty id="naryedge::OneOnOneEnrollRequest::DiamondNode::OneOnOneEnrollRequest::WayPoint::1" sizeCalculated="true" type="WayPoint" userDefined="false" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>695.5738470277379</x>
+                    <x>620.0121826073535</x>
                     <y>297.0</y>
                 </strategy>
                 <id>1</id>
@@ -2125,20 +2117,6 @@
         <target>Service</target>
         <name>Review</name>
         <properties>
-            <edgeproperty id="Review::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>Review</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>26.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>Review::WayPoint::0</related0>
-                        <related1>Review::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="Review::target::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -2166,8 +2144,8 @@
             <edgeproperty id="Review::source::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>parent</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>19.0</userOffsetX>
-                    <userOffsetY>-10.0</userOffsetY>
+                    <userOffsetX>17.0</userOffsetX>
+                    <userOffsetY>-8.0</userOffsetY>
                     <attached>Review::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -2184,6 +2162,20 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="Review::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>Review</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>26.0</userOffsetX>
+                    <userOffsetY>3.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>Review::WayPoint::0</related0>
+                        <related1>Review::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -2273,8 +2265,8 @@
             <edgeproperty id="naryedge::GroupEnrollRequest::DiamondNode::GroupEnrollRequest::WayPoint::0" sizeCalculated="true" type="WayPoint" userDefined="false" visible="true">
                 <name>0</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>640.8868400261412</x>
-                    <y>201.06115682947683</y>
+                    <x>644.7277031843482</x>
+                    <y>198.51841159141966</y>
                 </strategy>
                 <id>0</id>
                 <specialid>1</specialid>
@@ -2283,8 +2275,8 @@
             <edgeproperty id="naryedge::GroupEnrollRequest::DiamondNode::GroupEnrollRequest::WayPoint::1" sizeCalculated="true" type="WayPoint" userDefined="false" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>660.0954783225685</x>
-                    <y>173.0</y>
+                    <x>612.9638346987555</x>
+                    <y>150.0</y>
                 </strategy>
                 <id>1</id>
                 <specialid>2</specialid>
@@ -2298,17 +2290,15 @@
         <target>Tutor</target>
         <name>Proposal</name>
         <properties>
-            <edgeproperty id="Proposal::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
-                <name>Proposal</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>25.0</userOffsetX>
-                    <userOffsetY>14.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>Proposal::WayPoint::0</related0>
-                        <related1>Proposal::WayPoint::1</related1>
-                    </related>
+            <edgeproperty id="Proposal::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>tutor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>37.0</userOffsetX>
+                    <userOffsetY>2.0</userOffsetY>
+                    <attached>Proposal::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -2324,30 +2314,6 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="Proposal::target::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>tutor</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>37.0</userOffsetX>
-                    <userOffsetY>2.0</userOffsetY>
-                    <attached>Proposal::WayPoint::1</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="Proposal::source::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>request</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>41.0</userOffsetX>
-                    <userOffsetY>10.0</userOffsetY>
-                    <attached>Proposal::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="Proposal::source::multiplicity" sizeCalculated="true" type="multiplicity" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
@@ -2357,6 +2323,32 @@
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="Proposal::source::rolename" sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>request</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>46.0</userOffsetX>
+                    <userOffsetY>11.0</userOffsetY>
+                    <attached>Proposal::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="Proposal::AssociationName" sizeCalculated="true" type="associationName" userDefined="true" visible="true">
+                <name>Proposal</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>25.0</userOffsetX>
+                    <userOffsetY>14.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>Proposal::WayPoint::0</related0>
+                        <related1>Proposal::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
