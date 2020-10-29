@@ -210,11 +210,13 @@ operations
 constraints
     --Parents may only have one pending enrollment requests at a time. 
     inv:
-        self.enrollmentRequest->size() <= 1 
+        self.oneOnOneEnrollRequest->size() + self.groupEnrollRequest->size() <= 1 
     --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
 
     --A Parent may review a tutor only after rating a Tutor. 
-
+    /*inv:
+        self.rate = null implies self.review = null
+    */
 end
 
 class Tutor < User
@@ -305,13 +307,11 @@ association GroupEnrollment between
     Tutor[1] role groupInstructor 
 end 
 
-<<<<<<< Updated upstream
+
 -- association RelatedReview between 
 --     Rating[1] role ratings 
 --     Review[0..1] role review
 -- end 
-=======
->>>>>>> Stashed changes
 
 
 association ServicePayment between 
