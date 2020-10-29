@@ -1,0 +1,25 @@
+reset 
+
+!new Parent('P1')
+!new Parent('P2')
+
+!new Child('C1')
+!new Child('C2')
+
+!new Service('S1')
+!new Service('S2')
+
+!new Tutor('T1')
+!new Tutor('T2')
+
+!new Payment('P1')
+!new Payment('P2')
+
+
+!GR1 := new GroupEnrollRequest('GR1') between (P1, C1, S1, T1)
+!GSP1 := new ServicePayment('GSP1') between (P1, GR1)
+
+!
+
+!new SpecialRequest('SR1')
+
