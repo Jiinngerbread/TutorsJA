@@ -207,8 +207,9 @@ operations
         self.children := c;
     end
 constraints
-    --Parents may only send enrollment requests to Tutors for a service whose availability is “free”. 
-
+    --Parents may only have one pending enrollment requests at a time. 
+    inv:
+        self.enrollmentRequest->size() <= 1 
     --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
 
     --A Parent may review a tutor only after rating a Tutor. 
