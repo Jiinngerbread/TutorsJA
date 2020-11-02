@@ -222,13 +222,10 @@ constraints
     --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
         
     --A Parent may review a tutor only after rating a Tutor. 
-<<<<<<< HEAD
     /*inv:
         self.rate = null implies self.review = null
       */
-=======
 
->>>>>>> 01087d6e911b60d1895f2c320725936b016503bc
 end
 
 class Tutor < User
@@ -319,13 +316,10 @@ association GroupEnrollment between
     Tutor[1] role groupInstructor 
 end 
 
-<<<<<<< Updated upstream
 -- association RelatedReview between 
 --     Rating[1] role ratings 
 --     Review[0..1] role review
 -- end 
-=======
->>>>>>> Stashed changes
 
 
 association GroupServicePayment between 
@@ -453,8 +447,6 @@ context Calendar::RateTutor():
 pre: rating <> NULL implies duration > initialDur
 
 */
-
-
 
 
 
