@@ -2,7 +2,7 @@
 
 model TutorsJA
 
---Layout2.clt is used with this version-- 
+--layout1.clt is used with this version--
 
 -- ENUMS -- 
 enum GeneralStatus {Not_Approved, Approved, Verified}
@@ -205,8 +205,6 @@ operations
     end 
 end
 
-
-
 -- EXTENDED CONCRETE CLASSES --
 
 class Parent < User
@@ -279,6 +277,18 @@ association ServiceOffering between
     Service[*] role service
 end
 
+-- association TutorRating between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end 
+
+-- association TutorReview between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end
+
 association TutorCalendar between 
     Calendar[1] role schedule
     Tutor[1] role tutor
@@ -300,9 +310,22 @@ association ReviewOOOTutor between
 end 
 
 association ReviewGroupTutor between 
-    Review[1] role review 
+    Review[1] role rating 
     GroupEnrollRequest[1] role groupService
 end
+
+/*association OneOnOneEnrollment between 
+    Child[1] role student 
+    Tutor[1] role instructor 
+end 
+
+association GroupEnrollment between 
+    Child[*] role students 
+    Tutor[1] role groupInstructor 
+end 
+*/
+
+
 
 association GroupServicePayment between 
     Payment[1..*] role payments 
@@ -318,18 +341,6 @@ association CreateSpecialMsg between
     Parent[1] role spCreator 
     SpecialRequest[1..*] role request
 end
-
-/*association OneOnOneEnrollment between 
-    Child[1] role student 
-    Tutor[1] role instructor 
-end 
-
-association GroupEnrollment between 
-    Child[*] role students 
-    Tutor[1] role groupInstructor 
-end 
-*/
-
 
 
 -- ASSOCIATION CLASS -- 
@@ -352,10 +363,10 @@ attributes
 end 
 
 associationclass GroupEnrollRequest between 
-    
-    Child[*] role gparticipant
-    Service[*] role gService
- 
+    Parent[1] role gliaison 
+    Child[1] role gparticipant
+    Service[1] role gService
+    Tutor[1] role potentialgInstructor 
 attributes
         acceptanceStatus: EnrollmentStatus
 operations
@@ -368,10 +379,10 @@ constraints
 end
 
 associationclass OneOnOneEnrollRequest between 
-   
-    Child[*] role oooparticipant
-    Service[*] role oooServive
-    
+    Parent[1] role oooLiason 
+    Child[1] role oooparticipant
+    Service[1] role oooServive
+    Tutor[1] role potentialoooInstructor 
 attributes
     acceptanceStatus: EnrollmentStatus
     tutorAgreement: AgrStatus
@@ -386,7 +397,6 @@ operations
 constraints
 --service type must be 'one-on-one'
 end
-
 
 /*
 context Parent::SendEnrollmentReq():
