@@ -2,7 +2,7 @@
 
 model TutorsJA
 
---Layout2.clt is used with this version-- 
+--layout1.clt is used with this version--
 
 -- ENUMS -- 
 enum GeneralStatus {Not_Approved, Approved, Verified}
@@ -33,8 +33,7 @@ operations
     end
 end
 
-class Period  
---to be used to show a range of days on a calendar or period within which a service is offered
+class Period  --to be used to show a range of days on a calendar or period within which a service is offered
 attributes
     startDate: Date
     endDate: Date
@@ -49,7 +48,7 @@ end
 
 -- ABSTRACT CLASSES --
 
-abstract class User 
+abstract class User -- the D2 said its abstract --
 attributes 
     fname: String
     lname: String
@@ -76,11 +75,11 @@ attributes
     dob: Date
     sex: Sex
     grade: Grade
-    subjects: Set (String) 
-    modesOfDelivery: Set (ModeOfDelivery) 
-    serviceTypes: Set (ServiceType) 
-    specialNeeds: Set (String) 
-    location: String 
+    subjects: Set (String) --possible collection of subjects of interest --still need to check if set works like this but should since Miss used it as operation return types 
+    modesOfDelivery: Set (ModeOfDelivery) --maybe a Set for this as well in case they want a different mode for each type of service for eg
+    serviceTypes: Set (ServiceType) --set since they may enroll in many services; may want both private and group
+    specialNeeds: Set (String) --review this; good with me - suggesting a Set though
+    location: String --may not need this; I think we should keep it
     age: Integer
 operations
     ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String, age:Integer)
@@ -92,15 +91,16 @@ operations
         self.grade := g;
         self.subjects := sub;
         self.modesOfDelivery := mod;
-        self.serviceTypes := sts; 
+        self.serviceTypes := sts;
         self.specialNeeds := sns;
         self.location := loc;
-        self.age:= age; 
+        self.age:= age;
     end
 constraints
     --A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
         self.age >= 5 and self.age < 19
+
 end
 
 class SpecialRequest 
@@ -205,8 +205,6 @@ operations
     end 
 end
 
-
-
 -- EXTENDED CONCRETE CLASSES --
 
 class Parent < User
@@ -226,13 +224,6 @@ constraints
     --A parent may rate a tutor after ½ of the service their child is enrolled in is completed.
         
     --A Parent may review a tutor only after rating a Tutor. 
-<<<<<<< HEAD
-    /*inv:
-        self.rate = null implies self.review = null
-      */
-
-=======
->>>>>>> ced3a152e1de16098dd3c11f9d7366bef7435e77
 end
 
 class Tutor < User
@@ -286,6 +277,18 @@ association ServiceOffering between
     Service[*] role service
 end
 
+-- association TutorRating between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end 
+
+-- association TutorReview between 
+--     Rating[1] role rating
+--     Tutor[1] role Tutor 
+--     Child[1] role student
+-- end
+
 association TutorCalendar between 
     Calendar[1] role schedule
     Tutor[1] role tutor
@@ -306,23 +309,23 @@ association ReviewOOOTutor between
     OneOnOneEnrollRequest[1] role oooService
 end 
 
-<<<<<<< HEAD
+association ReviewGroupTutor between 
+    Review[1] role rating 
+    GroupEnrollRequest[1] role groupService
+end
+
+/*association OneOnOneEnrollment between 
+    Child[1] role student 
+    Tutor[1] role instructor 
+end 
+
 association GroupEnrollment between 
     Child[*] role students 
     Tutor[1] role groupInstructor 
 end 
+*/
 
--- association RelatedReview between 
---     Rating[1] role ratings 
---     Review[0..1] role review
--- end 
 
-=======
-association ReviewGroupTutor between 
-    Review[1] role review 
-    GroupEnrollRequest[1] role groupService
-end
->>>>>>> ced3a152e1de16098dd3c11f9d7366bef7435e77
 
 association GroupServicePayment between 
     Payment[1..*] role payments 
@@ -338,18 +341,6 @@ association CreateSpecialMsg between
     Parent[1] role spCreator 
     SpecialRequest[1..*] role request
 end
-
-/*association OneOnOneEnrollment between 
-    Child[1] role student 
-    Tutor[1] role instructor 
-end 
-
-association GroupEnrollment between 
-    Child[*] role students 
-    Tutor[1] role groupInstructor 
-end 
-*/
-
 
 
 -- ASSOCIATION CLASS -- 
@@ -372,10 +363,10 @@ attributes
 end 
 
 associationclass GroupEnrollRequest between 
-    
-    Child[*] role gparticipant
-    Service[*] role gService
- 
+    Parent[1] role gliaison 
+    Child[1] role gparticipant
+    Service[1] role gService
+    Tutor[1] role potentialgInstructor 
 attributes
         acceptanceStatus: EnrollmentStatus
 operations
@@ -388,10 +379,10 @@ constraints
 end
 
 associationclass OneOnOneEnrollRequest between 
-   
-    Child[*] role oooparticipant
-    Service[*] role oooServive
-    
+    Parent[1] role oooLiason 
+    Child[1] role oooparticipant
+    Service[1] role oooServive
+    Tutor[1] role potentialoooInstructor 
 attributes
     acceptanceStatus: EnrollmentStatus
     tutorAgreement: AgrStatus
@@ -407,7 +398,6 @@ constraints
 --service type must be 'one-on-one'
 end
 
-
 /*
 context Parent::SendEnrollmentReq():
 pre: self.hasPending = false
@@ -422,6 +412,8 @@ context Calendar::RateTutor():
 pre: rating <> NULL implies duration > initialDur
 
 */
+
+
 
 
 
