@@ -181,6 +181,11 @@ operations
         self.rating := r;
         self.reviewTxt := rt;
     end
+constraints
+    --A Parent may review a tutor only after rating a Tutor. 
+    inv:
+        self.rating = null implies self.reviewTxt = null
+
 end 
 
 class Payment
@@ -346,8 +351,6 @@ association GroupEnrollment between
 end 
 */
 
-
-
 -- ASSOCIATION CLASS -- 
 associationclass Proposal between
     SpecialRequest[1] role request
@@ -381,12 +384,14 @@ operations
     end
 constraints
 --service type must be 'group'
+    inv:
+        self.gService.serviceType = ServiceType::Group
 end
 
 associationclass OneOnOneEnrollRequest between 
    
     Child[*] role oooparticipant
-    Service[*] role oooServive
+    Service[*] role oooService
     
 attributes
     acceptanceStatus: EnrollmentStatus
@@ -401,6 +406,8 @@ operations
     end
 constraints
 --service type must be 'one-on-one'
+    inv:
+        oooService.serviceType = ServiceType::One_On_One
 end
 
 
