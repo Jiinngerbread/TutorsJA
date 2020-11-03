@@ -33,7 +33,8 @@ operations
     end
 end
 
-class Period  --to be used to show a range of days on a calendar or period within which a service is offered
+class Period  
+--to be used to show a range of days on a calendar or period within which a service is offered
 attributes
     startDate: Date
     endDate: Date
@@ -48,7 +49,7 @@ end
 
 -- ABSTRACT CLASSES --
 
-abstract class User -- the D2 said its abstract --
+abstract class User 
 attributes 
     fname: String
     lname: String
@@ -75,11 +76,11 @@ attributes
     dob: Date
     sex: Sex
     grade: Grade
-    subjects: Set (String) --possible collection of subjects of interest --still need to check if set works like this but should since Miss used it as operation return types 
-    modesOfDelivery: Set (ModeOfDelivery) --maybe a Set for this as well in case they want a different mode for each type of service for eg
-    serviceTypes: Set (ServiceType) --set since they may enroll in many services; may want both private and group
-    specialNeeds: Set (String) --review this; good with me - suggesting a Set though
-    location: String --may not need this; I think we should keep it
+    subjects: Set (String) 
+    modesOfDelivery: Set (ModeOfDelivery) 
+    serviceTypes: Set (ServiceType) 
+    specialNeeds: Set (String) 
+    location: String 
     age: Integer
 operations
     ChildInit(f:String, l:String, d:Date, s:Sex, g:Grade, sub:Set (String), mod:Set (ModeOfDelivery), sts:Set (ServiceType), sns: Set(String), loc:String, age:Integer)
@@ -91,16 +92,15 @@ operations
         self.grade := g;
         self.subjects := sub;
         self.modesOfDelivery := mod;
-        self.serviceTypes := sts;
+        self.serviceTypes := sts; 
         self.specialNeeds := sns;
         self.location := loc;
-        self.age:= age;
+        self.age:= age; 
     end
 constraints
     --A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
         self.age >= 5 and self.age < 19
-
 end
 
 class SpecialRequest 
