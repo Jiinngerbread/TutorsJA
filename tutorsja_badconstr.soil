@@ -1,0 +1,66 @@
+reset 
+
+!new Parent('P1')
+!new Parent('P2')
+
+!new Child('C1')
+!new Child('C2')
+
+!set C1.age := 6
+!set C2.age := 61
+--should give error [Child::ageFiveToNineteen]
+
+!new Service('S1')
+!new Service('S2')
+
+!set S1.modeOfDelivery := ModeOfDelivery::Face_To_Face
+!set S1.location := 'Kingston'
+
+!set S2.modeOfDelivery := ModeOfDelivery::Online
+!set S2.location := 'Montego Bay'
+--should give error [Service::inv1]
+
+!set S1.serviceType := ServiceType::Group
+!set S2.serviceType := ServiceType::Group 
+--second one should give error [OneOnOneEnrollRequest::inv5]
+
+!new Tutor('T1')
+!new Tutor('T2')
+
+!set T1.generalStatus := GeneralStatus::Approved
+!set T2.generalStatus := GeneralStatus::Not_Approved
+--second one should give error [Tutor::inv3]
+
+!new Payment('Py1')
+!new Payment('Py2')
+
+!new Review('R1')
+!new Review('R2')
+
+!set R1.rating := Ratings::STAR3
+!set R1.reviewTxt := 'His teaching was okay.'
+
+!set R2.reviewTxt := 'Best teaching my son has ever gotten!.'
+--should give error [Review::inv2]
+
+!insert (T1,S1) into ServiceOffering
+!insert (T2,S2) into ServiceOffering
+
+!insert (P1,C1) into ChildOf
+!insert (P2,C2) into ChildOf
+
+!GR1 := new GroupEnrollRequest('GR1') between (C1, S1)
+!OR1 := new OneOnOneEnrollRequest('OR1') between (C2, S2)
+
+!insert (Py1, GR1) into GroupServicePayment
+!insert (Py2, OR1) into OOOServicePayment
+
+!insert (R1,GR1) into ReviewGroupTutor
+!insert (R2,OR1) into ReviewOOOTutor
+
+--!new SpecialRequest('SR1')
+
+!D1 := new Dialogue('D1') between (P2, T2)
+
+
+check

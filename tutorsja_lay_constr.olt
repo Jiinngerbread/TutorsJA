@@ -1,0 +1,1509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram_Layout version="13">
+    <diagramOptions>
+        <autolayout>false</autolayout>
+        <antialiasing>false</antialiasing>
+        <showassocnames>false</showassocnames>
+        <showattributes>true</showattributes>
+        <showmultiplicities>false</showmultiplicities>
+        <showoperations>false</showoperations>
+        <showrolenames>true</showrolenames>
+        <showgrid>false</showgrid>
+        <ShowStates>false</ShowStates>
+    </diagramOptions>
+    <node id="R2" sizeCalculated="true" type="Object">
+        <name>R2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>171.04162728220035</x>
+            <y>481.6034942470212</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="P1" sizeCalculated="true" type="Object">
+        <name>P1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>4.510762933221002</x>
+            <y>100.2023519197678</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="P2" sizeCalculated="true" type="Object">
+        <name>P2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>10.826562471080933</x>
+            <y>494.4939006980534</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="GR1" sizeCalculated="true" type="Object">
+        <name>GR1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+            <userOffsetX>2.0</userOffsetX>
+            <userOffsetY>5.0</userOffsetY>
+            <basisDeltaX>ABSOLUTE</basisDeltaX>
+            <deltaX>0.0</deltaX>
+            <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+            <basisDeltaY>ABSOLUTE</basisDeltaY>
+            <deltaY>-54.0</deltaY>
+            <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+            <corner>NORTH</corner>
+            <relativeNodeId>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::-1</relativeNodeId>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="Py2" sizeCalculated="true" type="Object">
+        <name>Py2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>640.9410615949619</x>
+            <y>482.8257951896519</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="Py1" sizeCalculated="true" type="Object">
+        <name>Py1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>587.2731481056278</x>
+            <y>273.27983796656997</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="D1" sizeCalculated="true" type="Object">
+        <name>D1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+            <userOffsetX>-121.0</userOffsetX>
+            <userOffsetY>-110.0</userOffsetY>
+            <basisDeltaX>ABSOLUTE</basisDeltaX>
+            <deltaX>0.0</deltaX>
+            <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+            <basisDeltaY>ABSOLUTE</basisDeltaY>
+            <deltaY>-54.0</deltaY>
+            <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+            <corner>NORTH</corner>
+            <relativeNodeId>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::-1</relativeNodeId>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="C1" sizeCalculated="true" type="Object">
+        <name>C1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>230.7298559603165</x>
+            <y>65.85469789096726</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="C2" sizeCalculated="true" type="Object">
+        <name>C2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>228.5627603922236</x>
+            <y>271.93318621565106</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="OR1" sizeCalculated="true" type="Object">
+        <name>OR1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+            <userOffsetX>-16.0</userOffsetX>
+            <userOffsetY>33.0</userOffsetY>
+            <basisDeltaX>ABSOLUTE</basisDeltaX>
+            <deltaX>0.0</deltaX>
+            <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+            <basisDeltaY>ABSOLUTE</basisDeltaY>
+            <deltaY>-54.0</deltaY>
+            <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+            <corner>NORTH</corner>
+            <relativeNodeId>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::-1</relativeNodeId>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="T1" sizeCalculated="true" type="Object">
+        <name>T1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>973.6486197599252</x>
+            <y>79.90836237832048</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="T2" sizeCalculated="true" type="Object">
+        <name>T2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>972.966460122768</x>
+            <y>471.72881489751126</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="S1" sizeCalculated="true" type="Object">
+        <name>S1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>680.6062422863647</x>
+            <y>59.92775881442492</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="R1" sizeCalculated="true" type="Object">
+        <name>R1</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>367.9632176847193</x>
+            <y>265.98991175842946</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <node id="S2" sizeCalculated="true" type="Object">
+        <name>S2</name>
+        <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
+            <x>682.6537201762208</x>
+            <y>264.84800090778697</y>
+        </strategy>
+        <hidden>false</hidden>
+    </node>
+    <edge type="BinaryEdge">
+        <source>T2</source>
+        <target>S2</target>
+        <name>ServiceOffering</name>
+        <properties>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>service</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>6.0</userOffsetX>
+                    <userOffsetY>-33.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>tutor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>4.0</userOffsetX>
+                    <userOffsetY>-23.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ServiceOffering</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::0</related0>
+                        <related1>[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S2, tutor:T2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ServiceOffering : (service:S2, tutor:T2)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>R2</source>
+        <target>OR1</target>
+        <name>ReviewOOOTutor</name>
+        <properties>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>oooService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>12.0</userOffsetX>
+                    <userOffsetY>5.0</userOffsetY>
+                    <attached>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>review</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>-14.0</userOffsetX>
+                    <userOffsetY>6.0</userOffsetY>
+                    <attached>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ReviewOOOTutor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::0</related0>
+                        <related1>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ReviewOOOTutor : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], review:R2)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>R1</source>
+        <target>GR1</target>
+        <name>ReviewGroupTutor</name>
+        <properties>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>groupService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>16.0</userOffsetX>
+                    <userOffsetY>9.0</userOffsetY>
+                    <attached>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>review</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>3.0</userOffsetX>
+                    <userOffsetY>-1.0</userOffsetY>
+                    <attached>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ReviewGroupTutor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::0</related0>
+                        <related1>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ReviewGroupTutor : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], review:R1)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>Py2</source>
+        <target>OR1</target>
+        <name>OOOServicePayment</name>
+        <properties>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>oooService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>71.0</userOffsetX>
+                    <userOffsetY>7.0</userOffsetY>
+                    <attached>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>payments</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>72.0</userOffsetX>
+                    <userOffsetY>-4.0</userOffsetY>
+                    <attached>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>OOOServicePayment</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::0</related0>
+                        <related1>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[OOOServicePayment : (oooService:OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)], payments:Py2)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>Py1</source>
+        <target>GR1</target>
+        <name>GroupServicePayment</name>
+        <properties>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>groupService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>76.0</userOffsetX>
+                    <userOffsetY>9.0</userOffsetY>
+                    <attached>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>payments</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>74.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>GroupServicePayment</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::0</related0>
+                        <related1>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[GroupServicePayment : (groupService:GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)], payments:Py1)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>P2</source>
+        <target>C2</target>
+        <name>ChildOf</name>
+        <properties>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>child</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>5.0</userOffsetX>
+                    <userOffsetY>-8.0</userOffsetY>
+                    <attached>[ChildOf : (child:C2, parent:P2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ChildOf : (child:C2, parent:P2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>parent</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>4.0</userOffsetX>
+                    <userOffsetY>-7.0</userOffsetY>
+                    <attached>[ChildOf : (child:C2, parent:P2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ChildOf : (child:C2, parent:P2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ChildOf</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ChildOf : (child:C2, parent:P2)]::WayPoint::0</related0>
+                        <related1>[ChildOf : (child:C2, parent:P2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C2, parent:P2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ChildOf : (child:C2, parent:P2)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>T1</source>
+        <target>S1</target>
+        <name>ServiceOffering</name>
+        <properties>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>service</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>1.0</userOffsetX>
+                    <userOffsetY>8.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>tutor</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>8.0</userOffsetX>
+                    <userOffsetY>7.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ServiceOffering</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::0</related0>
+                        <related1>[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ServiceOffering : (service:S1, tutor:T1)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ServiceOffering : (service:S1, tutor:T1)]</linkValue>
+    </edge>
+    <edge type="BinaryEdge">
+        <source>P1</source>
+        <target>C1</target>
+        <name>ChildOf</name>
+        <properties>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>child</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>7.0</userOffsetX>
+                    <userOffsetY>6.0</userOffsetY>
+                    <attached>[ChildOf : (child:C1, parent:P1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ChildOf : (child:C1, parent:P1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>[ChildOf : (child:C1, parent:P1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>parent</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>1.0</userOffsetX>
+                    <userOffsetY>6.0</userOffsetY>
+                    <attached>[ChildOf : (child:C1, parent:P1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>ChildOf</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>[ChildOf : (child:C1, parent:P1)]::WayPoint::0</related0>
+                        <related1>[ChildOf : (child:C1, parent:P1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="[ChildOf : (child:C1, parent:P1)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <linkValue>[ChildOf : (child:C1, parent:P1)]</linkValue>
+    </edge>
+    <edge type="NodeEdge">
+        <source>C1</source>
+        <target>S1</target>
+        <name>GroupEnrollRequest</name>
+        <properties>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>gService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>7.0</userOffsetX>
+                    <userOffsetY>7.0</userOffsetY>
+                    <attached>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>gparticipant</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>5.0</userOffsetX>
+                    <userOffsetY>7.0</userOffsetY>
+                    <attached>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>GroupEnrollRequest</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::0</related0>
+                        <related1>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <connectionNode>
+            <edgeproperty
+                id="GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::-1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="false">
+                <name>-1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>0.0</offsetY>
+                    <related length="2">
+                        <related0>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::0</related0>
+                        <related1>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <id>-1</id>
+                <specialid>7</specialid>
+                <hidden>true</hidden>
+            </edgeproperty>
+        </connectionNode>
+        <associationClass>
+            <node id="GR1" sizeCalculated="true" type="Object">
+                <name>GR1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>2.0</userOffsetX>
+                    <userOffsetY>5.0</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>-54.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH</corner>
+                    <relativeNodeId>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]::WayPoint::-1</relativeNodeId>
+                </strategy>
+                <hidden>false</hidden>
+            </node>
+        </associationClass>
+        <linkValue>GR1 [GroupEnrollRequest : (gService:S1, gparticipant:C1)]</linkValue>
+    </edge>
+    <edge type="NodeEdge">
+        <source>P2</source>
+        <target>T2</target>
+        <name>Dialogue</name>
+        <properties>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::target::rolename"
+                sizeCalculated="true" type="rolename"
+                userDefined="false" visible="true">
+                <name>charRcvr</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::source::rolename"
+                sizeCalculated="true" type="rolename"
+                userDefined="false" visible="true">
+                <name>chatInitiator</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>Dialogue</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::0</related0>
+                        <related1>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <connectionNode>
+            <edgeproperty
+                id="D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::-1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="false">
+                <name>-1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>0.0</offsetY>
+                    <related length="2">
+                        <related0>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::0</related0>
+                        <related1>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <id>-1</id>
+                <specialid>7</specialid>
+                <hidden>true</hidden>
+            </edgeproperty>
+        </connectionNode>
+        <associationClass>
+            <node id="D1" sizeCalculated="true" type="Object">
+                <name>D1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>-121.0</userOffsetX>
+                    <userOffsetY>-110.0</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>-54.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH</corner>
+                    <relativeNodeId>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]::WayPoint::-1</relativeNodeId>
+                </strategy>
+                <hidden>false</hidden>
+            </node>
+        </associationClass>
+        <linkValue>D1 [Dialogue : (charRcvr:T2, chatInitiator:P2)]</linkValue>
+    </edge>
+    <edge type="NodeEdge">
+        <source>C2</source>
+        <target>S2</target>
+        <name>OneOnOneEnrollRequest</name>
+        <properties>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>oooService</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>5.0</userOffsetX>
+                    <userOffsetY>11.0</userOffsetY>
+                    <attached>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::target::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>oooparticipant</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>2.0</userOffsetX>
+                    <userOffsetY>8.0</userOffsetY>
+                    <attached>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
+                userDefined="false" visible="true">
+                <name>*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>OneOnOneEnrollRequest</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::0</related0>
+                        <related1>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </properties>
+        <waypoints>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::0"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>0</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>0</id>
+                <specialid>1</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
+                <name>1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                </strategy>
+                <id>1</id>
+                <specialid>2</specialid>
+                <hidden>false</hidden>
+            </edgeproperty>
+        </waypoints>
+        <hidden>false</hidden>
+        <connectionNode>
+            <edgeproperty
+                id="OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::-1"
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="false">
+                <name>-1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>0.0</offsetY>
+                    <related length="2">
+                        <related0>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::0</related0>
+                        <related1>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <id>-1</id>
+                <specialid>7</specialid>
+                <hidden>true</hidden>
+            </edgeproperty>
+        </connectionNode>
+        <associationClass>
+            <node id="OR1" sizeCalculated="true" type="Object">
+                <name>OR1</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>-16.0</userOffsetX>
+                    <userOffsetY>33.0</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>-54.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH</corner>
+                    <relativeNodeId>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]::WayPoint::-1</relativeNodeId>
+                </strategy>
+                <hidden>false</hidden>
+            </node>
+        </associationClass>
+        <linkValue>OR1 [OneOnOneEnrollRequest : (oooparticipant:C2, oooService:S2)]</linkValue>
+    </edge>
+</diagram_Layout>
