@@ -167,6 +167,7 @@ operations
         self.availStatus := AvailabilityStatus::Free;
     end
 constraints
+    --If the mode of delivery is online then there is no meet location
     inv:
         self.modeOfDelivery = ModeOfDelivery::Online implies self.location = null
 end
@@ -340,16 +341,16 @@ association CreateSpecialMsg between
     SpecialRequest[1..*] role request
 end
 
-/*association OneOnOneEnrollment between 
-    Child[1] role student 
-    Tutor[1] role instructor 
-end 
+-- association OneOnOneEnrollment between 
+--     Child[1] role student 
+--     Tutor[1] role instructor 
+-- end 
 
-association GroupEnrollment between 
-    Child[*] role students 
-    Tutor[1] role groupInstructor 
-end 
-*/
+-- association GroupEnrollment between 
+--     Child[*] role students 
+--     Tutor[1] role groupInstructor 
+-- end 
+-- 
 
 -- ASSOCIATION CLASS -- 
 associationclass Proposal between

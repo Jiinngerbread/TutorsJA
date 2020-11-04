@@ -15,11 +15,24 @@ reset
 !new Payment('P1')
 !new Payment('P2')
 
+!new Review('R1')
+!new Review('R2')
 
-!GR1 := new GroupEnrollRequest('GR1') between (P1, C1, S1, T1)
-!GSP1 := new ServicePayment('GSP1') between (P1, GR1)
+!insert (T1,S1) into ServiceOffering
+!insert (T2,S2) into ServiceOffering
 
-!
+!insert (P1,C1) into ChildOf
+!insert (P2,C2) into ChildOf
 
-!new SpecialRequest('SR1')
+!GR1 := new GroupEnrollRequest('GR1') between (C1, S1)
+!OR1 := new OneOnOneEnrollRequest('OR1') between (C2, S2)
 
+!GSP1 := new GroupServicePayment('GSP1') between (P1, GR1)
+!OSP1 := new OOOServicePayment('OSP1') between (P2, OR1)
+
+!insert (R1,GR1) into ReviewGroupTutor
+!insert (R2,OR1) into ReviewOOOTutor
+
+--!new SpecialRequest('SR1')
+
+!D1 := new Dialogue('D1') between (P2, T2)
