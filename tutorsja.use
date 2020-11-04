@@ -309,10 +309,10 @@ association ReviewOOOTutor between
     OneOnOneEnrollRequest[1] role oooService
 end 
 
-association GroupEnrollment between 
-    Child[*] role students 
-    Tutor[1] role groupInstructor 
-end 
+--association GroupEnrollment between 
+--    Child[*] role students 
+--    Tutor[1] role groupInstructor 
+--end 
 
 -- association RelatedReview between 
 --     Rating[1] role ratings 
