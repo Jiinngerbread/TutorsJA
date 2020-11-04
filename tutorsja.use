@@ -305,7 +305,7 @@ association ChildOf between
 end
 
 association ReviewOOOTutor between 
-    Review[1] role review
+    Review[0..1] role review
     OneOnOneEnrollRequest[1] role oooService
 end 
 
@@ -322,18 +322,18 @@ end
 
 
 association ReviewGroupTutor between 
-    Review[1] role review 
+    Review[0..1] role review 
     GroupEnrollRequest[1] role groupService
 end
 
 
 association GroupServicePayment between 
-    Payment[1..*] role payments 
+    Payment[*] role payments 
     GroupEnrollRequest[1] role groupService
 end
 
 association OOOServicePayment between 
-    Payment[1..*] role payments 
+    Payment[*] role payments 
     OneOnOneEnrollRequest[1] role oooService
 end
 
