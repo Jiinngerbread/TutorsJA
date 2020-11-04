@@ -24,7 +24,7 @@ reset
 !new Tutor('T2')
 
 !set T1.generalStatus := GeneralStatus::Approved
-!set T2.generalStatus := GeneralStatus::Approved
+!set T2.generalStatus := GeneralStatus::Verified
 
 !new Payment('Py1')
 !new Payment('Py2')

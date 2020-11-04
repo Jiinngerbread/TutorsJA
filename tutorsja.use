@@ -270,7 +270,7 @@ operations
 constraints
     --Only tutors who are approved may offer services 
     inv:
-        self.service->size() > 0 implies self.generalStatus = GeneralStatus::Approved
+        self.service->size() > 0 implies self.generalStatus <> GeneralStatus::Not_Approved
     --A tutor has at most 1 calendar
     --inv:
         --self.tutorCalendar->size() <= 1 
