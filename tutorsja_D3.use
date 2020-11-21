@@ -48,6 +48,16 @@ operations
     end
 end
 
+class Subject
+attributes
+	name: String
+end
+
+class ArrayList
+attributes
+	size: Integer
+end
+
 
 
 -- ABSTRACT CLASSES --
@@ -138,7 +148,7 @@ end
 class Role < Receiver
 attributes	
 	--modesOfDelivery (association)
-	--subjects (association)
+	subjects: ArrayList
 	--specialNeeds (association)
 end
 
@@ -173,7 +183,7 @@ end
 
 class SpecialRequest < Message
 attributes
-	--subjects (association)
+	subjects: ArrayList
 	--modesOfDelivery (assocation)
 	--specialNeeds (association)
 	status: SRStatus
@@ -271,6 +281,13 @@ association ServiceTimeSlots between
 	Service[1]
 	Slot[*] role timeSlots
 end
+
+--Associations Replacing Sets--
+association SubjectArrayList between
+	Subject[*]
+	ArrayList[*]
+end
+
 
 -- ASSOCIATION CLASS -- 
 associationclass EnrolRequest between
