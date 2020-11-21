@@ -14,8 +14,7 @@ enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
 enum SRStatus {Unanswered, Answered, Resolved, Outdated}
 enum Sex {Male, Female}
 enum EnrollmentStatus {Accepted, Denied, Pending}
-enum AgrStatus{Agree, Disagree}-- enum EnrollmentStatus {Accepted, Denied, Pending}
--- enum AgrStatus{Agree, Disagree}
+enum AgrStatus{Agree, Disagree}
 
 
 
@@ -107,8 +106,8 @@ attributes
 	grade: Grade
     subjects: ArrayList //because may need to teach more than subject esp for services to meet special requests; these subjects may also be at varying grade levels
     location: String
-    modeOfDelivery: ModeOfDelivery
-    serviceType: ServiceType
+    modeOfDelivery: ModeOfDelivery --use the Datatype here? (but single and not arraylist) 
+    serviceType: ServiceType --use the Datatype here? (but single and not arraylist) 
     duration: Period
     initialDur: Period 
     meetingDays: ArrayList //list of Session objects
@@ -178,7 +177,7 @@ class Role < Receiver
 attributes	
 	modesOfDelivery: ArrayList //list of ModeOfDel objects
 	subjects: ArrayList //list of Subject objects
-	--specialNeeds (association)
+	-- DONE specialNeeds (association) //DONE
 end
 
 class Child < Role
@@ -198,7 +197,7 @@ class Tutor < Role
 attributes
 	-- PREV: grades (association) //Covered by subjects attribute in role
 	generalStatus: GeneralStatus
-	--certifications (association)
+	--DONE certifications (association) //DONE
 	securityCode: Integer
 --operations
 constraints	
@@ -214,7 +213,7 @@ class SpecialRequest < Message
 attributes
 	subjects: ArrayList //list of Subject objects
 	modesOfDelivery: ArrayList //list of ModeOfDel objects
-	--specialNeeds (association)
+	--DONE specialNeeds (association) //DONE
 	status: SRStatus
 	neededBy: Date
 	daysPast: Integer
