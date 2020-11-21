@@ -51,6 +51,23 @@ end
 class Subject
 attributes
 	name: String
+	gradeLevel: Grade
+end
+
+class Session
+attributes
+	day: Days
+	time: String
+end
+
+class ModeOfDel
+attributes
+	mod: ModeOfDelivery
+end
+
+class TypeOfService
+attributes		
+	type: ServiceType
 end
 
 class ArrayList
@@ -70,8 +87,6 @@ end
 
 -- CONCRETE CLASSES --
 
--------------NEEDED: Calendar, Slot, Schedule --or whatever the right combination is
-
 class Person
 attributes
 	fname: String
@@ -90,13 +105,13 @@ end
 class Service
 attributes
 	grade: Grade
-    --subjects (association) //because may need to teach more than subject esp for services to meet special requests
+    subjects: ArrayList //because may need to teach more than subject esp for services to meet special requests; these subjects may also be at varying grade levels
     location: String
     modeOfDelivery: ModeOfDelivery
     serviceType: ServiceType
     duration: Period
     initialDur: Period 
-    --meetingDays (assocation)
+    meetingDays: ArrayList //list of Session objects
     numOfSlots: Integer
     currentRun: Period
     rate: Real
@@ -121,8 +136,8 @@ attributes
 	topic: String
 	text: String
 	date: Date
-	--attachments (association)
-	--isProposal: Boolean --doing it this way?
+	-- DONE attachments (association) // DONE
+	--isProposal: Boolean --doing it this way? // So far: no
 --operations
 --constraints
 end 
@@ -138,17 +153,31 @@ end
 
 class Slot
 attributes
-	sessionInfo: String
+	lessonInfo: String 
 	date: Date
 end
 
+class SpecialNeed
+attributes
+	need: String
+	description: String
+end
+
+class Certification
+attributes
+	name: String
+	knowledgeArea: String
+	certifyingBody: String
+	dateOfCertification: String
+	validDuration: Period
+end
 
 
 -- EXTENDED CONCRETE CLASSES --
 class Role < Receiver
 attributes	
-	--modesOfDelivery (association)
-	subjects: ArrayList
+	modesOfDelivery: ArrayList //list of ModeOfDel objects
+	subjects: ArrayList //list of Subject objects
 	--specialNeeds (association)
 end
 
@@ -159,7 +188,7 @@ attributes
 	dob: Date
 	chSex: Sex
 	age: Integer
-	--serviceTypes (association)
+	serviceTypes: ArrayList //list of TypeOfService objects
 --operations
 constraints
 	--person:isParent = True implies cannot enrol with tutors who belong to the same person
@@ -167,7 +196,7 @@ end
 
 class Tutor < Role 
 attributes
-	--grades (association)
+	-- PREV: grades (association) //Covered by subjects attribute in role
 	generalStatus: GeneralStatus
 	--certifications (association)
 	securityCode: Integer
@@ -183,8 +212,8 @@ end
 
 class SpecialRequest < Message
 attributes
-	subjects: ArrayList
-	--modesOfDelivery (assocation)
+	subjects: ArrayList //list of Subject objects
+	modesOfDelivery: ArrayList //list of ModeOfDel objects
 	--specialNeeds (association)
 	status: SRStatus
 	neededBy: Date
@@ -227,27 +256,27 @@ association ServiceOffering between
 	Service[*] role service
 end
 
-association ReviewTutorService between
+association TutorServiceReview between
 	EnrolRequest[1] role tutorService
 	Review[0..1] role review
 end
 
-association ServicePayment between
+association ServicePayments between
 	EnrolRequest[1] role tutorService
 	Payment[*] role payment
 end
 
-association SentMessage between
+association SentMessages between
 	Role[1] role sender
 	Message[*] role sentMsgs
 end  
 
-association ReceivedMessage between
+association ReceivedMessages between
 	Receiver[1] role receiver
 	Message[*] role rcvdMsgs
 end 
 
-association SpecReqResponse between
+association SpecReqResponses between
 	SpecialRequest[1] role specialRequest 
 	Proposal[*] role proposals
 end
@@ -286,6 +315,36 @@ end
 association SubjectArrayList between
 	Subject[*]
 	ArrayList[*]
+end
+
+association SessionArrayList between
+	Session[*]
+	ArrayList[*]
+end
+
+association	MODArrayList between
+	ModeOfDel[*]
+	ArrayList[*]
+end
+
+association	TOSArrayList between
+	TypeOfService[*]
+	ArrayList[*]
+end
+
+association RoleSpecNeeds between
+	Role[1]
+	SpecialNeed[*] role specNeeds
+end
+
+association SpecReqSpecNeeds between
+	SpecialRequest[1]
+	SpecialNeed[*] role specNeeds
+end
+
+association tutorCertifications between
+	Tutor[1]
+	Certification[*] role certifications
 end
 
 
