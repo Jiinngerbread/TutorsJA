@@ -1,0 +1,250 @@
+/* Group: TripleJ */
+
+model TutorsJA
+
+
+-- ENUMS -- 
+enum GeneralStatus {Not_Approved, Approved, Verified}
+enum Grade {Kg3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
+enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
+enum ModeOfDelivery {Online, Face_To_Face, Blended}
+enum ServiceType {One_On_One, Group}
+enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
+enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
+enum SRStatus {Unanswered, Answered, Resolved, Outdated}
+enum Sex {Male, Female}
+enum EnrollmentStatus {Accepted, Denied, Pending}
+enum AgrStatus{Agree, Disagree}-- enum EnrollmentStatus {Accepted, Denied, Pending}
+-- enum AgrStatus{Agree, Disagree}
+
+
+
+-- DATATYPE CLASSES --
+class Date 
+attributes 
+    day: Integer
+    month: Integer
+    year: Integer
+operations
+    DateInit(d: Integer, m: Integer, y: Integer)
+    begin
+        self.day := d;
+        self.month := m;
+        self.year:= y;
+    end
+end
+
+class Period  
+--PREV: to be used to show a range of days on a calendar or period within which a service is offered
+--still applicable? See Service
+attributes
+    startDate: Date
+    endDate: Date
+operations
+    PeriodInit(sDate: Date, eDate: Date)
+    begin
+        self.startDate := sDate;
+        self.endDate := eDate;
+    end
+end
+
+
+
+-- ABSTRACT CLASSES --
+
+abstract class Receiver
+attributes
+end 
+
+
+
+-- CONCRETE CLASSES --
+
+-------------NEEDED: Calendar, Slot, Schedule --or whatever the right combination is
+
+class Person
+attributes
+	fname: String
+	lname: String
+	username: String
+	password: String
+	sex: Sex
+	isParent: Boolean
+	location: String
+--operations
+constraints
+	--<= 1 tutor role
+	--isParent=True implies >= 1 child role
+end 
+
+class Service
+attributes
+	grade: Grade
+    --subjects (association) //because may need to teach more than subject esp for services to meet special requests
+    location: String
+    modeOfDelivery: ModeOfDelivery
+    serviceType: ServiceType
+    duration: Period
+    initialDur: Period 
+    --meetingDays (assocation)
+    numOfSlots: Integer
+    currentRun: Period
+    rate: Real
+    availStatus: AvailabilityStatus
+--operations
+end
+
+class Review
+attributes 
+    rating: Ratings
+    reviewTxt: String
+end 
+
+class Payment
+attributes
+    amount: Real
+    datePayed: Date
+end
+
+class Message
+attributes
+	topic: String
+	text: String
+	date: Date
+	--attachments (association)
+	--isProposal: Boolean --doing it this way?
+--operations
+--constraints
+end 
+
+class Attachment
+end
+
+
+
+-- EXTENDED CONCRETE CLASSES --
+class Role < Receiver
+attributes	
+	--modesOfDelivery (association)
+	--subjects (association)
+	--specialNeeds (association)
+end
+
+class Child < Role
+attributes
+	chName: String
+	grade: Grade
+	dob: Date
+	chSex: Sex
+	age: Integer
+	--serviceTypes (association)
+--operations
+constraints
+	--person:isParent = True implies cannot enrol with tutors who belong to the same person
+end
+
+class Tutor < Role 
+attributes
+	--grades (association)
+	generalStatus: GeneralStatus
+	--certifications (association)
+	securityCode: Integer
+--operations
+constraints	
+	--cannot enrol children who belong to the same person
+end
+
+class BulletinBoard < Receiver
+attributes
+	--?
+end
+
+class SpecialRequest < Message
+attributes
+	--subjects (association)
+	--modesOfDelivery (assocation)
+	--specialNeeds (association)
+	status: SRStatus
+	neededBy: Date
+	daysPast: Integer
+--operations
+constraints
+	--Receiver must be Bulletin Board
+end
+
+class Proposal < Message
+attributes
+	--?
+end
+
+class Image < Attachment
+end
+
+class Video < Attachment
+end
+
+class Audio < Attachment
+end
+
+class PDF < Attachment
+end
+
+class WordDoc < Attachment
+end
+
+-- ASSOCIATIONS IN MODEL -- 
+association PersonRole between
+	Person[1] role person
+	Role[1..*] role roles
+end
+
+association ServiceOffering between
+	Tutor[1] role tutor
+	Service[*] role service
+end
+
+association ReviewTutorService between
+	EnrolRequest[1] role tutorService
+	Review[0..1] role review
+end
+
+association ServicePayment between
+	EnrolRequest[1] role tutorService
+	Payment[*] role payment
+end
+
+association SentMessage between
+	Role[1] role sender
+	Message[*] role sentMsgs
+end  
+
+association ReceivedMessage between
+	Receiver[1] role receiver
+	Message[*] role rcvdMsgs
+end 
+
+association SpecReqResponse between
+	SpecialRequest[1] role specialRequest 
+	Proposal[*] role proposals
+end
+
+association MsgMedia between
+	Message[1] role message
+	Attachment[*] role attachments 
+end
+
+
+-- ASSOCIATION CLASS -- 
+associationclass EnrolRequest between
+	Child[*] role tutee
+	Service[*] role service
+attributes
+	acceptanceStatus: EnrollmentStatus
+	tutorAgreement: AgrStatus
+    parentAgreement: AgrStatus
+--operations
+	--setting of attributes differs based on value for serviceType of the Service
+constraints
+	-- consider multiplicities for group vs ooo
+end 
+
