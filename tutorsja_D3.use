@@ -120,6 +120,18 @@ end
 class Attachment
 end
 
+class Calendar
+end
+
+class Schedule
+end
+
+class Slot
+attributes
+	sessionInfo: String
+	date: Date
+end
+
 
 
 -- EXTENDED CONCRETE CLASSES --
@@ -192,6 +204,8 @@ end
 class WordDoc < Attachment
 end
 
+
+
 -- ASSOCIATIONS IN MODEL -- 
 association PersonRole between
 	Person[1] role person
@@ -233,6 +247,30 @@ association MsgMedia between
 	Attachment[*] role attachments 
 end
 
+association CalendarforSchedule between
+	Calendar[1] 
+	Schedule[*] role schedules
+end
+
+association TutorSchedule between
+	Tutor[1] 
+	Schedule[1] 
+end
+
+association ChildSchedule between
+	Child[1] 
+	Schedule[1] 
+end
+
+association ScheduleSlots between
+	Schedule[*] role schedulesWithSlot
+	Slot[*] role slots
+end
+
+association ServiceTimeSlots between
+	Service[1]
+	Slot[*] role timeSlots
+end
 
 -- ASSOCIATION CLASS -- 
 associationclass EnrolRequest between
