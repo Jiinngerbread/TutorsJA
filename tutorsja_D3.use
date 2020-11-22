@@ -122,6 +122,17 @@ class Review
 attributes 
     rating: Ratings
     reviewTxt: String
+operations
+	setRating(r:Ratings) 
+		begin
+			self.rating := r;
+		end
+
+	setReviewTxt(t:String)
+		begin		
+			self.reviewTxt := t;
+		end 
+
 end 
 
 class Payment
@@ -177,6 +188,7 @@ class Role < Receiver
 attributes	
 	modesOfDelivery: ArrayList //list of ModeOfDel objects
 	subjects: ArrayList //list of Subject objects
+	serviceTypes: ArrayList //list of TypeOfService objects
 	-- DONE specialNeeds (association) //DONE
 end
 
@@ -187,8 +199,30 @@ attributes
 	dob: Date
 	chSex: Sex
 	age: Integer
-	serviceTypes: ArrayList //list of TypeOfService objects
---operations
+operations
+	isRelevantTutorForChild(t: Tutor): Boolean =
+			let childSubjects: Set(Subject) = subjects.subject, 
+				childMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
+				childTOSs: Set(TypeOfService) = serviceTypes.typeOfService, 
+				subjBool: Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
+				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(childMODs)->size() > 0, 
+				tosBool: Boolean = t.serviceTypes.typeOfService->intersection(childTOSs)->size() > 0 
+
+				in
+				
+				subjBool and modBool and tosBool
+
+	listRelevantTutors(): Set(Tutor)
+		begin
+			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
+		end 		
+	pre: subjects.subject->size() > 0 --child must have subjects
+	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+	-- pre: modesOfDelivery.modeOfDel->size() > 0
+	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+	-- pre: serviceTypes.typeOfService->size() > 0
+	-- pre: t.serviceTypes.typeOfService->size() > 0
+	post: true --TO DO
 constraints
 	--person:isParent = True implies cannot enrol with tutors who belong to the same person
 end
@@ -357,17 +391,25 @@ attributes
     parentAgreement: AgrStatus
 operations
 	canReviewService() : Boolean =
-		begin
-			declare attendances: Attendance;
-			attendances := tutee.schedule.Attendance; 
-			
-			declare numOfSlots: Integer;
-			numOfSlots := attendances->size();
+		let attendances: Set(Attendance) = tutee.schedule.attendance, 
+			numOfSlots: Integer = attendances->size()
 
-			result := attendances.select(present = True)->size() >= numOfSlots/2;
+		 in
+			attendances.select(present = true)->size() >= numOfSlots/2
+			and
+			self.acceptanceStatus = EnrollmentStatus::Accepted
+		
+	reviewService(rating:Ratings, text:String)
+		begin
+			declare r:Review;
+			r := new Review();
+			r.setRating(rating);
+			r.setReviewTxt(text);
 		end
-	pre: acceptanceStatus = EnrollmentStatus::Accepted
-	post: true --TO DO
+	
+	pre: canReviewService()
+	post: self.review <> null 
+	post: self.service.enrolRequest.review->size() = self.service.enrolRequest.review@pre->size() + 1
 
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
