@@ -118,25 +118,19 @@ attributes
     availStatus: AvailabilityStatus
 	activeStatus: ActiveStatus 
 operations
-	-- UpdateActiveStatus()
-	-- begin
-	-- 	if self.tutor.schedule.attendance->forAll(present = true) then
-	-- 		-- begin
-	-- 			self.activeStatus := ActiveStatus::Closed
-	-- 		-- end;
-	-- 	-- end
-	-- 	if self.tutor.schedule.attendance->exists(present = true) then
-	-- 		-- begin
-	-- 			self.activeStatus := ActiveStatus::Active
-	-- 		-- end;
-	-- 	else
-	-- 		-- begin
-	-- 			self.activeStatus := ActiveStatus::Not_Started
-	-- 		-- end;
-	-- 	-- end
-	-- end
-	-- pre: self.tutor.schedule.attendance->size() > 0 
-	-- post: self.activeStatus <> null
+	UpdateActiveStatus()
+	begin
+		if (self.tutor.schedule.attendance->forAll(present = true)) then
+			self.activeStatus := ActiveStatus::Closed
+		endif
+		if (self.tutor.schedule.attendance->exists(present = true)) then
+			self.activeStatus := ActiveStatus::Active
+		else
+			self.activeStatus := ActiveStatus::Not_Started
+		endif
+	end
+	pre: self.tutor.schedule.attendance->size() > 0 
+	post: self.activeStatus <> null
 constraints
 	--If the mode of delivery is online then there is no meet location
     inv:
