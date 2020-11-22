@@ -109,10 +109,10 @@ attributes
     modeOfDelivery: ModeOfDelivery --use the Datatype here? (but single and not arraylist) 
     serviceType: ServiceType --use the Datatype here? (but single and not arraylist) 
     duration: Period
-    initialDur: Period 
+    initialDur: Period --?
     meetingDays: ArrayList //list of Session objects
-    numOfSlots: Integer
-    currentRun: Period
+    numOfSpaces: Integer
+    currentDate: Date 
     rate: Real
     availStatus: AvailabilityStatus
 --operations
@@ -300,10 +300,10 @@ association ChildSchedule between
 	Schedule[1] 
 end
 
-association ScheduleSlots between
-	Schedule[*] role schedulesWithSlot
-	Slot[*] role slots
-end
+-- association ScheduleSlots between
+-- 	Schedule[*] role schedulesWithSlot
+-- 	Slot[*] role slots
+-- end
 
 association ServiceTimeSlots between
 	Service[1]
@@ -355,9 +355,29 @@ attributes
 	acceptanceStatus: EnrollmentStatus
 	tutorAgreement: AgrStatus
     parentAgreement: AgrStatus
---operations
+operations
+	canReviewService() : Boolean =
+		begin
+			declare attendances: Attendance;
+			attendances := tutee.schedule.Attendance; 
+			
+			declare numOfSlots: Integer;
+			numOfSlots := attendances->size();
+
+			result := attendances.select(present = True)->size() >= numOfSlots/2;
+		end
+	pre: acceptanceStatus = EnrollmentStatus::Accepted
+	post: true --TO DO
+
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
 	-- consider multiplicities for group vs ooo
 end 
 
+
+associationclass Attendance between
+ 	Schedule[*] role schedulesWithSlot
+ 	Slot[*] role slots
+attributes
+	present: Boolean
+end
