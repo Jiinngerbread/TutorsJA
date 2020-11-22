@@ -7,6 +7,7 @@ model TutorsJA
 enum GeneralStatus {Not_Approved, Approved, Verified}
 enum Grade {Kg3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
 enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
+enum ActiveStatus {Active, Ended}
 enum ModeOfDelivery {Online, Face_To_Face, Blended}
 enum ServiceType {One_On_One, Group}
 enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
@@ -115,7 +116,27 @@ attributes
     currentDate: Date 
     rate: Real
     availStatus: AvailabilityStatus
---operations
+	activeStatus: ActiveStatus 
+operations
+	-- UpdateActiveStatus()
+	-- begin
+	-- 	if self.tutor.schedule.attendance->forAll(present = true) then
+	-- 		-- begin
+	-- 			self.activeStatus := ActiveStatus::Closed
+	-- 		-- end;
+	-- 	-- end
+	-- 	if self.tutor.schedule.attendance->exists(present = true) then
+	-- 		-- begin
+	-- 			self.activeStatus := ActiveStatus::Active
+	-- 		-- end;
+	-- 	else
+	-- 		-- begin
+	-- 			self.activeStatus := ActiveStatus::Not_Started
+	-- 		-- end;
+	-- 	-- end
+	-- end
+	-- pre: self.tutor.schedule.attendance->size() > 0 
+	-- post: self.activeStatus <> null
 constraints
 	--If the mode of delivery is online then there is no meet location
     inv:
@@ -172,6 +193,7 @@ class Slot
 attributes
 	lessonInfo: String 
 	date: Date
+	time: String
 end
 
 class SpecialNeed
