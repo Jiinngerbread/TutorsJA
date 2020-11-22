@@ -216,7 +216,7 @@ operations
 		begin
 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
 		end 		
-	pre: subjects.subject->size() > 0 --child must have subjects
+	pre: self.subjects.subject->size() > 0 --child must have subjects
 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
 	-- pre: modesOfDelivery.modeOfDel->size() > 0
 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
@@ -251,7 +251,23 @@ attributes
 	status: SRStatus
 	neededBy: Date
 	daysPast: Integer
---operations
+operations
+	isRelevantTutorForSpecReq(t: Tutor): Boolean =
+			let srSubjects: Set(Subject) = subjects.subject, 
+				srMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
+				subjBool: Boolean = t.subjects.subject->intersection(srSubjects)->size() > 0, 
+				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(srMODs)->size() > 0 
+
+				in
+				
+				subjBool and modBool and t.serviceTypes.typeOfService->select(type = ServiceType::One_On_One)->size() > 0
+
+	listRelevantTutorsSR(): Set(Tutor)
+		begin
+			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
+		end 		
+	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
+	post: true //To Do 
 constraints
 	--Receiver must be Bulletin Board
 end
