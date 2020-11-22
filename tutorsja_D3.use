@@ -267,7 +267,7 @@ operations
 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 		end 		
 	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
-	post: true //To Do 
+	post: true 
 constraints
 	--Receiver must be Bulletin Board
 end
@@ -359,6 +359,11 @@ association ServiceTimeSlots between
 	Service[1]
 	Slot[*] role timeSlots
 end
+
+association MembershipPayments between
+	Tutor[1]
+	Payment[*] role payments
+end 
 
 --Associations Replacing Sets--
 association SubjectArrayList between
