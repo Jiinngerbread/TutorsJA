@@ -244,7 +244,7 @@
         </strategy>
         <hidden>false</hidden>
     </node>
-    <node height="52.0" id="Slot" sizeCalculated="false" type="Class" width="113.3330078125">
+    <node height="68.0" id="Slot" sizeCalculated="false" type="Class" width="126.3330078125">
         <name>Slot</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
             <x>796.0</x>
@@ -886,8 +886,8 @@
                 sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>3</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-                    <userOffsetX>17.697803504992862</userOffsetX>
-                    <userOffsetY>26.0</userOffsetY>
+                    <userOffsetX>20.697803504992862</userOffsetX>
+                    <userOffsetY>31.0</userOffsetY>
                     <basisDeltaX>ABSOLUTE</basisDeltaX>
                     <deltaX>0.0</deltaX>
                     <maxDeltaX>1.7976931348623157E308</maxDeltaX>
