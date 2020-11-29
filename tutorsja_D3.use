@@ -252,7 +252,7 @@ operations
 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
 	-- pre: serviceTypes.typeOfService->size() > 0
 	-- pre: t.serviceTypes.typeOfService->size() > 0
-	post: result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
+	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
 constraints
 	--A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
@@ -305,7 +305,7 @@ operations
 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 		end 		
 	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
-	post: result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
+	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 constraints
 	--Receiver must be Bulletin Board
 end
