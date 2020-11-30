@@ -24,15 +24,19 @@ enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 -- DATATYPE CLASSES --
 class Date 
 attributes 
+	hour: Integer
+	min: Integer
     day: Integer
     month: Integer
     year: Integer
 operations
-    DateInit(d: Integer, m: Integer, y: Integer)
+    DateInit(d: Integer, m: Integer, y: Integer, h: Integer, min: Integer)
     begin
         self.day := d;
         self.month := m;
         self.year:= y;
+		self.hour := h;
+		self.min := min;
     end
 
 	equals(d: Date)
@@ -87,7 +91,13 @@ end
 class Session
 attributes
 	day: Days
-	time: String
+	startTime: Date
+	endTime: Date
+	recurring: Boolean
+	startRecurring: Date
+	endRecurring: Date
+	duration: Period
+    -- initialDur: Period --?
 end
 
 class ModeOfDel
@@ -139,35 +149,35 @@ attributes
     location: String
     -- modeOfDelivery: ModeOfDel 
     -- serviceType: TypeOfService
-    duration: Period
-    initialDur: Period --?
+    -- duration: Period
+    -- initialDur: Period --?
     -- meetingDays: ArrayList //list of Session objects
     numOfSpaces: Integer
     currentDate: Date 
     rate: Real
     availStatus: AvailabilityStatus
 	activeStatus: ActiveStatus 
-operations
-	UpdateActiveStatus()
-	begin
-		if self.tutor.schedule.attendance->forAll(a | a.present = true) then
-			begin 
-				self.activeStatus := ActiveStatus::Closed
-			end;
-		end;
-		if self.tutor.schedule.attendance->exists(a | a.present = true) then
-			begin 
-				self.activeStatus := ActiveStatus::Active
-			end;
-		else
-			begin 
-				self.activeStatus := ActiveStatus::Not_Started
-			end;
-		end;
+-- operations
+-- 	UpdateActiveStatus()
+-- 	begin
+-- 		if self.tutor.schedule.attendance->forAll(a | a.present = true) then
+-- 			begin 
+-- 				self.activeStatus := ActiveStatus::Closed
+-- 			end;
+-- 		end;
+-- 		if self.tutor.schedule.attendance->exists(a | a.present = true) then
+-- 			begin 
+-- 				self.activeStatus := ActiveStatus::Active
+-- 			end;
+-- 		else
+-- 			begin 
+-- 				self.activeStatus := ActiveStatus::Not_Started
+-- 			end;
+-- 		end;
 
-	end
-	pre: self.tutor.schedule.attendance->size() > 0 
-	post: self.activeStatus <> null
+-- 	end
+-- 	pre: self.tutor.schedule.attendance->size() > 0 
+-- 	post: self.activeStatus <> null
 constraints
 	--If the mode of delivery is online then there is no meet location
     -- inv:
@@ -221,14 +231,15 @@ end
 class Calendar
 end
 
-class Schedule
-end
+-- class Schedule
+-- end
 
 class Slot
 attributes
 	lessonInfo: String 
 	date: Date
 	time: String
+	-- sessionNum: Integer
 end
 
 class SpecialNeed
@@ -401,7 +412,8 @@ end
 
 association ServicePayments between
 	EnrolRequest[1] role tutorService
-	Payment[*] role payment
+	-- Payment[*] role payment
+	PaymentToTutor[1..*] role payment
 end
 
 association SentMessages between
@@ -429,19 +441,19 @@ association ScannedCert between
 	Attachment[*] role scan
 end
 
-association CalendarforSchedule between
-	Calendar[1] 
-	Schedule[*] role schedules
-end
+-- association CalendarforSchedule between
+-- 	Calendar[1] 
+-- 	Schedule[*] role schedules
+-- end
 
-association TutorSchedule between
+association TutorSession between
 	Tutor[1] 
-	Schedule[1] 
+	Session[*] 
 end
 
-association ChildSchedule between
+association ChildSession between
 	Child[1] 
-	Schedule[1] 
+	Session[*] 
 end
 
 -- association ScheduleSlots between
@@ -449,14 +461,20 @@ end
 -- 	Slot[*] role slots
 -- end
 
-association ServiceTimeSlots between
-	Service[1]
-	Slot[*] role timeSlots
+-- association ServiceSessions between
+-- 	Service[1]
+-- 	Session[*] role sessions
+-- end
+
+association SessionSlots between
+	Session[*] 
+	Slot[1..*]
 end
 
 association MembershipPayments between
 	Tutor[1]
-	Payment[*] role payments
+	-- Payment[*] role payments
+	Subscription[1..*] role payments
 end 
 
 --Associations Replacing Sets--
@@ -525,8 +543,8 @@ association TOSofChildInterest between
 end
 
 association SessionsOfService between
-	Session[1..*]
-	Service[1]
+	Session[1..*] role sessionsInServ
+	Service[1] role serv
 end
 
 -- >Special Request Association Sets
@@ -550,29 +568,29 @@ attributes
 	acceptanceStatus: EnrollmentStatus
 	tutorAgreement: AgrStatus
     parentAgreement: AgrStatus
-operations
-	canReviewService() : Boolean =
-		let attendances: Set(Attendance) = tutee.schedule.attendance, 
-			numOfSlots: Integer = attendances->size()
+-- operations
+-- 	canReviewService() : Boolean =
+-- 		let attendances: Set(Attendance) = tutee.schedule.attendance, 
+-- 			numOfSlots: Integer = attendances->size()
 
-		 in
-			attendances.select(present = true)->size() >= numOfSlots/2
-			and
-			self.acceptanceStatus = EnrollmentStatus::Accepted
+-- 		 in
+-- 			attendances.select(present = true)->size() >= numOfSlots/2
+-- 			and
+-- 			self.acceptanceStatus = EnrollmentStatus::Accepted
 		
-	reviewService(rating:Ratings, text:String)
-		begin
-			declare r:Review;
-			r := new Review();
-			r.setRating(rating);
-			r.setReviewTxt(text);
-		end
+-- 	reviewService(rating:Ratings, text:String)
+-- 		begin
+-- 			declare r:Review;
+-- 			r := new Review();
+-- 			r.setRating(rating);
+-- 			r.setReviewTxt(text);
+-- 		end
 	
-	pre: canReviewService()
-	pre: text <> null 
-	pre: rating <> null 
-	post: self.review = text 
-	post: self.service.enrolRequest.review->size() = self.service.enrolRequest.review@pre->size() + 1
+-- 	pre: canReviewService()
+-- 	pre: text <> null 
+-- 	pre: rating <> null 
+-- 	post: self.review = text 
+-- 	post: self.service.enrolRequest.review->size() = self.service.enrolRequest.review@pre->size() + 1
 
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
@@ -581,8 +599,8 @@ end
 
 
 associationclass Attendance between
- 	Schedule[*] role schedulesWithSlot
- 	Slot[*] role slots
+	Role[*] role participant
+	Slot[1..*] role lesson
 attributes
 	present: Boolean
 end
