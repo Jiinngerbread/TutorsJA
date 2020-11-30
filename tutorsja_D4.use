@@ -49,8 +49,6 @@ operations
 end
 
 class Period  
---PREV: to be used to show a range of days on a calendar or period within which a service is offered
---still applicable? See Service
 attributes
     startDate: Date
     endDate: Date
@@ -110,12 +108,6 @@ attributes
 	type: ServiceType
 end
 
--- class ArrayList
--- attributes
--- 	size: Integer
--- end
-
-
 
 -- ABSTRACT CLASSES --
 
@@ -145,13 +137,7 @@ end
 class Service
 attributes
 	gradeLvl: Grade
-    -- subjects: Subject
     location: String
-    -- modeOfDelivery: ModeOfDel 
-    -- serviceType: TypeOfService
-    -- duration: Period
-    -- initialDur: Period --?
-    -- meetingDays: ArrayList //list of Session objects
     numOfSpaces: Integer
     currentDate: Date 
     rate: Real
@@ -219,20 +205,12 @@ attributes
 	topic: String
 	text: String
 	date: Date
-	-- DONE attachments (association) // DONE
-	--isProposal: Boolean --doing it this way? // So far: no
 --operations
 --constraints
 end 
 
 class Attachment
 end
-
--- class Calendar
--- end
-
--- class Schedule
--- end
 
 class Slot
 attributes
@@ -267,10 +245,6 @@ end
 class Role < Receiver
 attributes	
 	status: AccountStatus
-	-- modesOfDelivery: ArrayList //list of ModeOfDel objects
-	-- subjects: ArrayList //list of Subject objects
-	-- serviceTypes: ArrayList //list of TypeOfService objects
-	-- DONE specialNeeds (association) //DONE
 end
 
 class Child < Role
@@ -314,9 +288,7 @@ end
 
 class Tutor < Role 
 attributes
-	-- PREV: grades (association) //Covered by subjects attribute in role
 	generalStatus: GeneralStatus
-	--DONE certifications (association) //DONE
 	securityCode: Integer
 --operations
 constraints	
@@ -334,9 +306,6 @@ end
 
 class SpecialRequest < Message
 attributes
-	-- subjects: ArrayList //list of Subject objects
-	-- modesOfDelivery: ArrayList //list of ModeOfDel objects
-	--DONE specialNeeds (association) //DONE
 	status: SRStatus
 	neededBy: Date
 	daysPast: Integer
@@ -441,11 +410,6 @@ association ScannedCert between
 	Attachment[*] role scan
 end
 
--- association CalendarforSchedule between
--- 	Calendar[1] 
--- 	Schedule[*] role schedules
--- end
-
 association TutorSession between
 	Tutor[1] 
 	Session[*] 
@@ -455,16 +419,6 @@ association ChildSession between
 	Child[1] 
 	Session[*] 
 end
-
--- association ScheduleSlots between
--- 	Schedule[*] role schedulesWithSlot
--- 	Slot[*] role slots
--- end
-
--- association ServiceSessions between
--- 	Service[1]
--- 	Session[*] role sessions
--- end
 
 association SessionSlots between
 	Session[*] 
