@@ -39,20 +39,9 @@ operations
 	begin
 	end
 
-	isGreaterThan()
+	before(d: Date)
 	begin
 	end
-
-	overlap()
-	begin
-	end
-
-	contains()
-	begin
-	end
-
-
-
 end
 
 class Period  
@@ -68,19 +57,23 @@ operations
         self.endDate := eDate;
     end
 
-	equals()
+	equals(p:Period)
 	begin
 	end
 
-	isGreaterThan()
+	isGreaterThan(p:Period)
 	begin
 	end
 
-	overlap()
+	before(p:Period)
 	begin
 	end
 
-	contains()
+	overlap(p:Period)
+	begin
+	end
+
+	contains(p:Period)
 	begin
 	end
 end
@@ -177,8 +170,8 @@ operations
 	post: self.activeStatus <> null
 constraints
 	--If the mode of delivery is online then there is no meet location
-    inv:
-        self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
+    -- inv:
+    --     self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
 end
 
 class Review
@@ -254,6 +247,7 @@ attributes
 operations
 	update(c:Certification)
 	begin
+	--doc and vd and the attachment needs to be updated 
 	end
 end
 
@@ -275,30 +269,30 @@ attributes
 	dob: Date
 	chSex: Sex
 	age: Integer
-operations
-	isRelevantTutorForChild(t: Tutor): Boolean =
-			let childSubjects: Set(Subject) = subjects.subject, 
-				childMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
-				childTOSs: Set(TypeOfService) = serviceTypes.typeOfService, 
-				subjBool: Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
-				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(childMODs)->size() > 0, 
-				tosBool: Boolean = t.serviceTypes.typeOfService->intersection(childTOSs)->size() > 0 
+-- operations
+-- 	isRelevantTutorForChild(t: Tutor): Boolean =
+-- 			let childSubjects: Set(Subject) = subjects.subject, 
+-- 				childMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
+-- 				childTOSs: Set(TypeOfService) = serviceTypes.typeOfService, 
+-- 				subjBool: Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
+-- 				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(childMODs)->size() > 0, 
+-- 				tosBool: Boolean = t.serviceTypes.typeOfService->intersection(childTOSs)->size() > 0 
 
-				in
+-- 				in
 				
-				subjBool and modBool and tosBool
+-- 				subjBool and modBool and tosBool
 
-	listRelevantTutors(): Set(Tutor)
-		begin
-			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
-		end 		
-	pre: self.subjects.subject->size() > 0 --child must have subjects
-	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
-	-- pre: modesOfDelivery.modeOfDel->size() > 0
-	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
-	-- pre: serviceTypes.typeOfService->size() > 0
-	-- pre: t.serviceTypes.typeOfService->size() > 0
-	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
+-- 	listRelevantTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
 constraints
 	--A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
@@ -335,23 +329,23 @@ attributes
 	status: SRStatus
 	neededBy: Date
 	daysPast: Integer
-operations
-	isRelevantTutorForSpecReq(t: Tutor): Boolean =
-			let srSubjects: Set(Subject) = subjects.subject, 
-				srMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
-				subjBool: Boolean = t.subjects.subject->intersection(srSubjects)->size() > 0, 
-				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(srMODs)->size() > 0 
+-- operations
+-- 	isRelevantTutorForSpecReq(t: Tutor): Boolean =
+-- 			let srSubjects: Set(Subject) = subjects.subject, 
+-- 				srMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
+-- 				subjBool: Boolean = t.subjects.subject->intersection(srSubjects)->size() > 0, 
+-- 				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(srMODs)->size() > 0 
 
-				in
+-- 				in
 				
-				subjBool and modBool and t.serviceTypes.typeOfService->select(type = ServiceType::One_On_One)->size() > 0
+-- 				subjBool and modBool and t.serviceTypes.typeOfService->select(type = ServiceType::One_On_One)->size() > 0
 
-	listRelevantTutorsSR(): Set(Tutor)
-		begin
-			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
-		end 		
-	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
-	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
+-- 	listRelevantTutorsSR(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 constraints
 	--Receiver must be Bulletin Board
 end
@@ -485,48 +479,48 @@ end
 
 -- >Role Sets<--
 association  SubjectsOfInterest between
-	Subject[*]
+	Subject[*] role subjectOffering
 	Role[1]
 end
 
 association ModeOfInterest between
-	ModeOfDel[*]
+	ModeOfDel[*] role MODBeingOffered
 	Role[1]
 end 
 
 association ServiceTypeInterestedIn between
-	TypeOfService[*]
+	TypeOfService[*] role TOSbeingOffered
 	Role[1]
 end
 
 -- >Service Association Sets
 association SubjectOfTuterService between 
-	Subject[1]
+	Subject[1] role subjOfService
 	Service[1]
 end 
 
 association SubjectOfChildInterest between
-	Subject[*]
+	Subject[*] role SubjsInterestedIn
 	Child[1]
 end
 
 association MODofTuorService between
-	ModeOfDel[1..*]
+	ModeOfDel[1..*] role MODofService
 	Service[1]
 end 
 
 association MODofChildInterest between
-	ModeOfDel[*]
+	ModeOfDel[*] role MODinterestedIn
 	Child[1]
 end
 
 association ServiceTypeOfTutorService between
-	TypeOfService[1]
+	TypeOfService[1] role TypeOfTheService
 	Service[1]
 end
 
 association TOSofChildInterest between
-	TypeOfService[*]
+	TypeOfService[*] role TOSInterestedIn
 	Child[1]
 end
 
