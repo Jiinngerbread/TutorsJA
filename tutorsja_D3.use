@@ -4,18 +4,20 @@ model TutorsJA
 
 
 -- ENUMS -- 
-enum GeneralStatus {Not_Approved, Approved, Verified}
+enum Sex {Male, Female}
 enum Grade {Kg3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
-enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
-enum ActiveStatus {Not_Started, Active, Ended, Closed}
+enum GeneralStatus {Not_Approved, Approved, Verified}
+enum AccountStatus {Good, Delinquent}
+enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
 enum ModeOfDelivery {Online, Face_To_Face, Blended}
 enum ServiceType {One_On_One, Group}
-enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
-enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
-enum SRStatus {Unanswered, Answered, Resolved, Outdated}
-enum Sex {Male, Female}
+enum AvailabilityStatus {Free, Fully_Booked, Not_Accepting_Requests, Service_Withdrawn}
+enum ActiveStatus {Not_Started, Active, Ended, Closed}
 enum EnrollmentStatus {Accepted, Denied, Pending}
 enum AgrStatus{Agree, Disagree}
+enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
+enum SRStatus {Unanswered, Answered, Resolved, Outdated}
+enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 
 
 
@@ -32,6 +34,25 @@ operations
         self.month := m;
         self.year:= y;
     end
+
+	equals(d: Date)
+	begin
+	end
+
+	isGreaterThan()
+	begin
+	end
+
+	overlap()
+	begin
+	end
+
+	contains()
+	begin
+	end
+
+
+
 end
 
 class Period  
@@ -46,6 +67,22 @@ operations
         self.startDate := sDate;
         self.endDate := eDate;
     end
+
+	equals()
+	begin
+	end
+
+	isGreaterThan()
+	begin
+	end
+
+	overlap()
+	begin
+	end
+
+	contains()
+	begin
+	end
 end
 
 class Subject
@@ -70,10 +107,10 @@ attributes
 	type: ServiceType
 end
 
-class ArrayList
-attributes
-	size: Integer
-end
+-- class ArrayList
+-- attributes
+-- 	size: Integer
+-- end
 
 
 
@@ -104,14 +141,14 @@ end
 
 class Service
 attributes
-	grade: Grade
-    subjects: ArrayList //because may need to teach more than subject esp for services to meet special requests; these subjects may also be at varying grade levels
+	gradeLvl: Grade
+    -- subjects: Subject
     location: String
-    modeOfDelivery: ModeOfDel 
-    serviceType: TypeOfService
+    -- modeOfDelivery: ModeOfDel 
+    -- serviceType: TypeOfService
     duration: Period
     initialDur: Period --?
-    meetingDays: ArrayList //list of Session objects
+    -- meetingDays: ArrayList //list of Session objects
     numOfSpaces: Integer
     currentDate: Date 
     rate: Real
@@ -166,8 +203,12 @@ end
 
 class Payment
 attributes
-    amount: Real
-    datePayed: Date
+    amountPaid: Real
+    datePaid: Date
+operations
+	deriveAmountToBePaid(m:Payment)
+	begin
+	end
 end
 
 class Message
@@ -206,26 +247,31 @@ end
 class Certification
 attributes
 	name: String
-	knowledgeArea: String
+	knowledgeArea: Subject -- having this be subject will make it easier to search 
 	certifyingBody: String
-	dateOfCertification: String
+	dateOfCertification: Date
 	validDuration: Period
+operations
+	update(c:Certification)
+	begin
+	end
 end
 
 
 -- EXTENDED CONCRETE CLASSES --
 class Role < Receiver
 attributes	
-	modesOfDelivery: ArrayList //list of ModeOfDel objects
-	subjects: ArrayList //list of Subject objects
-	serviceTypes: ArrayList //list of TypeOfService objects
+	status: AccountStatus
+	-- modesOfDelivery: ArrayList //list of ModeOfDel objects
+	-- subjects: ArrayList //list of Subject objects
+	-- serviceTypes: ArrayList //list of TypeOfService objects
 	-- DONE specialNeeds (association) //DONE
 end
 
 class Child < Role
 attributes
 	chName: String
-	grade: Grade
+	gradeLvl: Grade
 	dob: Date
 	chSex: Sex
 	age: Integer
@@ -283,8 +329,8 @@ end
 
 class SpecialRequest < Message
 attributes
-	subjects: ArrayList //list of Subject objects
-	modesOfDelivery: ArrayList //list of ModeOfDel objects
+	-- subjects: ArrayList //list of Subject objects
+	-- modesOfDelivery: ArrayList //list of ModeOfDel objects
 	--DONE specialNeeds (association) //DONE
 	status: SRStatus
 	neededBy: Date
@@ -331,6 +377,17 @@ class WordDoc < Attachment
 end
 
 
+class Subscription < Payment
+attributes 
+	SubscrPeriod: SubscriptionPeriod
+	SubscrRate: Integer
+end
+
+class PaymentToTutor < Payment
+attributes
+	TutotServiceRate: Integer
+end
+
 
 -- ASSOCIATIONS IN MODEL -- 
 association PersonRole between
@@ -372,6 +429,11 @@ association MsgMedia between
 	Message[1] role message
 	Attachment[*] role attachments 
 end
+--NEW--
+association ScannedCert between
+	Certification[1] role uploadedCert
+	Attachment[*] role scan
+end
 
 association CalendarforSchedule between
 	Calendar[1] 
@@ -404,25 +466,6 @@ association MembershipPayments between
 end 
 
 --Associations Replacing Sets--
-association SubjectArrayList between
-	Subject[*]
-	ArrayList[*]
-end
-
-association SessionArrayList between
-	Session[*]
-	ArrayList[*]
-end
-
-association	MODArrayList between
-	ModeOfDel[*]
-	ArrayList[*]
-end
-
-association	TOSArrayList between
-	TypeOfService[*]
-	ArrayList[*]
-end
 
 association RoleSpecNeeds between
 	Role[1]
@@ -438,6 +481,71 @@ association tutorCertifications between
 	Tutor[1]
 	Certification[*] role certifications
 end
+
+
+-- >Role Sets<--
+association  SubjectsOfInterest between
+	Subject[*]
+	Role[1]
+end
+
+association ModeOfInterest between
+	ModeOfDel[*]
+	Role[1]
+end 
+
+association ServiceTypeInterestedIn between
+	TypeOfService[*]
+	Role[1]
+end
+
+-- >Service Association Sets
+association SubjectOfTuterService between 
+	Subject[1]
+	Service[1]
+end 
+
+association SubjectOfChildInterest between
+	Subject[*]
+	Child[1]
+end
+
+association MODofTuorService between
+	ModeOfDel[1..*]
+	Service[1]
+end 
+
+association MODofChildInterest between
+	ModeOfDel[*]
+	Child[1]
+end
+
+association ServiceTypeOfTutorService between
+	TypeOfService[1]
+	Service[1]
+end
+
+association TOSofChildInterest between
+	TypeOfService[*]
+	Child[1]
+end
+
+association SessionsOfService between
+	Session[1..*]
+	Service[1]
+end
+
+-- >Special Request Association Sets
+association SubjectOfSR between
+	Subject[*]
+	SpecialRequest[1]
+end
+
+association ModeOfInterestOfSR between
+	ModeOfDel[*]
+	SpecialRequest[1]
+end
+
 
 
 -- ASSOCIATION CLASS -- 
