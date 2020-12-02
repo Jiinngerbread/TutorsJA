@@ -6,6 +6,7 @@ model TutorsJA
 -- ENUMS -- 
 enum Sex {Male, Female}
 enum Grade {Kg3, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven}
+enum SubjectName {Math, EngLang, EngLit, Spanish, History, Science, SocStudies, IT, ReadingComp, Phonics, Penmanship, Art, Music, POB, Accounts, Physics, Chemistry, Biology, Geography}
 enum GeneralStatus {Not_Approved, Approved, Verified}
 enum AccountStatus {Good, Delinquent}
 enum Days {Mon, Tue, Wed, Thru, Fri, Sat, Sun}
@@ -22,28 +23,44 @@ enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 
 
 -- DATATYPE CLASSES --
-class Date 
+class Time 
 attributes 
 	hour: Integer
 	min: Integer
-    day: Integer
+operations
+    TimeInit(h: Integer, min: Integer)
+    begin
+        self.hour := h;
+		self.min := min;
+    end
+
+	equalsT(t: Time)
+	begin
+	end
+
+	beforeT(t: Time)
+	begin
+	end
+end
+
+class Date 
+attributes 
+	day: Integer
     month: Integer
     year: Integer
 operations
-    DateInit(d: Integer, m: Integer, y: Integer, h: Integer, min: Integer)
+    DateInit(d: Integer, m: Integer, y: Integer)
     begin
         self.day := d;
         self.month := m;
         self.year:= y;
-		self.hour := h;
-		self.min := min;
     end
 
-	equals(d: Date)
+	equalsD(d: Date)
 	begin
 	end
 
-	before(d: Date)
+	beforeD(d: Date)
 	begin
 	end
 end
@@ -82,15 +99,15 @@ end
 
 class Subject
 attributes
-	name: String
+	name: SubjectName
 	gradeLevel: Grade
 end
 
 class Session
 attributes
 	day: Days
-	startTime: Date
-	endTime: Date
+	startTime: Time 
+	endTime: Time 
 	recurring: Boolean
 	startRecurring: Date
 	endRecurring: Date
@@ -111,11 +128,14 @@ end
 
 -- ABSTRACT CLASSES --
 
-abstract class Receiver
-attributes
-end 
+-- abstract class Receiver
+-- attributes
+-- end 
 
-
+abstract class Role 
+attributes	
+	status: AccountStatus
+end
 
 -- CONCRETE CLASSES --
 
@@ -204,7 +224,7 @@ class Message
 attributes
 	topic: String
 	text: String
-	date: Date
+	date: DateTime
 --operations
 --constraints
 end 
@@ -216,7 +236,7 @@ class Slot
 attributes
 	lessonInfo: String 
 	date: Date
-	time: String
+	-- time: String
 	-- sessionNum: Integer
 end
 
@@ -240,12 +260,26 @@ operations
 	end
 end
 
+class BulletinBoard 
+attributes
+	--?
+end
+
+-- -- EXTENDED ABSTRACT CLASSES --
+-- abstract class Role < Receiver
+-- attributes	
+-- 	status: AccountStatus
+-- end
+
 
 -- EXTENDED CONCRETE CLASSES --
-class Role < Receiver
-attributes	
-	status: AccountStatus
+class DateTime < Date, Time
 end
+
+-- class Role < Receiver
+-- attributes	
+-- 	status: AccountStatus
+-- end
 
 class Child < Role
 attributes
@@ -299,10 +333,10 @@ constraints
 	--cannot enrol children who belong to the same person
 end
 
-class BulletinBoard < Receiver
-attributes
-	--?
-end
+-- class BulletinBoard < Receiver
+-- attributes
+-- 	--?
+-- end
 
 class SpecialRequest < Message
 attributes
@@ -353,14 +387,15 @@ end
 
 class Subscription < Payment
 attributes 
-	SubscrPeriod: SubscriptionPeriod
-	SubscrRate: Integer
+	subscrPeriod: SubscriptionPeriod
+	periodPaidFor: Period
+	subscrRate: Integer
 end
 
-class PaymentToTutor < Payment
-attributes
-	TutotServiceRate: Integer
-end
+-- class PaymentToTutor < Payment
+-- attributes
+-- 	TutotServiceRate: Integer
+-- end
 
 
 -- ASSOCIATIONS IN MODEL -- 
@@ -381,8 +416,8 @@ end
 
 association ServicePayments between
 	EnrolRequest[1] role tutorService
-	-- Payment[*] role payment
-	PaymentToTutor[1..*] role payment
+	Payment[*] role payment
+	-- PaymentToTutor[1..*] role payment
 end
 
 association SentMessages between
@@ -390,8 +425,18 @@ association SentMessages between
 	Message[*] role sentMsgs
 end  
 
+-- association ReceivedMessages between
+-- 	Receiver[1] role receiver
+-- 	Message[*] role rcvdMsgs
+-- end 
+
+association ReceivedSRMessages between
+	BulletinBoard[1] role srreceiver
+	Message[*] role rcvdMsgs
+end 
+
 association ReceivedMessages between
-	Receiver[1] role receiver
+	Role[1] role receiver
 	Message[*] role rcvdMsgs
 end 
 
@@ -404,24 +449,26 @@ association MsgMedia between
 	Message[1] role message
 	Attachment[*] role attachments 
 end
+
 --NEW--
 association ScannedCert between
 	Certification[1] role uploadedCert
 	Attachment[*] role scan
 end
 
-association TutorSession between
-	Tutor[1] 
-	Session[*] 
-end
+-- association TutorSession between
+-- 	Tutor[1] 
+-- 	Session[*] 
+-- end
 
-association ChildSession between
-	Child[1] 
-	Session[*] 
-end
+-- association ChildSession between
+-- 	Child[1] 
+-- 	Session[*] 
+-- end
 
 association SessionSlots between
-	Session[*] 
+	-- Session[*] 
+	Session[1]
 	Slot[1..*]
 end
 
@@ -430,6 +477,7 @@ association MembershipPayments between
 	-- Payment[*] role payments
 	Subscription[1..*] role payments
 end 
+
 
 --Associations Replacing Sets--
 
@@ -452,49 +500,55 @@ end
 -- >Role Sets<--
 association  SubjectsOfInterest between
 	Subject[*] role subjectOffering
-	Role[1]
+	-- Role[1]
+	Role[*]
 end
 
 association ModeOfInterest between
 	ModeOfDel[*] role MODBeingOffered
-	Role[1]
+	-- Role[1]
+	Role[*]
 end 
 
 association ServiceTypeInterestedIn between
 	TypeOfService[*] role TOSbeingOffered
-	Role[1]
+	-- Role[1]
+	Role[*]
 end
 
 -- >Service Association Sets
-association SubjectOfTuterService between 
+association SubjectOfTutorService between 
 	Subject[1] role subjOfService
-	Service[1]
+	-- Service[1]
+	Service[*]
 end 
 
-association SubjectOfChildInterest between
-	Subject[*] role SubjsInterestedIn
-	Child[1]
-end
+-- association SubjectOfChildInterest between
+-- 	Subject[*] role SubjsInterestedIn
+-- 	Child[1]
+-- end
 
-association MODofTuorService between
+association MODofTutorService between
 	ModeOfDel[1..*] role MODofService
-	Service[1]
+	-- Service[1]
+	Service[*]
 end 
 
-association MODofChildInterest between
-	ModeOfDel[*] role MODinterestedIn
-	Child[1]
-end
+-- association MODofChildInterest between
+-- 	ModeOfDel[*] role MODinterestedIn
+-- 	Child[1]
+-- end
 
 association ServiceTypeOfTutorService between
 	TypeOfService[1] role TypeOfTheService
-	Service[1]
+	-- Service[1]
+	Service[*]
 end
 
-association TOSofChildInterest between
-	TypeOfService[*] role TOSInterestedIn
-	Child[1]
-end
+-- association TOSofChildInterest between
+-- 	TypeOfService[*] role TOSInterestedIn
+-- 	Child[1]
+-- end
 
 association SessionsOfService between
 	Session[1..*] role sessionsInServ
@@ -512,6 +566,10 @@ association ModeOfInterestOfSR between
 	SpecialRequest[1]
 end
 
+association ServiceTypeOfInterestOfSR between
+	TypeOfService[*]
+	SpecialRequest[1]
+end
 
 
 -- ASSOCIATION CLASS -- 
