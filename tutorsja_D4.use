@@ -431,17 +431,18 @@ end
 -- end 
 
 association ReceivedSRMessages between
-	BulletinBoard[1] role srreceiver
+	BulletinBoard[0..1] role srreceiver
 	Message[*] role rcvdMsgs
 end 
 
 association ReceivedMessages between
-	Role[1] role receiver
+	Role[0..1] role receiver
 	Message[*] role rcvdMsgs
 end 
 
 association SpecReqResponses between
-	SpecialRequest[1] role specialRequest 
+	-- SpecialRequest[1] role specialRequest 
+	SpecialRequest[*] role specialRequests --see changes list in doc for reason
 	Proposal[*] role proposals
 end
 
@@ -529,7 +530,8 @@ end
 -- end
 
 association MODofTutorService between
-	ModeOfDel[1..*] role MODofService
+	-- ModeOfDel[1..*] role MODofService
+	ModeOfDel[1] role MODofService
 	-- Service[1]
 	Service[*]
 end 
@@ -557,18 +559,24 @@ end
 
 -- >Special Request Association Sets
 association SubjectOfSR between
-	Subject[*]
-	SpecialRequest[1]
+	-- Subject[*]
+	Subject[1] --see changes list in doc for reason
+	-- SpecialRequest[1]
+	SpecialRequest[*]
 end
 
 association ModeOfInterestOfSR between
-	ModeOfDel[*]
-	SpecialRequest[1]
+	-- ModeOfDel[*]
+	ModeOfDel[1] 
+	-- SpecialRequest[1]
+	SpecialRequest[*]
 end
 
 association ServiceTypeOfInterestOfSR between
-	TypeOfService[*]
-	SpecialRequest[1]
+	-- TypeOfService[*]
+	TypeOfService[1] 
+	-- SpecialRequest[1]
+	SpecialRequest[*]
 end
 
 
@@ -611,8 +619,8 @@ end
 
 
 associationclass Attendance between
-	Role[*] role participant
-	Slot[1..*] role lesson
+	Role[1..*] role participant
+	Slot[*] role classDate
 attributes
 	present: Boolean
 end
