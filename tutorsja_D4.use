@@ -134,7 +134,14 @@ end
 
 abstract class Role 
 attributes	
-	status: AccountStatus
+	accStatus: AccountStatus
+--operations
+	--updateAccStatus 
+		--delinquent if > 3 reviews* and average rating is 1 or 0
+		--delinquent if no subscription payment for last month (remember that if they don't pay monthly have to check months covered by last payment for year/3 months)
+		--@* see comment in doc
+constraints
+	--if status = delinquent and type = tutor, all services should have service withdrawn status
 end
 
 -- CONCRETE CLASSES --
@@ -182,10 +189,12 @@ attributes
 -- 		end;
 
 -- 	end
+-- 	pre: self.tutor.accStatus <> delinquent
 -- 	pre: self.tutor.schedule.attendance->size() > 0 
 -- 	post: self.activeStatus <> null
+
 constraints
-	--If the mode of delivery is online then there is no meet location
+	--If the mode of delivery is online then there is no meet location //UPDATE - TBD: if online, put online platform
     -- inv:
     --     self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
 end
@@ -253,11 +262,13 @@ attributes
 	certifyingBody: String
 	dateOfCertification: Date
 	validDuration: Period
+	--verifiedStatus
 operations
 	update(c:Certification)
 	begin
 	--doc and vd and the attachment needs to be updated 
 	end
+	--verifyCertification
 end
 
 class BulletinBoard 
@@ -325,6 +336,10 @@ attributes
 	generalStatus: GeneralStatus
 	securityCode: Integer
 --operations
+	--addService *pre: tutor.accStatus <> delinquent
+	--addCertification
+	--confirmIdentity
+	--updateGenStatus *verified if all certifications have verified status (not yet implemented)
 constraints	
 	--Only tutors who are approved may offer services 
     inv:
@@ -624,3 +639,7 @@ associationclass Attendance between
 attributes
 	present: Boolean
 end
+
+
+
+------Constraints Outside of Classes------
