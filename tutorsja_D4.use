@@ -18,7 +18,8 @@ enum EnrollmentStatus {Accepted, Denied, Pending}
 enum AgrStatus{Agree, Disagree}
 enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
 enum SRStatus {Unanswered, Answered, Resolved, Outdated}
-enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
+enum MatchLeveL {None, Weak, Moderate, Strong}
+-- enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 
 
 
@@ -134,14 +135,6 @@ end
 
 abstract class Role 
 attributes	
-	accStatus: AccountStatus
---operations
-	--updateAccStatus 
-		--delinquent if > 3 reviews* and average rating is 1 or 0
-		--delinquent if no subscription payment for last month (remember that if they don't pay monthly have to check months covered by last payment for year/3 months)
-		--@* see comment in doc
-constraints
-	--if status = delinquent and type = tutor, all services should have service withdrawn status
 end
 
 -- CONCRETE CLASSES --
@@ -165,12 +158,17 @@ class Service
 attributes
 	gradeLvl: Grade
     location: String
-    numOfSpaces: Integer
+    numOfSpaces: Integer init: 1
     currentDate: Date 
     rate: Real
     availStatus: AvailabilityStatus
 	activeStatus: ActiveStatus 
 -- operations
+--  UpdateNumOfSpaces(num:Integer)
+	--pre: type of service is group
+	--pre: self.tutor.accStatus <> delinquent and self.tutor.generalStatus <> Not_Approved
+	--post:  if type of service is group, nuOfSpaces = nuOfSpaces@pre + num
+
 -- 	UpdateActiveStatus()
 -- 	begin
 -- 		if self.tutor.schedule.attendance->forAll(a | a.present = true) then
@@ -189,14 +187,22 @@ attributes
 -- 		end;
 
 -- 	end
--- 	pre: self.tutor.accStatus <> delinquent
--- 	pre: self.tutor.schedule.attendance->size() > 0 
+-- 	pre: self.tutor.accStatus <> delinquent and self.tutor.generalStatus <> Not_Approved
+-- 	pre: self.tutor.schedule.attendance->size() > 0 ?
 -- 	post: self.activeStatus <> null
+
+-- requestOOOEnrollment(c: Child)
+	-- pre: re tutor (t) of service: matchLevelforTutorandChild(t) <> MatchLevel::None)	
+
+-- requestGroupEnrollment(c: Child)
+	-- pre: re tutor (t) of service: matchLevelforTutorandChild(t) <> MatchLevel::None)	
 
 constraints
 	--If the mode of delivery is online then there is no meet location //UPDATE - TBD: if online, put online platform
     -- inv:
     --     self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
+
+	--number of enrollment requests with Accepted status <= numOfSpaces
 end
 
 class Review
@@ -207,6 +213,7 @@ operations
 	setRating(r:Ratings) 
 		begin
 			self.rating := r;
+			--if num of reviews >= 10, call updateAccStatus()
 		end
 
 	setReviewTxt(t:String)
@@ -300,7 +307,9 @@ attributes
 	chSex: Sex
 	age: Integer
 -- operations
--- 	isRelevantTutorForChild(t: Tutor): Boolean =
+-- 	matchLevelforTutorandChild(t: Tutor): MatchLevel 
+		--begin
+			--result := MatchLevel::None
 -- 			let childSubjects: Set(Subject) = subjects.subject, 
 -- 				childMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
 -- 				childTOSs: Set(TypeOfService) = serviceTypes.typeOfService, 
@@ -309,9 +318,62 @@ attributes
 -- 				tosBool: Boolean = t.serviceTypes.typeOfService->intersection(childTOSs)->size() > 0 
 
 -- 				in
-				
--- 				subjBool and modBool and tosBool
+				--if subjBool and not others, result := MatchLevel::Weak
+				--if (subjBool and modBool) or (subjBool and tosBool), result := MatchLeveL::Moderate
+				--if subjBool and modBool and tosBool, result := MatchLeveL::Strong
+				--(IGNORE IF initialization after begin is possible) else, result := MatchLevel::None
+			--end
+			-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+			-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+			-- pre: modesOfDelivery.modeOfDel->size() > 0
+			-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+			-- pre: serviceTypes.typeOfService->size() > 0
+			-- pre: t.serviceTypes.typeOfService->size() > 0
+			--pre: tutor generalStatus <> GeneralStatus::Not_Approved
+			--post: if subjBool and not others, result := MatchLevel::Weak
+			--post: if (subjBool and modBool) or (subjBool and tosBool), result := MatchLeveL::Moderate
+			--post: if subjBool and modBool and tosBool, result := MatchLeveL::Strong
+			--post: (IGNORE IF initialization after begin is possible) else, result := MatchLevel::None
 
+--listWeakMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
+
+
+--listModerateMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)
+-- 		end 	
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)	
+
+
+--listStrongMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
+
+--IGNORE:
 -- 	listRelevantTutors(): Set(Tutor)
 -- 		begin
 -- 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForChild(t))
@@ -334,13 +396,26 @@ end
 class Tutor < Role 
 attributes
 	generalStatus: GeneralStatus
+	joinDate: Date 
 	securityCode: Integer
+	accStatus: AccountStatus
 --operations
-	--addService *pre: tutor.accStatus <> delinquent
+	--updateAccStatus 
+		--delinquent if >= 10 reviews and average rating is <=1 
+		--delinquent if no subscription payment for last month (remember that if they don't pay monthly have to check months covered by last payment for year/3 months)
+		--@* see comment in doc
+
+	--addService 
+		--pre: accStatus <> delinquent and generalStatus <> Not_Approved
+		--post: if type is group numOfSpaces > 1
+		--post: if type is One_on_One, numOfSpaces = 1
+
 	--addCertification
 	--confirmIdentity
 	--updateGenStatus *verified if all certifications have verified status (not yet implemented)
 constraints	
+	--if status = delinquent all services should have service withdrawn status
+
 	--Only tutors who are approved may offer services 
     inv:
         self.service->size() > 0 implies self.generalStatus <> GeneralStatus::Not_Approved
@@ -357,8 +432,9 @@ class SpecialRequest < Message
 attributes
 	status: SRStatus
 	neededBy: Date
-	daysPast: Integer
+	daysPast: Integer --init:30
 -- operations
+	-- setNeededBy(nb: Date) 
 -- 	isRelevantTutorForSpecReq(t: Tutor): Boolean =
 -- 			let srSubjects: Set(Subject) = subjects.subject, 
 -- 				srMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
@@ -369,6 +445,74 @@ attributes
 				
 -- 				subjBool and modBool and t.serviceTypes.typeOfService->select(type = ServiceType::One_On_One)->size() > 0
 
+
+-- 	matchLevelforTutorandChild(t: Tutor): MatchLevel 
+		--begin
+			--result := MatchLevel::None
+-- 			let childSubjects: Set(Subject) = subjects.subject, 
+-- 				childMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
+-- 				childTOSs: Set(TypeOfService) = serviceTypes.typeOfService, 
+-- 				subjBool: Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
+-- 				modBool: Boolean = t.modesOfDelivery.modeOfDel->intersection(childMODs)->size() > 0, 
+-- 				tosBool: Boolean = t.serviceTypes.typeOfService->intersection(childTOSs)->size() > 0 
+
+-- 				in
+				--if subjBool and not others, result := MatchLevel::Weak
+				--if (subjBool and modBool) or (subjBool and tosBool), result := MatchLeveL::Moderate
+				--if subjBool and modBool and tosBool, result := MatchLeveL::Strong
+				--(IGNORE IF initialization after begin is possible) else, result := MatchLevel::None
+			--end
+			-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+			-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+			-- pre: modesOfDelivery.modeOfDel->size() > 0
+			-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+			-- pre: serviceTypes.typeOfService->size() > 0
+			-- pre: t.serviceTypes.typeOfService->size() > 0
+			--pre: tutor generalStatus <> GeneralStatus::Not_Approved
+			--post: if subjBool and not others, result := MatchLevel::Weak
+			--post: if (subjBool and modBool) or (subjBool and tosBool), result := MatchLeveL::Moderate
+			--post: if subjBool and modBool and tosBool, result := MatchLeveL::Strong
+			--post: (IGNORE IF initialization after begin is possible) else, result := MatchLevel::None
+
+--listWeakMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
+
+
+--listModerateMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)
+-- 		end 	
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)	
+
+
+--listStrongMatchTutors(): Set(Tutor)
+-- 		begin
+-- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
+-- 		end 		
+-- 	pre: self.subjects.subject->size() > 0 --child must have subjects
+-- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 	-- pre: serviceTypes.typeOfService->size() > 0
+-- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
+
+--IGNORE:
 -- 	listRelevantTutorsSR(): Set(Tutor)
 -- 		begin
 -- 			result := Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
@@ -377,6 +521,7 @@ attributes
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 constraints
 	--Receiver must be Bulletin Board
+	--if neededBy has passed then status = outdated
 end
 
 class Proposal < Message
@@ -600,10 +745,20 @@ associationclass EnrolRequest between
 	Child[*] role tutee
 	Service[*] role service
 attributes
-	acceptanceStatus: EnrollmentStatus
-	tutorAgreement: AgrStatus
-    parentAgreement: AgrStatus
+	acceptanceStatus: EnrollmentStatus 	init: EnrollmentStatus::Pending
+	tutorAgreement: AgrStatus	 init: AgrStatus::Denied
+    parentAgreement: AgrStatus 		init: AgrStatus::Denied
 -- operations
+	--updateAcceptStatus() --what argument? string ('A', 'D') A-Accept, D - Deny, boolean?
+		--if accepting, check numOfSpaces and compare to size of set of EnrolReq objects with accepted status (from Service)
+			-- if set size is = numOfSpaces, acceptanceStatus = EnrollmentStatus::Denied
+			--else acceptanceStatus = EnrollmentStatus::Accepted
+		--if denying, acceptanceStatus = EnrollmentStatus::Denied
+
+		--pre: 
+		--post: if accepting and set size is < numOfSpaces, acceptanceStatus = Accepted
+		--post: if accepting and set size is = numOfSpaces, acceptanceStatus = Denied
+
 -- 	canReviewService() : Boolean =
 -- 		let attendances: Set(Attendance) = tutee.schedule.attendance, 
 -- 			numOfSlots: Integer = attendances->size()
@@ -630,6 +785,7 @@ attributes
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
 	-- consider multiplicities for group vs ooo
+	-- re tutor (t) of service: matchLevelforTutorandChild(t) <> MatchLevel::None)	
 end 
 
 
