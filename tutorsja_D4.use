@@ -19,7 +19,7 @@ enum AgrStatus{Agree, Disagree}
 enum Ratings {STAR1, STAR2, STAR3, STAR4, STAR5}
 enum SRStatus {Unanswered, Answered, Resolved, Outdated}
 enum MatchLeveL {None, Weak, Moderate, Strong}
--- enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
+enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 
 
 
@@ -50,6 +50,7 @@ attributes
     month: Integer
     year: Integer
 operations
+
     DateInit(d: Integer, m: Integer, y: Integer)
     begin
         self.day := d;
@@ -59,10 +60,20 @@ operations
 
 	equalsD(d: Date)
 	begin
+		if self.day = d.day and self.month = d.month and self.year = d.year then
+			begin
+				self.day = d.day and self.month = d.month and self.year = d.year
+			end;
+		end;
 	end
 
 	beforeD(d: Date)
 	begin
+		if self.year <= d.year and self.month <= d.month and self.day < d.day then
+			begin
+				self.year <= d.year and self.month <= d.month and self.day < d.day
+			end;
+		end;
 	end
 end
 
@@ -112,7 +123,7 @@ attributes
 	recurring: Boolean
 	startRecurring: Date
 	endRecurring: Date
-	duration: Period
+	-- duration: Period
     -- initialDur: Period --?
 end
 
@@ -150,19 +161,30 @@ attributes
 	location: String
 --operations
 constraints
-	--<= 1 tutor role
-	--isParent=True implies >= 1 child role
+	--A person cannot have more than one tutor role
+	inv: 
+		self -> select(ocl.isKindof(Tutor)) -> size() <= 1 
+		
+	--person:isParent = True implies cannot enrol with tutors who belong to the same person
+	--inv noSelfEroll:
+	--	self.isParent = true implies forAll(t:Tutor| self <> t)
+		
+	--A person who is a parent must have atleast one child
+	inv:
+		self.isParent = true implies self -> select(ocl.isKindof(Child)) -> size() >= 1
 end 
 
 class Service
 attributes
-	gradeLvl: Grade
+	-- gradeLvl: Grade
     location: String
     numOfSpaces: Integer init: 1
     currentDate: Date 
+	startDate: Date
+	endDate: Date
     rate: Real
-    availStatus: AvailabilityStatus
-	activeStatus: ActiveStatus 
+    availStatus: AvailabilityStatus 
+	activeStatus: ActiveStatus init:ActiveStatus::Not_Started
 -- operations
 --  UpdateNumOfSpaces(num:Integer)
 	--pre: type of service is group
@@ -171,21 +193,23 @@ attributes
 
 -- 	UpdateActiveStatus()
 -- 	begin
--- 		if self.tutor.schedule.attendance->forAll(a | a.present = true) then
--- 			begin 
--- 				self.activeStatus := ActiveStatus::Closed
--- 			end;
--- 		end;
--- 		if self.tutor.schedule.attendance->exists(a | a.present = true) then
+-- 		
+-- 		if self.sessionsInServ->slot->attendance->select(participant.isTypeOf(Tutor))->exists(a | a.present = true) then
 -- 			begin 
 -- 				self.activeStatus := ActiveStatus::Active
 -- 			end;
 -- 		else
+			--begin
+			--	if currentDate.equalsD(startDate) or currentDate.beforeD(endDate) then
+-- 					self.activeStatus := ActiveStatus::Closed
+			--end;
+		--end;
+--		if self.sessionsInServ->slot->attendance->select(participant.isTypeOf(Tutor))->forAll(a | a.present = true) then
 -- 			begin 
--- 				self.activeStatus := ActiveStatus::Not_Started
+-- 				self.activeStatus := ActiveStatus::Ended
 -- 			end;
 -- 		end;
-
+	
 -- 	end
 -- 	pre: self.tutor.accStatus <> delinquent and self.tutor.generalStatus <> Not_Approved
 -- 	pre: self.tutor.schedule.attendance->size() > 0 ?
@@ -199,10 +223,68 @@ attributes
 
 constraints
 	--If the mode of delivery is online then there is no meet location //UPDATE - TBD: if online, put online platform
-    -- inv:
-    --     self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
+    --inv:
+    --self.modeOfDelivery.mod = ModeOfDelivery::Online implies self.location = null
+	--inv MODisOLthenNull:
+	--if self.MODofService.mod = ModeOfDelivery::Online implies self.location = NULL
+
 
 	--number of enrollment requests with Accepted status <= numOfSpaces
+	inv:
+		self.EnrolRequest -> size() < self.EnrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted) -> size()
+	--number of enrollment request associated with a service whose availability is NOT "free" should be 0
+	inv:
+		
+	--If availability of service is not free it should have no enrollment request
+	inv:
+		self.availStatus <> AvailabilityStatus::Free implies self.EnrollRequest -> size()  = 0 
+
+statemachines
+	psm ServiceActiveStatus
+	states 
+		start: initial
+		initialised [activeStatus = ActiveStatus::Not_Started and 
+						currentDate.beforeD(startDate) = true
+					]
+
+		active [activeStatus = ActiveStatus::Active and 
+					(currentDate.equalsD(startDate) or endDate.beforeD(currentDate)<>true) 
+					and 
+					enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()>0
+					and
+					availStatus <> AvailabilityStatus::Service_Withdrawn
+					]
+
+		closed [activeStatus = ActiveStatus::Closed and 
+					(currentDate.equalsD(startDate) and 
+						enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()=0
+					)
+					or  
+					(currentDate.beforeD(endDate) and
+						(availStatus = AvailabilityStatus::Not_Accepting_Requests
+						or
+						availStatus = AvailabilityStatus::Service_Withdrawn
+						)
+					)
+				]
+				
+		ended: final [activeStatus = ActiveStatus::Ended and 
+					currentDate.equalsD(endDate) 
+					and 
+					enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()>0
+			  ]
+
+	transitions
+		start -> initialised {create}
+		initialised -> initialised {UpdateActiveStatus}
+		initialised -> active {UpdateActiveStatus}
+		initialised -> ended {UpdateActiveStatus}
+		initialised -> closed {UpdateActiveStatus}
+		active -> ended {UpdateActiveStatus}
+		active -> closed {UpdateActiveStatus}
+		closed -> active {UpdateActiveStatus}
+		closed -> ended {UpdateActiveStatus}
+	end 
 end
 
 class Review
@@ -389,8 +471,12 @@ constraints
 	--A child must have a minimum age of 5 and a child must be below the age of 19. 
     inv ageFiveToNineteen:
         self.age >= 5 and self.age < 19
+	
+	-- Parents may only send enrollment requests to Tutors for a service whose availability is “free”.
+	inv ServiceStatusmustBeFree: 
+			self.service-> select(s:Service| s.availStatus= AvailabilityStatus::Free)
+	
 
-	--person:isParent = True implies cannot enrol with tutors who belong to the same person
 end
 
 class Tutor < Role 
@@ -398,29 +484,49 @@ attributes
 	generalStatus: GeneralStatus
 	joinDate: Date 
 	securityCode: Integer
-	accStatus: AccountStatus
+	accStatus: AccountStatus init:AccountStatus::Good
 --operations
 	--updateAccStatus 
 		--delinquent if >= 10 reviews and average rating is <=1 
 		--delinquent if no subscription payment for last month (remember that if they don't pay monthly have to check months covered by last payment for year/3 months)
-		--@* see comment in doc
+	
 
-	--addService 
+	--addOOOService() : Service
+	--addGroupService(mod:ModeOfDel, subj:Subject, loc:String, numOfSpaces:Integer, currentDate:Date, startDate:Date, rate:Real) : Service
+	
 		--pre: accStatus <> delinquent and generalStatus <> Not_Approved
-		--post: if type is group numOfSpaces > 1
-		--post: if type is One_on_One, numOfSpaces = 1
+		--post: result.oclIsNew()
+		--post: if type = ServiceType::Group then numOfSpaces > 1
+		--post: if type = ServiceType::Group then service.location <> NULL, service.numOfSpaces>1, service.rate<>NULL -- for constraint 11
+		--post: if type = ServiceType::One_On_One then numOfSpaces = 1
+		--post: Service.allInstances -> size() = Service.allInstances@pre ->size() + 1
+
 
 	--addCertification
 	--confirmIdentity
 	--updateGenStatus *verified if all certifications have verified status (not yet implemented)
 constraints	
 	--if status = delinquent all services should have service withdrawn status
-
+	inv: 
+		self.generalStatus = GeneralStatus::delinquent implies self.service->forall(s|s.availStatus = AvailabilityStatus::Service_Withdrawn)
 	--Only tutors who are approved may offer services 
     inv:
         self.service->size() > 0 implies self.generalStatus <> GeneralStatus::Not_Approved
 		
-	--cannot enrol children who belong to the same person
+statemachines
+	psm  AccountValidity
+	states	
+		start: initial 
+
+		good [accStatus = AccountStatus::Good]
+
+		delinquent [accStatus = AccountStatus::Delinquent]
+
+	transitions
+		start -> good {create}					
+		-- good -> delinquent {updateAccStatus}
+		-- delinquent -> good {updateAccStatus}
+	end 
 end
 
 -- class BulletinBoard < Receiver
@@ -430,9 +536,11 @@ end
 
 class SpecialRequest < Message
 attributes
-	status: SRStatus
+	status: SRStatus init: SRStatus::Unanswered
 	neededBy: Date
-	daysPast: Integer --init:30
+	currentDate: Date
+	daysUntilNeeded: Integer
+	daysPast: Integer 
 -- operations
 	-- setNeededBy(nb: Date) 
 -- 	isRelevantTutorForSpecReq(t: Tutor): Boolean =
@@ -520,13 +628,49 @@ attributes
 -- 	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 constraints
-	--Receiver must be Bulletin Board
+	--A Special Request existing without a date-needed-by date will become outdated after 31 days.
+	inv:
+		self.neededBy = null and self.daysPast = 31 implies self.status::Outdated 
+
 	--if neededBy has passed then status = outdated
+	inv SRisOutdated:
+		self.neededBy.beforeD(self.currentDate) = false implies self.status = SRStatus::Outdated
+		
+	--only one of the proposals connected to a special request may have a status of Accepted
+	inv:
+		self.proposals.select(a:Proposal|a.accepted = true) -> size() <= 1
+
+
+statemachines
+	psm SpecialRequestStatus
+	states	
+		start: initial
+
+		pending [status = SRStatus::Unanswered and proposals->size() = 0]
+
+		answered [status = SRStatus::Answered and proposals->size() > 0]
+
+		resolved: final [status = SRStatus::Resolved and proposals->select(accepted = true)->size() = 1]
+
+		outdated [status = SRStatus::Outdated and 
+					(proposals->size() = 0 	
+					or 
+						(daysPast >= 30 and proposals->select(accepted = true)->size() = 0)
+				]
+
+	transitions
+		start -> pending {create}
+		pending -> answered {} --missing submitProposal method
+		answered -> resolved {} -- missing acceptProposal method
+		answered -> outdated {} --missing method to check days past on special request
+		outdated -> pending {} --missing updateDateNeededBy method
+	end
+
 end
 
 class Proposal < Message
 attributes
-	--?
+	accepted: Boolean
 end
 
 class Image < Attachment
@@ -746,8 +890,8 @@ associationclass EnrolRequest between
 	Service[*] role service
 attributes
 	acceptanceStatus: EnrollmentStatus 	init: EnrollmentStatus::Pending
-	tutorAgreement: AgrStatus	 init: AgrStatus::Denied
-    parentAgreement: AgrStatus 		init: AgrStatus::Denied
+	tutorAgreement: AgrStatus	 init: AgrStatus::Disagree
+    parentAgreement: AgrStatus 		init: AgrStatus::Disagree
 -- operations
 	--updateAcceptStatus() --what argument? string ('A', 'D') A-Accept, D - Deny, boolean?
 		--if accepting, check numOfSpaces and compare to size of set of EnrolReq objects with accepted status (from Service)
@@ -785,7 +929,38 @@ attributes
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
 	-- consider multiplicities for group vs ooo
+
 	-- re tutor (t) of service: matchLevelforTutorandChild(t) <> MatchLevel::None)	
+
+	-- Before a child is enrolled into a Tutor’s Service, both tutor and parent must agree to the terms of service
+	inv AcceptanceIfAgree: 
+		self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Agree implies self.enrollmEnrollmentStatus::Accepted and
+		self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Agree implies self.enrollmEnrollmentStatus = acceptanceStatus::Pending and
+		self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Disagree implies self.enrollmEnrollmentStatus = acceptanceStatus::Pending and
+		self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Disagree implies self.enrollmEnrollmentStatus = acceptanceStatus::Denied
+
+statemachines
+	psm EnrollRequestStatus
+	states	
+		start: inital 
+
+		pending [acceptanceStatus = EnrollmentStatus::Pending and tutorAgreement = AgrStatus::Disagree and parentAgreement = AgrStatus::Disagree]
+
+		accepted [acceptanceStatus = EnrollmentStatus:Accepted and 
+					tutee.matchLevelforTutorandChild(service.tutor) <> MatchLeveL::None 
+					and 
+					service.enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size < service.numOfSlots
+				]
+
+		denied [acceptanceStatus = EnrollmentStatus::Denied]
+	
+	transitions
+		start-> pending {create}
+		-- pending -> accepted {updateAcceptStatus} 
+		-- pending -> denied {updateAcceptStatus}
+		-- denied -> accepted {updateAcceptStatus}
+		-- accepted -> denied {updateAcceptStatus}
+	end
 end 
 
 
@@ -796,6 +971,3 @@ attributes
 	present: Boolean
 end
 
-
-
-------Constraints Outside of Classes------
