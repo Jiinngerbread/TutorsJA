@@ -237,16 +237,16 @@ attributes
 --operations
 constraints
 	--A person cannot have more than one tutor role
-	inv: 
-		self -> select(ocl.isKindof(Tutor)) -> size() <= 1 
+	inv NoMoreThanOneTutorRole: 
+		self.roles->select(oclIsTypeOf(Tutor))->size() <= 1 
 		
 	--person:isParent = True implies cannot enrol with tutors who belong to the same person
 	--inv noSelfEroll:
 	--	self.isParent = true implies forAll(t:Tutor| self <> t)
 		
 	--A person who is a parent must have atleast one child
-	inv:
-		self.isParent = true implies self -> select(ocl.isKindof(Child)) -> size() >= 1
+	inv ParentHasAtLeastOneChild :
+		self.isParent = true implies self.roles->select(oclIsTypeOf(Child))->size() >= 1
 end 
 
 class Service
@@ -305,14 +305,16 @@ constraints
 
 
 	--number of enrollment requests with Accepted status <= numOfSpaces
-	inv:
-		self.EnrolRequest -> size() < self.EnrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted) -> size()
+	inv EnrolCapacityNotExceeded:
+		self.numOfSpaces >= self.EnrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()
 	--number of enrollment request associated with a service whose availability is NOT "free" should be 0
 	inv:
 		
-	--If availability of service is not free it should have no enrollment request
-	inv:
-		self.availStatus <> AvailabilityStatus::Free implies self.EnrollRequest -> size()  = 0 
+	--If availability of service is not free it should have no PENDING enrollment requests
+	inv :
+		self.availStatus <> AvailabilityStatus::Free 
+		implies 
+		self.EnrollRequest->select(acceptanceStatus = EnrollmentStatus::Pending)->size() = 0 
 
 statemachines
 	psm ServiceActiveStatus
@@ -379,7 +381,7 @@ operations
 		end 
 constraints
 	--A Parent may review a tutor only after rating a Tutor. 
-    inv:
+    inv ReviewOnlyAfterRating:
         self.rating = null implies self.reviewTxt = null
 end 
 
@@ -582,10 +584,11 @@ attributes
 	--updateGenStatus *verified if all certifications have verified status (not yet implemented)
 constraints	
 	--if status = delinquent all services should have service withdrawn status
-	inv: 
-		self.generalStatus = GeneralStatus::delinquent implies self.service->forall(s|s.availStatus = AvailabilityStatus::Service_Withdrawn)
-	--Only tutors who are approved may offer services 
-    inv:
+	inv DeliquentTutorsHaveServiceWithdrawnStatuses: 
+		self.accStatus = AccountStatus::Delinquent implies self.service->forall(s|s.availStatus = AvailabilityStatus::Service_Withdrawn)
+
+	--Only tutors who are approved or verified may offer services 
+    inv UnapprovedTutorsHaveNoServices:
         self.service->size() > 0 implies self.generalStatus <> GeneralStatus::Not_Approved
 		
 statemachines
