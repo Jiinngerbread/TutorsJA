@@ -26,7 +26,7 @@ enum SubscriptionPeriod{Monthly, ThreeMonths, Annual}
 -- DATATYPE CLASSES --
 class Time 
 attributes 
-	hour: Integer
+	hour: Integer --uses 24-hour format
 	min: Integer
 operations
     TimeInit(h: Integer, min: Integer)
@@ -35,12 +35,30 @@ operations
 		self.min := min;
     end
 
-	equalsT(t: Time)
+	equalsT(t: Time): Boolean
 	begin
+		if self.hour = t.hour and self.min = t.min then
+			begin
+				result := true
+			end;
+		end;
 	end
 
-	beforeT(t: Time)
+	beforeT(t: Time): Boolean
 	begin
+		result := false 
+		if self.hour < t.hour then
+			begin
+				result := true
+			end;
+		else
+			begin
+				if self.min < t.min then
+					begin
+						result := true
+					end;
+			end;
+		end;
 	end
 end
 
