@@ -7,7 +7,8 @@ reset
 
     --person later wants to add another child
 !C2 := T.createChildRole(....)
-T.addRoletoPerson(C2,P1)
+-- !T.addRoletoPerson(C2,P1) REPLACED by below
+!P1.addRole(C2)
 
 --Object Model for View Relevant Tutors
 

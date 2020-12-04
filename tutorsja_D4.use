@@ -230,6 +230,61 @@ attributes
 end
 
 -- CONCRETE CLASSES --
+class TutorsJA
+operations
+	createChildRole(name: String, grLvl: Integer, dobDD: Integer, dobMM: Integer, dobYY: Integer, sex: String, age: Integer)	: Child
+		begin
+			declare c: Child;
+			c := new Child();
+			---can the functions below be replaced with an init? 
+					--eg c.ChildInit(name, grLvl, dobDD, dobMM, dobYY, sex, age);--TBD
+			---or would the init be used when we say new Child()? 'new' is like when we call the constructor right? and init is the constructor or an arbitrary method?
+			c.setName(name); --TBD
+			c.setGradeLevel(grLvl); --TBD
+			c.setDOB(dobDD, dobMM, dobYY); --TBD
+			c.setSex(sex); --TBD; 
+				--should setSex() take the Sex enum (and createChildRole still takes it as a string but uses an if to determine which enum should be passed to setSex())
+				--or, should createChildRole take the Sex enum? We would need to pass the enum to the function on the command line but can we do that?
+			c.setAge(age);--TBD
+			insert(self, c) into ChildRoles; --TBD
+			result := c; 
+		end
+		-- pre: true
+		-- post: true 
+
+
+	createTutorRole(sc: Integer): Tutor
+		begin
+			declare t: Tutor;
+			t := new Tutor();
+			t.setSecurityCode(sc); --TBD
+			insert(self, t) into TutorRoles; --TBD
+			result := t;
+		end
+		-- pre: true
+		-- post: true 
+
+	addPerson(fn: String, ln: String, un: String, pswd: String, sex:String, isParent: Boolean, loc: String, firstRole: Role)
+		begin	
+			declare p: Person;
+			p := new Person();
+			p.setName(fn,ln); --TBD
+			p.setUserInfo(un,pswd); --TBD
+			p.setSex(sex); --TBD
+			p.setIsParent(isParent); --TBD
+			p.setLocation(loc); --TBD
+			insert(self, p) into PersonsInSys; --TBD
+			insert(p, firstRole) into PersonRole; --can we use the addRole method here? 
+			--if yes:
+			--p.addRole(firstRole); --TBD
+		end
+
+	-- RE BELOW: putting this in Person class
+	-- addRoleToPerson(newRole:Role, existingPerson:Person)
+	-- 	begin
+	-- 		insert(existingPerson, newRole) into PersonRole;
+	-- 	end
+
 
 class Person
 attributes
@@ -240,7 +295,12 @@ attributes
 	sex: Sex
 	isParent: Boolean
 	location: String
---operations
+operations
+	addRole(newRole: Role)
+		begin
+			insert(self, newRole) into PersonRole;
+		end
+
 constraints
 	--A person cannot have more than one tutor role
 	inv NoMoreThanOneTutorRole: 
@@ -563,6 +623,8 @@ constraints
 
 	-- A parent may only request enrollment for a service for their Child where the Child and the Tutor share atleast one matching Subject (both name and gradelevel).
 	--inv ChildTutorSubjectMatch: 
+	--Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
+	--childSubjects: Set(Subject) = subjects.subject, 
 		--self.
 end
 
