@@ -58,23 +58,49 @@ operations
         self.year:= y;
     end
 
-	equalsD(d: Date)
+	equalsD(d: Date): Boolean
 	begin
 		if self.day = d.day and self.month = d.month and self.year = d.year then
 			begin
-				self.day = d.day and self.month = d.month and self.year = d.year
+				result := self.day = d.day and self.month = d.month and self.year = d.year
 			end;
 		end;
 	end
 
-	beforeD(d: Date)
+	beforeD(d: Date): Boolean
+	--given d1.beforeD(d2), gives true if d1 comes before d2
 	begin
-		if self.year <= d.year and self.month <= d.month and self.day < d.day then
+	-- 	if self.year <= d.year and self.month <= d.month and self.day < d.day then
+	-- 		begin
+	-- 			self.year <= d.year and self.month <= d.month and self.day < d.day
+	-- 		end;
+	-- 	end;
+	-- end
+
+		result := false 
+		if self.year < d.year then
 			begin
-				self.year <= d.year and self.month <= d.month and self.day < d.day
+				result := true
+			end;
+		else
+			begin
+				if self.month < d.month then
+					begin
+						result := true
+					end;
+				else 
+					begin
+						if self.day < d.day then
+							begin
+								result := true
+							end;
+					end;
 			end;
 		end;
 	end
+		
+
+
 end
 
 class Period  
@@ -88,24 +114,55 @@ operations
         self.endDate := eDate;
     end
 
-	equals(p:Period)
+	equals(p:Period): Boolean
 	begin
+		result := self.startDate.equalsD(p.startDate) and p.endDate.equalsD(P.endDate)
 	end
 
-	isGreaterThan(p:Period)
+	-- isGreaterThan(p:Period): Boolean
+	-- begin
+	-- end
+
+	before(p:Period): Boolean
+	--given p1.before(p2), gives true if p1 comes before p2
 	begin
+		result := self.endDate.beforeD(p.endDate)
 	end
 
-	before(p:Period)
+	overlap(p:Period): Boolean
+	--given p1.overlap(p2), gives true if p1 does NOT end before p2 starts 
+										--OR p2 does NOT end before p1 starts
+
+	--IGNORE given p1.overlap(p2), gives true if p1 starts at the same time as p2 
+										--IGNORE OR if p1 starts before p2 ends and 
+										--IGNORE OR if p1 starts when p2 ends
+										--IGNORE OR if p1 ends before p2 ends and starts when or after p2 starts
 	begin
+		-- result := self.startDate.equalsD(p.startDate) 
+		-- 			or self.startDate.beforeD(p.endDate)
+		-- 			or self.startDate.equalsD(p.endDate) 
+		-- 			or self.endDate.beforeD(p.endDate)
+
+		result := self.endDate.beforeD(p.startDate) <> true 
+					or p.endDate.beforeD(self.startDate) <> true
 	end
 
-	overlap(p:Period)
+	contains(p:Period): Boolean
+	--given p1.contains(p2), gives true if p2 occurs within p1 
+		-- i.e. : gives true if p1 is NOT equal to p2 
+								--AND p2 starts as or after p1 starts 
+								--AND p2 ends as or before p1 ends
 	begin
-	end
-
-	contains(p:Period)
-	begin
+		result := self.equals(p) <> true and	
+					( p.startDate.equalsD(self.startDate) 
+					  or 
+					  self.startDate.beforeD(p.startDate)
+					)
+					and
+					( p.endDate.equalsD(self.endDate) 
+					  or
+					  p.endDate.beforeD(self.endDate)
+					)
 	end
 end
 
@@ -934,10 +991,10 @@ constraints
 
 	-- Before a child is enrolled into a Tutor’s Service, both tutor and parent must agree to the terms of service
 	inv AcceptanceIfAgree: 
-		self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Agree implies self.enrollmEnrollmentStatus::Accepted and
-		self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Agree implies self.enrollmEnrollmentStatus = acceptanceStatus::Pending and
-		self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Disagree implies self.enrollmEnrollmentStatus = acceptanceStatus::Pending and
-		self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Disagree implies self.enrollmEnrollmentStatus = acceptanceStatus::Denied
+		(self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Agree implies self.EnrollmentStatus::Accepted) and
+		(self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Agree implies self.EnrollmentStatus = acceptanceStatus::Pending) and
+		(self.tutorAgreement = AgrStatus::Agree and self.parentAgreement = AgrStatus::Disagree implies self.EnrollmentStatus = acceptanceStatus::Pending) and
+		(self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Disagree implies self.EnrollmentStatus = acceptanceStatus::Denied)
 
 statemachines
 	psm EnrollRequestStatus
