@@ -1,0 +1,15 @@
+reset
+
+--Object Model for Create Parent + Create Tutor
+!T := new TutorsJA()
+!C1 := T.createChildRole(....)
+!P1 := T.addPerson(....,C1)
+
+    --person later wants to add another child
+!C2 := T.createChildRole(....)
+T.addRoletoPerson(C2,P1)
+
+--Object Model for View Relevant Tutors
+
+
+--Object Model for Request Enrollment 

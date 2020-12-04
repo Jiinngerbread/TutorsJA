@@ -46,7 +46,6 @@ operations
 
 	beforeT(t: Time): Boolean
 	begin
-		result := false 
 		if self.hour < t.hour then
 			begin
 				result := true
@@ -57,6 +56,11 @@ operations
 					begin
 						result := true
 					end;
+				else
+					begin
+						result := false 
+					end;
+				end;
 			end;
 		end;
 	end
@@ -95,7 +99,6 @@ operations
 	-- 	end;
 	-- end
 
-		result := false 
 		if self.year < d.year then
 			begin
 				result := true
@@ -112,13 +115,16 @@ operations
 							begin
 								result := true
 							end;
+						else
+							begin
+								result := false
+							end;
+						end;
 					end;
+				end;
 			end;
 		end;
 	end
-		
-
-
 end
 
 class Period  
@@ -240,9 +246,11 @@ constraints
 	inv NoMoreThanOneTutorRole: 
 		self.roles->select(oclIsTypeOf(Tutor))->size() <= 1 
 		
-	--person:isParent = True implies cannot enrol with tutors who belong to the same person
-	--inv noSelfEroll:
-	--	self.isParent = true implies forAll(t:Tutor| self <> t)
+	--For a person who is a parent a tutor, their children cannot have enrollment requests with their tutor role
+	inv noSelfEnroll:
+		self.isParent = true and self.roles->select(oclIsTypeOf(Tutor))->size()>0
+		implies 
+		self.roles->select(oclIsTypeOf(Child))->service->tutor->forAll(t:Tutor| t.person <> self)
 		
 	--A person who is a parent must have atleast one child
 	inv ParentHasAtLeastOneChild :
@@ -308,10 +316,10 @@ constraints
 	inv EnrolCapacityNotExceeded:
 		self.numOfSpaces >= self.EnrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()
 	--number of enrollment request associated with a service whose availability is NOT "free" should be 0
-	inv:
+	--inv:
 		
 	--If availability of service is not free it should have no PENDING enrollment requests
-	inv :
+	inv OnlyFreeServicesHavePendingRequests:
 		self.availStatus <> AvailabilityStatus::Free 
 		implies 
 		self.EnrollRequest->select(acceptanceStatus = EnrollmentStatus::Pending)->size() = 0 
@@ -330,7 +338,7 @@ statemachines
 					enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()>0
 					and
 					availStatus <> AvailabilityStatus::Service_Withdrawn
-					]
+				]
 
 		closed [activeStatus = ActiveStatus::Closed and 
 					(currentDate.equalsD(startDate) and 
@@ -346,21 +354,21 @@ statemachines
 				]
 				
 		ended: final [activeStatus = ActiveStatus::Ended and 
-					currentDate.equalsD(endDate) 
-					and 
-					enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()>0
-			  ]
+						currentDate.equalsD(endDate) 
+						and 
+						enrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()>0
+			  		 ]
 
 	transitions
 		start -> initialised {create}
-		initialised -> initialised {UpdateActiveStatus}
-		initialised -> active {UpdateActiveStatus}
-		initialised -> ended {UpdateActiveStatus}
-		initialised -> closed {UpdateActiveStatus}
-		active -> ended {UpdateActiveStatus}
-		active -> closed {UpdateActiveStatus}
-		closed -> active {UpdateActiveStatus}
-		closed -> ended {UpdateActiveStatus}
+		initialised -> initialised {UpdateActiveStatus()}
+		initialised -> active {UpdateActiveStatus()}
+		initialised -> ended {UpdateActiveStatus()}
+		initialised -> closed {UpdateActiveStatus()}
+		active -> ended {UpdateActiveStatus()}
+		active -> closed {UpdateActiveStatus()}
+		closed -> active {UpdateActiveStatus()}
+		closed -> ended {UpdateActiveStatus()}
 	end 
 end
 
@@ -551,9 +559,11 @@ constraints
 	
 	-- Parents may only send enrollment requests to Tutors for a service whose availability is “free”.
 	inv ServiceStatusmustBeFree: 
-			self.service-> select(s:Service| s.availStatus= AvailabilityStatus::Free)
-	
+		self.service-> select(s:Service| s.availStatus= AvailabilityStatus::Free)
 
+	-- A parent may only request enrollment for a service for their Child where the Child and the Tutor share atleast one matching Subject (both name and gradelevel).
+	--inv ChildTutorSubjectMatch: 
+		--self.
 end
 
 class Tutor < Role 
@@ -585,7 +595,7 @@ attributes
 constraints	
 	--if status = delinquent all services should have service withdrawn status
 	inv DeliquentTutorsHaveServiceWithdrawnStatuses: 
-		self.accStatus = AccountStatus::Delinquent implies self.service->forall(s|s.availStatus = AvailabilityStatus::Service_Withdrawn)
+		self.accStatus = AccountStatus::Delinquent implies self.service->forAll(s|s.availStatus = AvailabilityStatus::Service_Withdrawn)
 
 	--Only tutors who are approved or verified may offer services 
     inv UnapprovedTutorsHaveNoServices:
@@ -617,10 +627,10 @@ attributes
 	status: SRStatus init: SRStatus::Unanswered
 	neededBy: Date
 	currentDate: Date
-	daysUntilNeeded: Integer
+	daysUntilNeeded: Integer init:31
 	daysPast: Integer 
 -- operations
-	-- setNeededBy(nb: Date) 
+-- setNeededBy(nb: Date) 
 -- 	isRelevantTutorForSpecReq(t: Tutor): Boolean =
 -- 			let srSubjects: Set(Subject) = subjects.subject, 
 -- 				srMODs: Set(ModeOfDel) = modesOfDelivery.modeOfDel, 
@@ -665,11 +675,11 @@ attributes
 -- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
 -- 		end 		
 -- 	pre: self.subjects.subject->size() > 0 --child must have subjects
--- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
--- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: serviceTypes.typeOfService->size() > 0
--- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 		pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 		pre: modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: serviceTypes.typeOfService->size() > 0
+-- 		pre: t.serviceTypes.typeOfService->size() > 0
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Weak)
 
 
@@ -678,11 +688,11 @@ attributes
 -- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)
 -- 		end 	
 -- 	pre: self.subjects.subject->size() > 0 --child must have subjects
--- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
--- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: serviceTypes.typeOfService->size() > 0
--- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 		pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 		pre: modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: serviceTypes.typeOfService->size() > 0
+-- 		pre: t.serviceTypes.typeOfService->size() > 0
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Moderate)	
 
 
@@ -691,11 +701,11 @@ attributes
 -- 			result := Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
 -- 		end 		
 -- 	pre: self.subjects.subject->size() > 0 --child must have subjects
--- 	-- pre: t.subjects.subject->size() > 0 --tutor must have subjects
--- 	-- pre: modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: t.modesOfDelivery.modeOfDel->size() > 0
--- 	-- pre: serviceTypes.typeOfService->size() > 0
--- 	-- pre: t.serviceTypes.typeOfService->size() > 0
+-- 		pre: t.subjects.subject->size() > 0 --tutor must have subjects
+-- 		pre: modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: t.modesOfDelivery.modeOfDel->size() > 0
+-- 		pre: serviceTypes.typeOfService->size() > 0
+-- 		pre: t.serviceTypes.typeOfService->size() > 0
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|matchLevelforTutorandChild(t)=MatchLevel::Strong)
 
 --IGNORE:
@@ -706,17 +716,17 @@ attributes
 -- 	pre: self.subjects.subject->size() > 0 --Spec Req must have subjects
 -- 	post: result = Tutor.allInstances()->select(t:Tutor|isRelevantTutorForSpecReq(t))
 constraints
-	--A Special Request existing without a date-needed-by date will become outdated after 31 days.
-	inv:
+	--A Special Request existing without a date-needed-by date will become outdated after 31 days
+	inv SRNoDateNeededOutdatedAfter31Days:
 		self.neededBy = null and self.daysPast = 31 implies self.status::Outdated 
 
 	--if neededBy has passed then status = outdated
-	inv SRisOutdated:
+	inv SRisOutdated: 
 		self.neededBy.beforeD(self.currentDate) = false implies self.status = SRStatus::Outdated
 		
 	--only one of the proposals connected to a special request may have a status of Accepted
-	inv:
-		self.proposals.select(a:Proposal|a.accepted = true) -> size() <= 1
+	inv SROnlyOneAcceptedProposal:
+		self.proposals.select(a:Proposal|a.accepted = true)->size() <= 1
 
 
 statemachines
