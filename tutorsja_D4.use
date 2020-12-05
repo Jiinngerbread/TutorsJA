@@ -234,18 +234,20 @@ class TutorsJA
 operations
 	-- to the questions asked in the uncommented section
 	--JB:  just create the methods as we have to create instances of the class so  we would have:  
-	addPerson(Personfn:String, Personln:String, PersonUserName: String, PersonPW: String, PersonSex: Sex, isPersonParent: Boolean, PersonLoc: String): Person
+	addPerson(Personfn:String, Personln:String, PersonUserName: String, PersonPW: String, PersonSex: Sex, isPersonParent: Boolean, PersonLoc: String, firstRole: Role): Person
 		begin	
 			declare p: Person;
 			p := new Person(Personfn, Personln, PersonUserName, PersonPW, PersonSex, isPersonParent, PersonLoc);
-			insert(self, p) into PersonRole;
+			insert(self, p) into PersonsInSys; --TBD
+	 		p.addRole(firstRole);
+			result := p;
 		end
 	---  so in essence TutorsJa.addPerson(Jinn, Brown, jiinngerbread, Female, True, Kingston); -- <- Parent
 	---  and TutorsJa.addPerson(Joanna-Joy, Gray, Joy, Female, False, Kingston); -- <- Tutor
 	
 	createNewChild(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer): Child
 			begin
-				declare c: Childl 
+				declare c: Child; 
 				c:= new Child(name, gradelvl, dob, s, age)
 				insert(self, c) into ChildRoles;
 				result := c; 
@@ -346,10 +348,10 @@ operations
 		self.location := loc;
 	end
 
-	-- addRole(newRole: Role)
-	-- 	begin
-	-- 		insert(self, newRole) into PersonRole;
-	-- 	end
+	addRole(newRole: Role)
+		begin
+			insert(self, newRole) into PersonRole;
+		end
 
 constraints
 	--A person cannot have more than one tutor role
@@ -425,6 +427,7 @@ constraints
 	--number of enrollment requests with Accepted status <= numOfSpaces
 	inv EnrolCapacityNotExceeded:
 		self.numOfSpaces >= self.EnrolRequest->select(acceptanceStatus = EnrollmentStatus::Accepted)->size()
+	
 	--number of enrollment request associated with a service whose availability is NOT "free" should be 0
 	--inv:
 		
@@ -583,6 +586,7 @@ attributes
 	dob: Date
 	chSex: Sex
 	age: Integer
+	
 
 	ChildInit(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer)
 	begin
@@ -683,9 +687,7 @@ constraints
 
 	-- A parent may only request enrollment for a service for their Child where the Child and the Tutor share atleast one matching Subject (both name and gradelevel).
 	--inv ChildTutorSubjectMatch: 
-	--Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
-	--childSubjects: Set(Subject) = subjects.subject, 
-		--self.service.
+		--self.service->tutor->forAll(t:Tutor| t.subjectOffering->intersection(self.subjectOffering)->size() > 0)
 end
 
 class Tutor < Role 
@@ -721,6 +723,8 @@ attributes
 	--addCertification
 	--confirmIdentity
 	--updateGenStatus *verified if all certifications have verified status (not yet implemented)
+
+	
 constraints	
 	--if status = delinquent all services should have service withdrawn status
 	inv DeliquentTutorsHaveServiceWithdrawnStatuses: 
@@ -920,6 +924,8 @@ end
 
 
 -- ASSOCIATIONS IN MODEL -- 
+association PersonsInSys between
+	TutorsJA[1] role 
 association PersonRole between
 	Person[1] role person
 	Role[1..*] role roles
@@ -1116,32 +1122,40 @@ attributes
 			--else acceptanceStatus = EnrollmentStatus::Accepted
 		--if denying, acceptanceStatus = EnrollmentStatus::Denied
 
-		--pre: 
-		--post: if accepting and set size is < numOfSpaces, acceptanceStatus = Accepted
-		--post: if accepting and set size is = numOfSpaces, acceptanceStatus = Denied
+		updateAcceptStatus()
+			if self.tutorAgreement= AgrStatus::Agree and self.parentAgreement = AgrStatus::Agree then 
+				if EnrolRequest.AllInstances->select(acceptanceStatus = EnrollmentStatus::Accepted)->size() + 1 <= self->Service.numOfSpaces then 
+					self.acceptanceStatus = EnrollmentStatus::Accepted
+				else self.acceptanceStatus = EnrollmentStatus::Denied endif 
+			if self.tutorAgreement = AgrStatus::Disagree and self.parentAgreement = AgrStatus::Disagree then 
+				self.acceptanceStatus = EnrollmentStatus::Denied
+			else acceptanceStatus= EnrollmentStatus::Pending endif
 
--- 	canReviewService() : Boolean =
--- 		let attendances: Set(Attendance) = tutee.schedule.attendance, 
--- 			numOfSlots: Integer = attendances->size()
+		pre: self.acceptanceStatus = EnrollmentStatus::Pending
+		-- post: if accepting and set size is < numOfSpaces, acceptanceStatus = Accepted
+		post: EnrolRequest.AllInstances->select(acceptanceStatus = EnrollmentStatus::Accepted)->size() + 1 
+		-- post: if accepting and set size is = numOfSpaces, acceptanceStatus = Denied
+		post: EnrolRequest.AllInstances->select(acceptanceStatus = EnrollmentStatus::Denied)->size() + 1 
 
--- 		 in
--- 			attendances.select(present = true)->size() >= numOfSlots/2
--- 			and
--- 			self.acceptanceStatus = EnrollmentStatus::Accepted
-		
--- 	reviewService(rating:Ratings, text:String)
--- 		begin
--- 			declare r:Review;
--- 			r := new Review();
+	canReviewService() : Boolean =
+		let attendances: Set(Attendance) = self->service->sessionsInServ->slot->Attendance 
+			numOfSlots: Integer = attendances->size()
+
+		in if (attendances.select(present = true)->size() >= numOfSlots/2) and (self.acceptanceStatus = EnrollmentStatus::Accepted) then result := true endif
+
+	reviewService(rating:Ratings, text:String)
+		begin
+			declare r:Review;
+			r := new Review(rating, text);
 -- 			r.setRating(rating);
 -- 			r.setReviewTxt(text);
--- 		end
+		end
 	
--- 	pre: canReviewService()
--- 	pre: text <> null 
--- 	pre: rating <> null 
--- 	post: self.review = text 
--- 	post: self.service.enrolRequest.review->size() = self.service.enrolRequest.review@pre->size() + 1
+	pre: canReviewService()
+	pre: text <> null 
+	pre: rating <> null 
+	post: self.review = text 
+	post: self.service.enrolRequest.review->size() = self.service.enrolRequest.review@pre->size() + 1
 
 	--setting of attributes differs based on value for serviceType of the Service
 constraints
