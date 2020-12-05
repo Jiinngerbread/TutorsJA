@@ -232,92 +232,97 @@ end
 -- CONCRETE CLASSES --
 class TutorsJA
 operations
-	createChildRole(name: String, grLvl: Integer, dobDD: Integer, dobMM: Integer, dobYY: Integer, sex: String, age: Integer)	: Child
-		begin
-			declare c: Child;
-			c := new Child();
-			---can the functions below be replaced with an init? 
-					--eg c.ChildInit(name, grLvl, dobDD, dobMM, dobYY, sex, age);--TBD
-			---or would the init be used when we say new Child()? 'new' is like when we call the constructor right? and init is the constructor or an arbitrary method?
-			
-			--JB:  just create the methods as we have to create instances of the class so  we would have:  
-			-- addPerson(Personfn:String, Personln:String, PersonUserName: String, PersonPW: String, PersonSex: Sex, isPersonParent: Boolean, PersonLoc: String): Person
-			-- 	begin	
-			-- 		declare p: Person;
-			-- 		p := new Person(Personfn, Personln, PersonUserName, PersonPW, PersonSex, isPersonParent, PersonLoc);
-			-- 		insert(self, p) into PersonRole;
-			-- 	end
-			---  so in essence TutorsJa.addPerson(Jinn, Brown, jiinngerbread, Female, True, Kingston); -- <- Parent
-			---  and TutorsJa.addPerson(Joanna-Joy, Gray, Joy, Female, False, Kingston); -- <- Tutor
-			
-			-- createNewChild(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer): Child
-			--		begin
-					-- 	declare c: Childl 
-					-- 	c:= new Child(name, gradelvl, dob, s, age)
-					-- 	insert(self, c) into ChildRoles;
-					-- 	result := c; 
-			-- 		end
-			---  so in essence TutorsJa.createnewChild(Jinn, Six, (4, 12, 2020), Female, 13)
-			
-			-- createTutorRole(TutorGenStat: GeneralStatus, TutorJoined: Date, TutorCode:Integer): Tutor
-			-- begin
-			-- 	declare t: Tutor;
-			-- 	t := new Tutor(TutorGenStat, TutorJoined, TutorCode);
-			-- 	insert(self, t) into TutorRoles; 
-			-- 	result := t;
-			-- end
-			---  so in essence TutorsJa.createTutorRole(Approved,(4, 12, 2020), 96)
-
-			-- having TutorsJA class just have the method call to create the objects this way works for to instantiate multiple objects. 
-			-- dont really get why we would have addRole in person on line 343 like that but choose to write it out in this class for the rest. 
-
-			c.setName(name); --TBD
-			c.setGradeLevel(grLvl); --TBD
-			c.setDOB(dobDD, dobMM, dobYY); --TBD
-			c.setSex(sex); --TBD; 
-				--should setSex() take the Sex enum (and createChildRole still takes it as a string but uses an if to determine which enum should be passed to setSex())
-				--or, should createChildRole take the Sex enum? We would need to pass the enum to the function on the command line but can we do that?
-			c.setAge(age);--TBD
-			insert(self, c) into ChildRoles; --TBD
-			result := c; 
-		end
-		-- pre: true
-		-- post: true 
-
-
-	createTutorRole(sc: Integer): Tutor
-		begin
-			declare t: Tutor;
-			t := new Tutor();
-			t.setSecurityCode(sc); --TBD
-			insert(self, t) into TutorRoles; --TBD
-			result := t;
-		end
-		-- pre: true
-		-- post: true 
-
-	addPerson(fn: String, ln: String, un: String, pswd: String, sex:String, isParent: Boolean, loc: String, firstRole: Role)
+	-- to the questions asked in the uncommented section
+	--JB:  just create the methods as we have to create instances of the class so  we would have:  
+	addPerson(Personfn:String, Personln:String, PersonUserName: String, PersonPW: String, PersonSex: Sex, isPersonParent: Boolean, PersonLoc: String): Person
 		begin	
 			declare p: Person;
-			p := new Person();
-			p.setName(fn,ln); --TBD
-			p.setUserInfo(un,pswd); --TBD
-			p.setSex(sex); --TBD
-			p.setIsParent(isParent); --TBD
-			p.setLocation(loc); --TBD
-			insert(self, p) into PersonsInSys; --TBD
-			insert(p, firstRole) into PersonRole; --can we use the addRole method here? 
-			--if yes:
-			--p.addRole(firstRole); --TBD
+			p := new Person(Personfn, Personln, PersonUserName, PersonPW, PersonSex, isPersonParent, PersonLoc);
+			insert(self, p) into PersonRole;
 		end
+	---  so in essence TutorsJa.addPerson(Jinn, Brown, jiinngerbread, Female, True, Kingston); -- <- Parent
+	---  and TutorsJa.addPerson(Joanna-Joy, Gray, Joy, Female, False, Kingston); -- <- Tutor
+	
+	createNewChild(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer): Child
+			begin
+				declare c: Childl 
+				c:= new Child(name, gradelvl, dob, s, age)
+				insert(self, c) into ChildRoles;
+				result := c; 
+			end
+	---  so in essence TutorsJa.createnewChild(Jinn, Six, (4, 12, 2020), Female, 13)
+	
+	createTutorRole(TutorGenStat: GeneralStatus, TutorJoined: Date, TutorCode:Integer): Tutor
+	begin
+		declare t: Tutor;
+		t := new Tutor(TutorGenStat, TutorJoined, TutorCode);
+		insert(self, t) into TutorRoles; 
+		result := t;
+	end
+	---  so in essence TutorsJa.createTutorRole(Approved,(4, 12, 2020), 96)
+
+	-- having TutorsJA class just have the method call to create the objects this way works for to instantiate multiple objects. 
+	-- dont really get why we would have addRole in person on line 343 like that but choose to write it out in this class for the rest. 
+
+	--------------------------------------------we had the below, initially -------------------------------------------------------------------------------------------------------
+	-- createChildRole(name: String, grLvl: Integer, dobDD: Integer, dobMM: Integer, dobYY: Integer, sex: String, age: Integer)	: Child
+	-- 	begin
+	-- 		declare c: Child;
+	-- 		c := new Child();
+	-- 		---can the functions below be replaced with an init? 
+	-- 				--eg c.ChildInit(name, grLvl, dobDD, dobMM, dobYY, sex, age);--TBD
+	-- 		---or would the init be used when we say new Child()? 'new' is like when we call the constructor right? and init is the constructor or an arbitrary method?
+			
+
+	-- 		c.setName(name); --TBD
+	-- 		c.setGradeLevel(grLvl); --TBD
+	-- 		c.setDOB(dobDD, dobMM, dobYY); --TBD
+	-- 		c.setSex(sex); --TBD; 
+	-- 			--should setSex() take the Sex enum (and createChildRole still takes it as a string but uses an if to determine which enum should be passed to setSex())
+	-- 			--or, should createChildRole take the Sex enum? We would need to pass the enum to the function on the command line but can we do that?
+	-- 		c.setAge(age);--TBD
+	-- 		insert(self, c) into ChildRoles; --TBD
+	-- 		result := c; 
+	-- 	end
+	-- 	-- pre: true
+	-- 	-- post: true 
+
+
+	-- createTutorRole(sc: Integer): Tutor
+	-- 	begin
+	-- 		declare t: Tutor;
+	-- 		t := new Tutor();
+	-- 		t.setSecurityCode(sc); --TBD
+	-- 		insert(self, t) into TutorRoles; --TBD
+	-- 		result := t;
+	-- 	end
+	-- 	-- pre: true
+	-- 	-- post: true 
+
+	-- addPerson(fn: String, ln: String, un: String, pswd: String, sex:String, isParent: Boolean, loc: String, firstRole: Role)
+	-- 	begin	
+	-- 		declare p: Person;
+	-- 		p := new Person();
+	-- 		p.setName(fn,ln); --TBD
+	-- 		p.setUserInfo(un,pswd); --TBD
+	-- 		p.setSex(sex); --TBD
+	-- 		p.setIsParent(isParent); --TBD
+	-- 		p.setLocation(loc); --TBD
+	-- 		insert(self, p) into PersonsInSys; --TBD
+	-- 		insert(p, firstRole) into PersonRole; --can we use the addRole method here? 
+	-- 		--if yes:
+	-- 		--p.addRole(firstRole); --TBD
+	-- 	end
 
 	-- RE BELOW: putting this in Person class 
-	--- JB: doing this for person means you can do it for tutor, and child
-	--- it doesnt really follow when you put it in person as newRole in this class is of type role while in person its self, which would be type person 
 	-- addRoleToPerson(newRole:Role, existingPerson:Person)
 	-- 	begin
 	-- 		insert(existingPerson, newRole) into PersonRole;
 	-- 	end
+
+	--- JB: doing this for person means you can do it for tutor, and child
+	--- it doesnt really follow when you put it in person as newRole in this class is of type role while in person it is of type self, which would be type person 
+
 
 
 class Person
@@ -340,10 +345,11 @@ operations
 		self.isParent := parentHmm;
 		self.location := loc;
 	end
-	addRole(newRole: Role)
-		begin
-			insert(self, newRole) into PersonRole;
-		end
+
+	-- addRole(newRole: Role)
+	-- 	begin
+	-- 		insert(self, newRole) into PersonRole;
+	-- 	end
 
 constraints
 	--A person cannot have more than one tutor role
@@ -679,7 +685,7 @@ constraints
 	--inv ChildTutorSubjectMatch: 
 	--Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
 	--childSubjects: Set(Subject) = subjects.subject, 
-		--self.subject 
+		--self.service.
 end
 
 class Tutor < Role 
