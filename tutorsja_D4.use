@@ -239,6 +239,38 @@ operations
 			---can the functions below be replaced with an init? 
 					--eg c.ChildInit(name, grLvl, dobDD, dobMM, dobYY, sex, age);--TBD
 			---or would the init be used when we say new Child()? 'new' is like when we call the constructor right? and init is the constructor or an arbitrary method?
+			
+			--JB:  just create the methods as we have to create instances of the class so  we would have:  
+			-- addPerson(Personfn:String, Personln:String, PersonUserName: String, PersonPW: String, PersonSex: Sex, isPersonParent: Boolean, PersonLoc: String): Person
+			-- 	begin	
+			-- 		declare p: Person;
+			-- 		p := new Person(Personfn, Personln, PersonUserName, PersonPW, PersonSex, isPersonParent, PersonLoc);
+			-- 		insert(self, p) into PersonRole;
+			-- 	end
+			---  so in essence TutorsJa.addPerson(Jinn, Brown, jiinngerbread, Female, True, Kingston); -- <- Parent
+			---  and TutorsJa.addPerson(Joanna-Joy, Gray, Joy, Female, False, Kingston); -- <- Tutor
+			
+			-- createNewChild(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer): Child
+			--		begin
+					-- 	declare c: Childl 
+					-- 	c:= new Child(name, gradelvl, dob, s, age)
+					-- 	insert(self, c) into ChildRoles;
+					-- 	result := c; 
+			-- 		end
+			---  so in essence TutorsJa.createnewChild(Jinn, Six, (4, 12, 2020), Female, 13)
+			
+			-- createTutorRole(TutorGenStat: GeneralStatus, TutorJoined: Date, TutorCode:Integer): Tutor
+			-- begin
+			-- 	declare t: Tutor;
+			-- 	t := new Tutor(TutorGenStat, TutorJoined, TutorCode);
+			-- 	insert(self, t) into TutorRoles; 
+			-- 	result := t;
+			-- end
+			---  so in essence TutorsJa.createTutorRole(Approved,(4, 12, 2020), 96)
+
+			-- having TutorsJA class just have the method call to create the objects this way works for to instantiate multiple objects. 
+			-- dont really get why we would have addRole in person on line 343 like that but choose to write it out in this class for the rest. 
+
 			c.setName(name); --TBD
 			c.setGradeLevel(grLvl); --TBD
 			c.setDOB(dobDD, dobMM, dobYY); --TBD
@@ -279,7 +311,9 @@ operations
 			--p.addRole(firstRole); --TBD
 		end
 
-	-- RE BELOW: putting this in Person class
+	-- RE BELOW: putting this in Person class 
+	--- JB: doing this for person means you can do it for tutor, and child
+	--- it doesnt really follow when you put it in person as newRole in this class is of type role while in person its self, which would be type person 
 	-- addRoleToPerson(newRole:Role, existingPerson:Person)
 	-- 	begin
 	-- 		insert(existingPerson, newRole) into PersonRole;
@@ -296,6 +330,16 @@ attributes
 	isParent: Boolean
 	location: String
 operations
+	PersonInit(fn:String, ln:String, un: String, pw: String, sex: Sex, parentHmm: Boolean, 	loc: String)
+	begin
+		self.fname := fn;
+		self.lname:= ln;
+		self.username := un;
+		self.password := pw;
+		self.sex := sex ;
+		self.isParent := parentHmm;
+		self.location := loc;
+	end
 	addRole(newRole: Role)
 		begin
 			insert(self, newRole) into PersonRole;
@@ -533,6 +577,16 @@ attributes
 	dob: Date
 	chSex: Sex
 	age: Integer
+
+	ChildInit(name: String, gradelvl: Grade, dob: Date, s: Sex, age: Integer)
+	begin
+		self.chName := name;
+		self.gradeLvl := gradelvl;
+		self.dob := dob;
+		self.chSex := s;
+		self.age := age;
+	end
+
 -- operations
 -- 	matchLevelforTutorandChild(t: Tutor): MatchLevel 
 		--begin
@@ -625,7 +679,7 @@ constraints
 	--inv ChildTutorSubjectMatch: 
 	--Boolean = t.subjects.subject->intersection(childSubjects)->size() > 0, 
 	--childSubjects: Set(Subject) = subjects.subject, 
-		--self.
+		--self.subject 
 end
 
 class Tutor < Role 
@@ -634,6 +688,13 @@ attributes
 	joinDate: Date 
 	securityCode: Integer
 	accStatus: AccountStatus init:AccountStatus::Good
+
+	TutorInit(genStat:GeneralStatus, joined:Date, secureCode:Integer)
+	begin
+		self.generalStatus := genStat;
+		self.joinDate :=joined;
+		self.secureCode := secureCode;
+	end
 --operations
 	--updateAccStatus 
 		--delinquent if >= 10 reviews and average rating is <=1 
